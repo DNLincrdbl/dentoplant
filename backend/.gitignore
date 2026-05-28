@@ -1,0 +1,10 @@
+.env
+instance/
+__pycache__/
+.pytest_cache/
+flask_session/
+flask_session_data/
+app/static/uploads/
+venv/
+*.pyc
+
