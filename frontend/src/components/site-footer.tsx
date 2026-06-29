@@ -20,6 +20,16 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 import { SITE } from "@/lib/site-data";
 
+// A linkek szövegét/útvonalát később linkenként véglegesítjük.
+const FOOTER_LINKS: { label: string; href: string }[] = [
+  { label: "Jogi nyilatkozat", href: "/jogi-nyilatkozat" },
+  { label: "ÁSZF", href: "/aszf" },
+  { label: "Adatvédelmi tájékoztató", href: "/adatvedelem" },
+  { label: "Oldaltérkép", href: "/oldalterkep" },
+  { label: "Partnerek", href: "/partnerek" },
+  { label: "Bejelentkezés", href: "/kapcsolat" },
+];
+
 export function SiteFooter() {
   return (
     <footer className="mt-24 bg-brand-900 text-brand-50">
@@ -105,12 +115,20 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <div className="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs text-brand-100/70 md:flex-row">
-          <p>© {new Date().getFullYear()} Dentoplant. Minden jog fenntartva.</p>
-          <div className="flex gap-6">
-            <Link href="/adatvedelem" className="hover:text-white">Adatvédelem</Link>
-            <Link href="/aszf" className="hover:text-white">ÁSZF</Link>
-          </div>
+        <div className="container-page py-6">
+          <nav
+            aria-label="Jogi és egyéb információk"
+            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs font-medium uppercase tracking-wider text-brand-100/80"
+          >
+            {FOOTER_LINKS.map((l) => (
+              <Link key={l.href} href={l.href} className="hover:text-white">
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+          <p className="mt-5 text-center text-xs text-brand-100/60">
+            © {new Date().getFullYear()} Dentoplant. Minden jog fenntartva.
+          </p>
         </div>
       </div>
     </footer>
