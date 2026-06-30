@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChevronDown, Menu, Phone, X } from "lucide-react";
 import { NAV, SITE } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
@@ -10,6 +10,16 @@ import { cn } from "@/lib/utils";
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [mobileSub, setMobileSub] = useState<string | null>(null);
+
+  // Nyitott mobil menünél a háttér ne legyen görgethető.
+  useEffect(() => {
+    if (!open) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [open]);
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background/85 backdrop-blur-md">
