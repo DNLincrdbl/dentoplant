@@ -24,6 +24,7 @@ import { SITE } from "@/lib/site-data";
 const FOOTER_LINKS: { label: string; href: string }[] = [
   { label: "Jogi nyilatkozat", href: "/jogi-nyilatkozat" },
   { label: "ÁSZF", href: "/aszf" },
+  { label: "Garancia", href: "/garancia" },
   { label: "Adatvédelmi tájékoztató", href: "/adatvedelem" },
   { label: "Oldaltérkép", href: "/oldalterkep" },
   { label: "Partnerek", href: "/partnerek" },

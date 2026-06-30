@@ -34,7 +34,7 @@ FRONTEND_URL=http://localhost:3000
 
 ### 3. Adatbázis inicializálása
 
-Az `instance/` mappa automatikusan létrejön, és egy SQLite adatbázis (`tanker.db` — örökölt név, később átnevezhető) lesz benne. Migrations futtatása:
+Az `instance/` mappa automatikusan létrejön, és egy SQLite adatbázis (`dentoplant.db`) lesz benne. Migrations futtatása:
 
 ```bash
 python run.py migrate upgrade
@@ -165,4 +165,4 @@ részek később kitakaríthatók:
 - `app/blueprints/stations.py` + `app/models/station.py` (üzemanyag állomások — nincs használva)
 - `app/blueprints/contact.py` + `app/models/contact.py` (Dentoplantnál külön kapcsolat-űrlap kellhet, ha igen, áttartható)
 - `seed_stations.py` (CLI seed script)
-- `instance/tanker.db` → később átnevezhető pl. `dentoplant.db`-re a `DATABASE_URL`-ben
+- `instance/dentoplant.db` → felülírható a `DATABASE_URL`-ben

@@ -12,7 +12,7 @@ app = create_app()
 
 @group()
 def cli():
-    """Tanker Backend CLI"""
+    """Dentoplant Backend CLI"""
 
 @cli.command("serve")
 @option("--port", default=5000, type=int)

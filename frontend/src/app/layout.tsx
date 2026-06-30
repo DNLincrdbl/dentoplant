@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Fraunces } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import { PublicChrome } from "@/components/public-chrome";
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin", "latin-ext"],
   display: "swap",
-});
-
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  axes: ["SOFT", "opsz"],
 });
 
 export const metadata: Metadata = {
@@ -31,7 +24,7 @@ export default function RootLayout({
   return (
     <html
       lang="hu"
-      className={`${jakarta.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${geist.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <PublicChrome>{children}</PublicChrome>

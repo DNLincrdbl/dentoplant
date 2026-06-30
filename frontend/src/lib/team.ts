@@ -1,3 +1,5 @@
+import { PROFILES } from "./team-profiles.generated";
+
 export type CareerEntry = { year: string; event: string };
 
 export type TeamMember = {
@@ -27,7 +29,7 @@ export type TeamGroup = {
   members: TeamMember[];
 };
 
-export const TEAM: TeamGroup[] = [
+const RAW_TEAM: TeamGroup[] = [
   {
     heading: "Fogorvosok",
     members: [
@@ -41,7 +43,7 @@ export const TEAM: TeamGroup[] = [
           "Fog- és szájbetegségek szakorvosa",
         ],
         focus: "Fogágybetegségek kezelése, csontpótlás, implantológia",
-        image: "/munkatarsak/dr-marazi-kinga.jpg",
+        image: "/munkatarsak/dr-maraz-kinga.jpg",
         hasProfile: true,
         bio: [
           "Számtalan hazai és külföldi tudományos program résztvevőjeként a legmagasabb szakmai felkészültséget tekintem egy jól működő praxis alapjául.",
@@ -203,6 +205,38 @@ export const TEAM: TeamGroup[] = [
     ],
   },
 ];
+
+/**
+ * Összefésüli a kézi (RAW_TEAM) és a generált (PROFILES) adatokat.
+ * A kézzel megadott mezők MINDIG elsőbbséget élveznek a scraperrel szemben.
+ * A `hasProfile` automatikusan true lesz, ha van érdemi profilszöveg.
+ */
+function mergeMember(member: TeamMember): TeamMember {
+  const gen = PROFILES[member.slug];
+  if (!gen) return member;
+  const merged: TeamMember = {
+    ...member,
+    image: member.image ?? gen.image,
+    bio: member.bio ?? gen.bio,
+    career: member.career ?? gen.career,
+    affiliations: member.affiliations ?? gen.affiliations,
+    quote: member.quote ?? gen.quote,
+  };
+  const hasContent = Boolean(
+    merged.bio?.length ||
+      merged.career?.length ||
+      merged.affiliations?.length ||
+      merged.quote ||
+      merged.credentials?.length,
+  );
+  merged.hasProfile = member.hasProfile ?? hasContent;
+  return merged;
+}
+
+export const TEAM: TeamGroup[] = RAW_TEAM.map((group) => ({
+  ...group,
+  members: group.members.map(mergeMember),
+}));
 
 /** Egyszerű kétbetűs monogram-generátor a placeholder körhöz. */
 export function initials(fullName: string): string {

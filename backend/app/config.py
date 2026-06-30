@@ -30,7 +30,7 @@ class BaseConfig:
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
     _default_sqlite_path = (
-        Path(__file__).resolve().parent.parent / "instance" / "tanker.db"
+        Path(__file__).resolve().parent.parent / "instance" / "dentoplant.db"
     )
 
     _default_sqlite_uri = f"sqlite:///{_default_sqlite_path.as_posix()}"

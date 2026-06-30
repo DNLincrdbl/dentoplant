@@ -1,4 +1,5 @@
 import { SERVICE_CATEGORIES, getServicesByCategory } from "./services";
+import { TEAM } from "./team";
 
 export const SITE = {
   name: "Dentoplant",
@@ -33,11 +34,13 @@ export const NAV: NavItem[] = [
   {
     label: "Orvosaink",
     href: "/munkatarsaink",
-    children: [
-      { label: "Dr. Maráz Kinga", href: "/munkatars/dr-maraz-kinga" },
-      { label: "Dr. Vadász Anna", href: "/munkatars/dr-vadasz-anna" },
-      { label: "Dr. Mészáros Csongor", href: "/munkatars/dr-meszaros-csongor" },
-    ],
+    children: TEAM.flatMap((group) =>
+      group.members.map((m) => ({
+        label: m.name,
+        href: m.hasProfile ? `/munkatars/${m.slug}` : "/munkatarsaink",
+        description: m.role,
+      })),
+    ),
   },
   {
     label: "Szolgáltatások",
@@ -52,6 +55,7 @@ export const NAV: NavItem[] = [
     })),
   },
   { label: "Árak", href: "/arak" },
+  { label: "Garancia", href: "/garancia" },
   { label: "Esetek", href: "/esetek" },
   { label: "Galéria", href: "/galeria" },
   { label: "Blog", href: "/blog" },

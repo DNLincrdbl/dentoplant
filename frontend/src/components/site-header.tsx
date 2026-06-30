@@ -54,74 +54,91 @@ export function SiteHeader() {
         </button>
       </div>
 
-      {open && (
-        <div className="border-t border-border bg-background lg:hidden">
-          <div className="container-page flex flex-col py-4">
-            {NAV.map((item) => (
-              <div key={item.href} className="border-b border-border/60 py-2 last:border-0">
-                <div className="flex items-center justify-between">
-                  <Link
-                    href={item.href}
-                    className="py-2 text-base font-semibold text-foreground"
-                    onClick={() => !(item.children || item.groups) && setOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                  {(item.children || item.groups) && (
-                    <button
-                      onClick={() => setMobileSub(mobileSub === item.href ? null : item.href)}
-                      aria-label="Almenü"
-                      className="grid h-9 w-9 place-items-center rounded-full text-muted-foreground"
+      <div
+        aria-hidden={!open}
+        className={cn(
+          "grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out lg:hidden",
+          open ? "grid-rows-[1fr] opacity-100" : "pointer-events-none grid-rows-[0fr] opacity-0"
+        )}
+      >
+        <div className="min-h-0 overflow-hidden">
+          <div className="border-t border-border bg-background">
+            <div className="container-page flex flex-col py-4">
+              {NAV.map((item) => (
+                <div key={item.href} className="border-b border-border/60 py-2 last:border-0">
+                  <div className="flex items-center justify-between">
+                    <Link
+                      href={item.href}
+                      className="py-2 text-base font-semibold text-foreground"
+                      onClick={() => !(item.children || item.groups) && setOpen(false)}
                     >
-                      <ChevronDown
-                        className={cn(
-                          "h-4 w-4 transition-transform",
-                          mobileSub === item.href && "rotate-180"
-                        )}
-                      />
-                    </button>
+                      {item.label}
+                    </Link>
+                    {(item.children || item.groups) && (
+                      <button
+                        onClick={() => setMobileSub(mobileSub === item.href ? null : item.href)}
+                        aria-label="Almenü"
+                        className="grid h-9 w-9 place-items-center rounded-full text-muted-foreground"
+                      >
+                        <ChevronDown
+                          className={cn(
+                            "h-4 w-4 transition-transform duration-300",
+                            mobileSub === item.href && "rotate-180"
+                          )}
+                        />
+                      </button>
+                    )}
+                  </div>
+                  {(item.children || item.groups) && (
+                    <div
+                      className={cn(
+                        "grid overflow-hidden transition-[grid-template-rows] duration-300 ease-out",
+                        mobileSub === item.href ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      )}
+                    >
+                      <div className="min-h-0 overflow-hidden">
+                        <div className="flex flex-col pb-2 pl-2">
+                          {item.groups
+                            ? item.groups.map((g) => (
+                                <div key={g.heading} className="mb-2">
+                                  <div className="pb-1 pt-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-600">
+                                    {g.heading}
+                                  </div>
+                                  {g.children.map((c) => (
+                                    <Link
+                                      key={c.href}
+                                      href={c.href}
+                                      className="block py-1.5 text-sm text-muted-foreground hover:text-brand-700"
+                                      onClick={() => setOpen(false)}
+                                    >
+                                      {c.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              ))
+                            : item.children?.map((c) => (
+                                <Link
+                                  key={c.href}
+                                  href={c.href}
+                                  className="py-2 text-sm text-muted-foreground hover:text-brand-700"
+                                  onClick={() => setOpen(false)}
+                                >
+                                  {c.label}
+                                </Link>
+                              ))}
+                        </div>
+                      </div>
+                    </div>
                   )}
                 </div>
-                {mobileSub === item.href && (
-                  <div className="flex flex-col pb-2 pl-2">
-                    {item.groups
-                      ? item.groups.map((g) => (
-                          <div key={g.heading} className="mb-2">
-                            <div className="pb-1 pt-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-600">
-                              {g.heading}
-                            </div>
-                            {g.children.map((c) => (
-                              <Link
-                                key={c.href}
-                                href={c.href}
-                                className="block py-1.5 text-sm text-muted-foreground hover:text-brand-700"
-                                onClick={() => setOpen(false)}
-                              >
-                                {c.label}
-                              </Link>
-                            ))}
-                          </div>
-                        ))
-                      : item.children?.map((c) => (
-                          <Link
-                            key={c.href}
-                            href={c.href}
-                            className="py-2 text-sm text-muted-foreground hover:text-brand-700"
-                            onClick={() => setOpen(false)}
-                          >
-                            {c.label}
-                          </Link>
-                        ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            <Link href="/kapcsolat" className="btn-primary mt-4 !w-full" onClick={() => setOpen(false)}>
-              Bejelentkezés
-            </Link>
+              ))}
+              <Link href="/kapcsolat" className="btn-primary mt-4 !w-full" onClick={() => setOpen(false)}>
+                Bejelentkezés
+              </Link>
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }
