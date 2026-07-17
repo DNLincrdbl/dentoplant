@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { useLocale, useLocalizedHref } from "@/lib/i18n/context";
+import { getHours } from "@/lib/site-data";
 
 function FacebookIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -20,18 +24,39 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 import { SITE } from "@/lib/site-data";
 
-// A linkek szövegét/útvonalát később linkenként véglegesítjük.
-const FOOTER_LINKS: { label: string; href: string }[] = [
-  { label: "Jogi nyilatkozat", href: "/jogi-nyilatkozat" },
-  { label: "ÁSZF", href: "/aszf" },
-  { label: "Garancia", href: "/garancia" },
-  { label: "Adatvédelmi tájékoztató", href: "/adatvedelem" },
-  { label: "Oldaltérkép", href: "/oldalterkep" },
-  { label: "Partnerek", href: "/partnerek" },
-  { label: "Bejelentkezés", href: "/kapcsolat" },
+const FOOTER_LINKS: { hu: string; en: string; href: string }[] = [
+  { hu: "Jogi nyilatkozat", en: "Legal notice", href: "/jogi-nyilatkozat" },
+  { hu: "ÁSZF", en: "Terms & Conditions", href: "/aszf" },
+  { hu: "Garancia", en: "Guarantee", href: "/garancia" },
+  { hu: "Adatvédelmi tájékoztató", en: "Privacy policy", href: "/adatvedelem" },
+  { hu: "Oldaltérkép", en: "Sitemap", href: "/oldalterkep" },
+  { hu: "Partnerek", en: "Partners", href: "/partnerek" },
+  { hu: "Bejelentkezés", en: "Book appointment", href: "/kapcsolat" },
+];
+
+const FOOTER_SERVICES: { hu: string; en: string; href: string }[] = [
+  { hu: "Digitális mosolytervezés", en: "Digital Smile Design", href: "/szolgaltatasok/digitalis-mosolytervezes" },
+  { hu: "Fogágybetegség kezelése", en: "Periodontal disease treatment", href: "/szolgaltatasok/fogagybetegseg-kezelese" },
+  { hu: "Fogbeültetés", en: "Dental implantation", href: "/szolgaltatasok/fogbeultetes" },
+  { hu: "Fogszabályozás", en: "Orthodontics", href: "/szolgaltatasok/fogszabalyozas" },
+  { hu: "Mikroszkópos fogászat", en: "Microscope dentistry", href: "/szolgaltatasok/mikroszkopos-fogaszat" },
 ];
 
 export function SiteFooter() {
+  const locale = useLocale();
+  const l = useLocalizedHref();
+  const en = locale === "en";
+  const t = {
+    tagline: en
+      ? "Dental and implantology clinic in Szeged. Up-to-date professional knowledge, thorough preparation, many years of clinical experience and the most effective treatment methods in one place."
+      : "Fogászati és implantológiai rendelő Szegeden. Naprakész szakmai ismeretek, alapos felkészültség, sokéves klinikai tapasztalat és a leghatékonyabb kezelési módszerek egy helyen.",
+    services: en ? "Services" : "Szolgáltatások",
+    contact: en ? "Contact" : "Kapcsolat",
+    hours: en ? "Opening hours" : "Nyitvatartás",
+    legalNav: en ? "Legal and other information" : "Jogi és egyéb információk",
+    rights: en ? "All rights reserved." : "Minden jog fenntartva.",
+  };
+  const hours = getHours(locale);
   return (
     <footer className="mt-24 bg-brand-900 text-brand-50">
       <div className="container-page grid gap-12 py-16 md:grid-cols-4">
@@ -45,9 +70,7 @@ export function SiteFooter() {
             </span>
           </div>
           <p className="mt-4 max-w-md text-sm leading-relaxed text-brand-100/80">
-            Fogászati és implantológiai rendelő Szegeden. Naprakész szakmai ismeretek,
-            alapos felkészültség, sokéves klinikai tapasztalat és a leghatékonyabb
-            kezelési módszerek egy helyen.
+            {t.tagline}
           </p>
           <div className="mt-6 flex gap-3">
             <a
@@ -69,20 +92,22 @@ export function SiteFooter() {
 
         <div>
           <h4 className="font-sans text-sm font-semibold uppercase tracking-wider text-brand-200">
-            Szolgáltatások
+            {t.services}
           </h4>
           <ul className="mt-4 space-y-3 text-sm">
-            <li><Link href="/szolgaltatasok/digitalis-mosolytervezes" className="hover:text-white">Digitális mosolytervezés</Link></li>
-            <li><Link href="/szolgaltatasok/fogagybetegseg-kezelese" className="hover:text-white">Fogágybetegség kezelése</Link></li>
-            <li><Link href="/szolgaltatasok/fogbeultetes" className="hover:text-white">Fogbeültetés</Link></li>
-            <li><Link href="/szolgaltatasok/fogszabalyozas" className="hover:text-white">Fogszabályozás</Link></li>
-            <li><Link href="/szolgaltatasok/mikroszkopos-fogaszat" className="hover:text-white">Mikroszkópos fogászat</Link></li>
+            {FOOTER_SERVICES.map((s) => (
+              <li key={s.href}>
+                <Link href={l(s.href)} className="hover:text-white">
+                  {en ? s.en : s.hu}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div>
           <h4 className="font-sans text-sm font-semibold uppercase tracking-wider text-brand-200">
-            Kapcsolat
+            {t.contact}
           </h4>
           <ul className="mt-4 space-y-3 text-sm text-brand-100/90">
             <li className="flex items-start gap-3">
@@ -103,10 +128,10 @@ export function SiteFooter() {
             </li>
           </ul>
           <h4 className="mt-8 font-sans text-sm font-semibold uppercase tracking-wider text-brand-200">
-            Nyitvatartás
+            {t.hours}
           </h4>
           <ul className="mt-4 space-y-2 text-sm text-brand-100/90">
-            {SITE.hours.map((h) => (
+            {hours.map((h) => (
               <li key={h.day} className="flex justify-between gap-3">
                 <span>{h.day}</span>
                 <span className="text-white">{h.value}</span>
@@ -118,17 +143,17 @@ export function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="container-page py-6">
           <nav
-            aria-label="Jogi és egyéb információk"
+            aria-label={t.legalNav}
             className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs font-medium uppercase tracking-wider text-brand-100/80"
           >
-            {FOOTER_LINKS.map((l) => (
-              <Link key={l.href} href={l.href} className="hover:text-white">
-                {l.label}
+            {FOOTER_LINKS.map((link) => (
+              <Link key={link.href} href={l(link.href)} className="hover:text-white">
+                {en ? link.en : link.hu}
               </Link>
             ))}
           </nav>
           <p className="mt-5 text-center text-xs text-brand-100/60">
-            © {new Date().getFullYear()} Dentoplant. Minden jog fenntartva.
+            © {new Date().getFullYear()} Dentoplant. {t.rights}
           </p>
         </div>
       </div>

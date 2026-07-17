@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CalendarDays } from "lucide-react";
 import { useEffect, useState } from "react";
-import { SITE } from "@/lib/site-data";
+import { useLocale, useLocalizedHref } from "@/lib/i18n/context";
 
 /**
  * Modul-szintű flag: teljes oldalbetöltéskor (frissítés/megnyitás) a modul
@@ -16,6 +16,19 @@ let heroHasAnimated = false;
 const REVEAL = "transition-all duration-[900ms] ease-out will-change-transform";
 
 export function Hero() {
+  const locale = useLocale();
+  const l = useLocalizedHref();
+  const en = locale === "en";
+  const t = {
+    title: en
+      ? "Your smile deserves more than just a treatment."
+      : "A mosolyod többet érdemel, mint egy egyszerű kezelést.",
+    subtitle: en
+      ? "A premium dental and implantology clinic in Szeged, where precision, up-to-date expertise and respect for patients meet."
+      : "Prémium fogászati és implantológiai rendelő Szegeden, ahol a precizitás, a naprakész szaktudás és a páciensek tisztelete találkozik.",
+    secondary: en ? "Premium care, personalised." : "Prémium ellátás, személyre szabva.",
+    cta: en ? "Book appointment" : "Időpontfoglalás",
+  };
   const [show, setShow] = useState(() => heroHasAnimated);
 
   useEffect(() => {
@@ -51,16 +64,13 @@ export function Hero() {
             style={delay(150)}
             className={`font-sans text-4xl font-extrabold leading-[1.03] tracking-tight text-brand-900 sm:text-5xl xl:text-6xl ${rc("opacity-0 -translate-x-10")}`}
           >
-            A mosolyod többet
-            <br className="hidden sm:block" /> érdemel, mint egy
-            <br className="hidden sm:block" /> egyszerű kezelést.
+            {t.title}
           </h1>
           <p
             style={delay(300)}
             className={`mx-auto mt-6 max-w-sm text-sm leading-relaxed text-muted-foreground lg:mx-0 ${rc("opacity-0 -translate-x-8")}`}
           >
-            Prémium fogászati és implantológiai rendelő Szegeden, ahol a precizitás,
-            a naprakész szaktudás és a páciensek tisztelete találkozik.
+            {t.subtitle}
           </p>
         </div>
 
@@ -89,21 +99,20 @@ export function Hero() {
             style={delay(450)}
             className={`font-sans text-3xl font-extrabold leading-[1.05] tracking-tight text-brand-700 sm:text-4xl xl:text-5xl ${rc("opacity-0 translate-x-10")}`}
           >
-            Prémium ellátás,
-            <br className="hidden sm:block" /> személyre szabva.
+            {t.secondary}
           </h2>
           <div
             style={delay(600)}
             className={`mt-7 flex justify-center lg:justify-end ${rc("opacity-0 translate-x-8")}`}
           >
             <Link
-              href="/kapcsolat"
+              href={l("/kapcsolat")}
               className="group inline-flex items-center gap-3 rounded-full bg-brand-600 py-1.5 pl-1.5 pr-6 text-white shadow-lg shadow-brand-900/15 transition-colors hover:bg-brand-700"
             >
               <span className="grid h-9 w-9 place-items-center rounded-full bg-white/20 transition-transform group-hover:scale-105">
                 <CalendarDays className="h-4 w-4" />
               </span>
-              <span className="text-sm font-semibold">Időpontfoglalás</span>
+              <span className="text-sm font-semibold">{t.cta}</span>
             </Link>
           </div>
         </div>

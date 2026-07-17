@@ -238,6 +238,15 @@ export const TEAM: TeamGroup[] = RAW_TEAM.map((group) => ({
   members: group.members.map(mergeMember),
 }));
 
+/** Egy adott munkatárs lekérése slug alapján (minden csoportból). */
+export function getMember(slug: string): TeamMember | undefined {
+  for (const group of TEAM) {
+    const found = group.members.find((m) => m.slug === slug);
+    if (found) return found;
+  }
+  return undefined;
+}
+
 /** Egyszerű kétbetűs monogram-generátor a placeholder körhöz. */
 export function initials(fullName: string): string {
   const parts = fullName

@@ -1,6 +1,122 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
+
+type Media = { src: string; alt: string; width: number; height: number };
+
+/** Two-column image + text row. Image defaults to the right on desktop. */
+export function MediaText({
+  image,
+  reverse = false,
+  children,
+}: {
+  image: Media;
+  reverse?: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <div className="grid items-center gap-6 md:grid-cols-2 md:gap-10">
+      <div className={reverse ? "md:order-2" : ""}>
+        <div className="space-y-3 text-base leading-relaxed text-foreground/85">{children}</div>
+      </div>
+      <div className={reverse ? "md:order-1" : ""}>
+        <div className="overflow-hidden rounded-2xl border border-border shadow-sm">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            width={image.width}
+            height={image.height}
+            className="h-full w-full object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** A single framed image with optional caption. */
+export function Figure({ src, alt, width, height, caption }: Media & { caption?: string }) {
+  return (
+    <figure className="space-y-2">
+      <div className="overflow-hidden rounded-2xl border border-border shadow-sm">
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className="h-full w-full object-cover"
+          sizes="(max-width: 768px) 100vw, 720px"
+        />
+      </div>
+      {caption && (
+        <figcaption className="text-center text-sm text-muted-foreground">{caption}</figcaption>
+      )}
+    </figure>
+  );
+}
+
+/** Before / after comparison with a central arrow and labels. */
+export function BeforeAfter({
+  before,
+  after,
+  beforeLabel,
+  afterLabel,
+}: {
+  before: Media;
+  after: Media;
+  beforeLabel: string;
+  afterLabel: string;
+}) {
+  return (
+    <div className="relative grid gap-4 sm:grid-cols-2">
+      <BaTile media={before} label={beforeLabel} />
+      <BaTile media={after} label={afterLabel} />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 hidden h-12 w-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-brand-600 text-white shadow-lg sm:grid">
+        <ArrowRight className="h-5 w-5" />
+      </div>
+    </div>
+  );
+}
+
+function BaTile({ media, label }: { media: Media; label: string }) {
+  return (
+    <figure className="space-y-2">
+      <div className="overflow-hidden rounded-2xl border border-border shadow-sm">
+        <Image
+          src={media.src}
+          alt={media.alt}
+          width={media.width}
+          height={media.height}
+          className="h-full w-full object-cover"
+          sizes="(max-width: 640px) 100vw, 50vw"
+        />
+      </div>
+      <figcaption className="text-center text-sm font-semibold uppercase tracking-wider text-brand-700">
+        {label}
+      </figcaption>
+    </figure>
+  );
+}
+
+/** Responsive 16:9 YouTube embed. */
+export function VideoEmbed({ id, title }: { id: string; title: string }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-border shadow-sm">
+      <div className="relative aspect-video">
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${id}`}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          className="absolute inset-0 h-full w-full"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  );
+}
 
 /** A whole sectioned area within a service page (top-level h2). */
 export function Section({ title, children }: { title: string; children: ReactNode }) {

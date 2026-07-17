@@ -4,12 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ChevronDown, Menu, Phone, X } from "lucide-react";
-import { NAV, SITE } from "@/lib/site-data";
+import { getNav, SITE } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
+import { useLocale, useLocalizedHref } from "@/lib/i18n/context";
+import { LanguageSwitcher } from "./language-switcher";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [mobileSub, setMobileSub] = useState<string | null>(null);
+  const locale = useLocale();
+  const l = useLocalizedHref();
+  const NAV = getNav(locale);
+  const t = {
+    book: locale === "en" ? "Book appointment" : "Bejelentkezés",
+    menu: locale === "en" ? "Menu" : "Menü",
+    submenu: locale === "en" ? "Submenu" : "Almenü",
+    home: locale === "en" ? "Dentoplant — home" : "Dentoplant — kezdőlap",
+  };
 
   // Nyitott mobil menünél a háttér ne legyen görgethető.
   useEffect(() => {
@@ -24,7 +35,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background/85 backdrop-blur-md">
       <div className="container-page flex h-20 items-center justify-between gap-6">
-        <Link href="/" aria-label="Dentoplant — kezdőlap" className="flex items-center">
+        <Link href={l("/")} aria-label={t.home} className="flex items-center">
           <Image
             src="/logo.png"
             alt="Dentoplant fogászati rendelő"
@@ -42,21 +53,22 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <LanguageSwitcher />
           <a
             href={SITE.phoneHref}
-            aria-label={`Hívás: ${SITE.phone}`}
+            aria-label={`${locale === "en" ? "Call" : "Hívás"}: ${SITE.phone}`}
             title={SITE.phone}
             className="grid h-11 w-11 place-items-center rounded-full border border-brand-200 bg-brand-50 text-brand-700 transition-all hover:scale-105 hover:border-brand-600 hover:bg-brand-600 hover:text-white"
           >
             <Phone className="h-4 w-4" />
           </a>
-          <Link href="/kapcsolat" className="btn-primary !h-11 !px-5 !text-sm">
-            Bejelentkezés
+          <Link href={l("/kapcsolat")} className="btn-primary !h-11 !px-5 !text-sm">
+            {t.book}
           </Link>
         </div>
 
         <button
-          aria-label="Menü"
+          aria-label={t.menu}
           className="grid h-11 w-11 place-items-center rounded-full border border-border lg:hidden"
           onClick={() => setOpen((o) => !o)}
         >
@@ -78,7 +90,7 @@ export function SiteHeader() {
                 <div key={item.href} className="border-b border-border/60 py-2 last:border-0">
                   <div className="flex items-center justify-between">
                     <Link
-                      href={item.href}
+                      href={l(item.href)}
                       className="py-2 text-base font-semibold text-foreground"
                       onClick={() => !(item.children || item.groups) && setOpen(false)}
                     >
@@ -87,7 +99,7 @@ export function SiteHeader() {
                     {(item.children || item.groups) && (
                       <button
                         onClick={() => setMobileSub(mobileSub === item.href ? null : item.href)}
-                        aria-label="Almenü"
+                        aria-label={t.submenu}
                         className="grid h-9 w-9 place-items-center rounded-full text-muted-foreground"
                       >
                         <ChevronDown
@@ -117,7 +129,7 @@ export function SiteHeader() {
                                   {g.children.map((c) => (
                                     <Link
                                       key={c.href}
-                                      href={c.href}
+                                      href={l(c.href)}
                                       className="block py-1.5 text-sm text-muted-foreground hover:text-brand-700"
                                       onClick={() => setOpen(false)}
                                     >
@@ -129,7 +141,7 @@ export function SiteHeader() {
                             : item.children?.map((c) => (
                                 <Link
                                   key={c.href}
-                                  href={c.href}
+                                  href={l(c.href)}
                                   className="py-2 text-sm text-muted-foreground hover:text-brand-700"
                                   onClick={() => setOpen(false)}
                                 >
@@ -142,8 +154,11 @@ export function SiteHeader() {
                   )}
                 </div>
               ))}
-              <Link href="/kapcsolat" className="btn-primary mt-4 !w-full" onClick={() => setOpen(false)}>
-                Bejelentkezés
+              <div className="mt-4 flex justify-center">
+                <LanguageSwitcher />
+              </div>
+              <Link href={l("/kapcsolat")} className="btn-primary mt-4 !w-full" onClick={() => setOpen(false)}>
+                {t.book}
               </Link>
             </div>
           </div>
@@ -153,12 +168,21 @@ export function SiteHeader() {
   );
 }
 
-function NavDesktopItem({ item }: { item: (typeof NAV)[number] }) {
+function NavDesktopItem({ item }: { item: ReturnType<typeof getNav>[number] }) {
+  const locale = useLocale();
+  const l = useLocalizedHref();
+  const strings = {
+    notFound:
+      locale === "en"
+        ? "Can't find what you're looking for? See all our services."
+        : "Nem találja, amit keres? Nézze meg az összes szolgáltatást.",
+    allServices: locale === "en" ? "All services →" : "Összes szolgáltatás →",
+  };
   const hasDropdown = !!item.children || !!item.groups;
   if (!hasDropdown) {
     return (
       <Link
-        href={item.href}
+        href={l(item.href)}
         className="rounded-full px-3.5 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-brand-50 hover:text-brand-700"
       >
         {item.label}
@@ -168,7 +192,7 @@ function NavDesktopItem({ item }: { item: (typeof NAV)[number] }) {
   return (
     <div className="group relative">
       <Link
-        href={item.href}
+        href={l(item.href)}
         className="flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-brand-50 hover:text-brand-700"
       >
         {item.label}
@@ -186,7 +210,7 @@ function NavDesktopItem({ item }: { item: (typeof NAV)[number] }) {
                   {g.children.map((c) => (
                     <Link
                       key={c.href}
-                      href={c.href}
+                      href={l(c.href)}
                       className="rounded-lg px-2 py-1.5 text-sm text-foreground/85 transition-colors hover:bg-brand-50 hover:text-brand-700"
                     >
                       {c.label}
@@ -196,14 +220,12 @@ function NavDesktopItem({ item }: { item: (typeof NAV)[number] }) {
               </div>
             ))}
             <div className="col-span-3 mt-1 flex items-center justify-between rounded-xl bg-brand-50/60 px-4 py-3">
-              <span className="text-sm text-muted-foreground">
-                Nem találja, amit keres? Nézze meg az összes szolgáltatást.
-              </span>
+              <span className="text-sm text-muted-foreground">{strings.notFound}</span>
               <Link
-                href={item.href}
+                href={l(item.href)}
                 className="text-sm font-semibold text-brand-700 hover:text-brand-600"
               >
-                Összes szolgáltatás →
+                {strings.allServices}
               </Link>
             </div>
           </div>
@@ -212,7 +234,7 @@ function NavDesktopItem({ item }: { item: (typeof NAV)[number] }) {
             {item.children!.map((c) => (
               <Link
                 key={c.href}
-                href={c.href}
+                href={l(c.href)}
                 className="block rounded-xl px-4 py-3 transition-colors hover:bg-brand-50"
               >
                 <div className="text-sm font-semibold text-foreground">{c.label}</div>

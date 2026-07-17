@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { PublicChrome } from "@/components/public-chrome";
+import { LocaleProvider } from "@/lib/i18n/context";
+import { getLocale } from "@/lib/i18n/server";
 
 const geist = Geist({
   variable: "--font-geist",
@@ -16,18 +18,21 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://dentoplant.hu"),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
   return (
     <html
-      lang="hu"
+      lang={locale}
       className={`${geist.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <PublicChrome>{children}</PublicChrome>
+        <LocaleProvider locale={locale}>
+          <PublicChrome>{children}</PublicChrome>
+        </LocaleProvider>
       </body>
     </html>
   );

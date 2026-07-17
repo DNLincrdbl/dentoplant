@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { getLocale } from "@/lib/i18n/server";
+import { localizeHref } from "@/lib/i18n/config";
 
 export type Crumb = { label: string; href?: string };
 
-export function PageHero({
+export async function PageHero({
   eyebrow,
   title,
   description,
@@ -14,6 +16,7 @@ export function PageHero({
   description?: string;
   crumbs?: Crumb[];
 }) {
+  const locale = await getLocale();
   return (
     <section className="relative overflow-hidden border-b border-border bg-gradient-to-b from-brand-50/70 to-background pt-12 pb-14 md:pt-20 md:pb-20">
       <div className="absolute inset-x-0 top-0 -z-10 h-72 bg-[radial-gradient(circle_at_50%_-20%,rgba(115,48,138,0.18),transparent_60%)]" />
@@ -23,7 +26,7 @@ export function PageHero({
             {crumbs.map((c, i) => (
               <span key={i} className="flex items-center gap-1.5">
                 {c.href ? (
-                  <Link href={c.href} className="hover:text-brand-700">
+                  <Link href={localizeHref(c.href, locale)} className="hover:text-brand-700">
                     {c.label}
                   </Link>
                 ) : (

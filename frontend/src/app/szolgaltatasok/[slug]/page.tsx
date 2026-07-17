@@ -3,9 +3,19 @@ import { notFound } from "next/navigation";
 import { ArrowRight, Phone, Sparkles } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { CtaContact } from "@/components/home/cta-contact";
-import { SERVICES, getService, getServicesByCategory } from "@/lib/services";
+import {
+  SERVICES,
+  categoryLabel,
+  getService,
+  getServicesByCategory,
+  serviceName,
+  serviceSummary,
+} from "@/lib/services";
 import { SITE } from "@/lib/site-data";
 import { SERVICE_CONTENTS } from "@/components/services/contents";
+import { ServiceDoctors } from "@/components/services/service-doctors";
+import { getLocale } from "@/lib/i18n/server";
+import { localizeHref } from "@/lib/i18n/config";
 
 export function generateStaticParams() {
   return SERVICES.map((s) => ({ slug: s.slug }));
@@ -19,9 +29,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getService(slug);
   if (!service) return {};
+  const locale = await getLocale();
   return {
-    title: `${service.name} — Dentoplant Fogászat Szeged`,
-    description: service.summary.slice(0, 160),
+    title: `${serviceName(service, locale)} — Dentoplant ${locale === "en" ? "Dentistry Szeged" : "Fogászat Szeged"}`,
+    description: serviceSummary(service, locale).slice(0, 160),
   };
 }
 
@@ -34,6 +45,16 @@ export default async function ServicePage({
   const service = getService(slug);
   if (!service) notFound();
 
+  const locale = await getLocale();
+  const en = locale === "en";
+  const t = {
+    home: en ? "Home" : "Főoldal",
+    services: en ? "Services" : "Szolgáltatások",
+    category: en ? "Category" : "Kategória",
+    booking: en ? "Book appointment" : "Időpontfoglalás",
+    related: en ? "Related services" : "Kapcsolódó szolgáltatások",
+  };
+
   const related = getServicesByCategory(service.category)
     .filter((s) => s.slug !== service.slug)
     .slice(0, 3);
@@ -43,20 +64,25 @@ export default async function ServicePage({
   return (
     <>
       <PageHero
-        eyebrow={service.category}
-        title={service.name}
-        description={service.summary}
+        eyebrow={categoryLabel(service.category, locale)}
+        title={serviceName(service, locale)}
+        description={serviceSummary(service, locale)}
         crumbs={[
-          { label: "Főoldal", href: "/" },
-          { label: "Szolgáltatások", href: "/szolgaltatasok" },
-          { label: service.name },
+          { label: t.home, href: "/" },
+          { label: t.services, href: "/szolgaltatasok" },
+          { label: serviceName(service, locale) },
         ]}
       />
 
       <section className="container-page py-16 md:py-20">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px] lg:gap-16">
           <article className="prose-content">
-            <FullServiceContent slug={service.slug} fallbackName={service.name} />
+            <FullServiceContent
+              slug={service.slug}
+              fallbackName={serviceName(service, locale)}
+              locale={locale}
+            />
+            <ServiceDoctors slugs={service.doctors} />
           </article>
 
           <aside className="lg:sticky lg:top-28 lg:self-start">
@@ -66,12 +92,14 @@ export default async function ServicePage({
                   <Icon className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground">Kategória</div>
-                  <div className="font-semibold text-brand-900">{service.category}</div>
+                  <div className="text-xs uppercase tracking-wider text-muted-foreground">{t.category}</div>
+                  <div className="font-semibold text-brand-900">
+                    {categoryLabel(service.category, locale)}
+                  </div>
                 </div>
               </div>
-              <Link href="/kapcsolat" className="btn-primary mt-6 !w-full">
-                Időpontfoglalás <ArrowRight className="h-4 w-4" />
+              <Link href={localizeHref("/kapcsolat", locale)} className="btn-primary mt-6 !w-full">
+                {t.booking} <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href={SITE.phoneHref}
@@ -85,18 +113,18 @@ export default async function ServicePage({
             {related.length > 0 && (
               <div className="mt-6 rounded-2xl border border-border bg-muted/40 p-6">
                 <div className="text-xs font-semibold uppercase tracking-wider text-brand-600">
-                  Kapcsolódó szolgáltatások
+                  {t.related}
                 </div>
                 <ul className="mt-4 space-y-3">
                   {related.map((r) => (
                     <li key={r.slug}>
                       <Link
-                        href={`/szolgaltatasok/${r.slug}`}
+                        href={localizeHref(`/szolgaltatasok/${r.slug}`, locale)}
                         className="group flex items-start gap-3"
                       >
                         <r.icon className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-600" />
                         <span className="text-sm font-medium text-foreground group-hover:text-brand-700">
-                          {r.name}
+                          {serviceName(r, locale)}
                         </span>
                       </Link>
                     </li>
@@ -113,44 +141,75 @@ export default async function ServicePage({
   );
 }
 
-function PlaceholderContent({ name }: { name: string }) {
+function PlaceholderContent({ name, locale }: { name: string; locale: "hu" | "en" }) {
+  const en = locale === "en";
   return (
     <div className="space-y-6 text-base leading-relaxed text-foreground/85">
       <div className="rounded-2xl border border-dashed border-brand-200 bg-brand-50/40 p-6 text-sm text-brand-800">
         <div className="flex items-start gap-3">
           <Sparkles className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-600" />
           <div>
-            <strong className="block font-semibold text-brand-900">Részletes tartalom hamarosan</strong>
+            <strong className="block font-semibold text-brand-900">
+              {en ? "Detailed content coming soon" : "Részletes tartalom hamarosan"}
+            </strong>
             <span className="text-brand-800/80">
-              A <em>{name}</em> oldal részletes leírását hamarosan frissítjük. Addig is keressen
-              minket bizalommal — kérdéseire szívesen válaszolunk személyes konzultáción.
+              {en ? (
+                <>
+                  We are updating the detailed description of the <em>{name}</em> page soon. In the
+                  meantime, feel free to contact us — we are happy to answer your questions during a
+                  personal consultation.
+                </>
+              ) : (
+                <>
+                  A <em>{name}</em> oldal részletes leírását hamarosan frissítjük. Addig is keressen
+                  minket bizalommal — kérdéseire szívesen válaszolunk személyes konzultáción.
+                </>
+              )}
             </span>
           </div>
         </div>
       </div>
 
-      <h2 className="font-display text-2xl text-brand-900">Hogyan tudunk segíteni?</h2>
+      <h2 className="font-display text-2xl text-brand-900">
+        {en ? "How can we help?" : "Hogyan tudunk segíteni?"}
+      </h2>
       <p>
-        Foglaljon időpontot egy első konzultációra, ahol részletesen feltérképezzük az állapotát és
-        személyre szabott kezelési tervet javaslunk. A Dentoplant Rendelőben naprakész szakmai
-        ismereteken és sokéves klinikai tapasztalaton alapuló ellátást kap.
+        {en
+          ? "Book an appointment for an initial consultation, where we thoroughly assess your condition and recommend a personalised treatment plan. At the Dentoplant clinic you receive care based on up-to-date professional knowledge and many years of clinical experience."
+          : "Foglaljon időpontot egy első konzultációra, ahol részletesen feltérképezzük az állapotát és személyre szabott kezelési tervet javaslunk. A Dentoplant Rendelőben naprakész szakmai ismereteken és sokéves klinikai tapasztalaton alapuló ellátást kap."}
       </p>
       <ul className="grid gap-3 sm:grid-cols-2">
         <li className="rounded-xl border border-border bg-background p-4 text-sm">
-          <strong className="block text-brand-800">Részletes vizsgálat</strong>
-          Digitális röntgen és szükség esetén Cone Beam CT a pontos diagnózishoz.
+          <strong className="block text-brand-800">
+            {en ? "Thorough examination" : "Részletes vizsgálat"}
+          </strong>
+          {en
+            ? "Digital X-ray and, if needed, Cone Beam CT for an accurate diagnosis."
+            : "Digitális röntgen és szükség esetén Cone Beam CT a pontos diagnózishoz."}
         </li>
         <li className="rounded-xl border border-border bg-background p-4 text-sm">
-          <strong className="block text-brand-800">Személyre szabott terv</strong>
-          Áttekinthető, lépésről lépésre kidolgozott kezelési tervet kap.
+          <strong className="block text-brand-800">
+            {en ? "Personalised plan" : "Személyre szabott terv"}
+          </strong>
+          {en
+            ? "A clear, step-by-step treatment plan."
+            : "Áttekinthető, lépésről lépésre kidolgozott kezelési tervet kap."}
         </li>
         <li className="rounded-xl border border-border bg-background p-4 text-sm">
-          <strong className="block text-brand-800">Modern technológia</strong>
-          Mikroszkópos pontosság, lézer és digitális tervezés ahol indokolt.
+          <strong className="block text-brand-800">
+            {en ? "Modern technology" : "Modern technológia"}
+          </strong>
+          {en
+            ? "Microscopic precision, laser and digital planning where warranted."
+            : "Mikroszkópos pontosság, lézer és digitális tervezés ahol indokolt."}
         </li>
         <li className="rounded-xl border border-border bg-background p-4 text-sm">
-          <strong className="block text-brand-800">Hosszú távú gondozás</strong>
-          Rendszeres kontroll és utánkövetés, hogy a kezelés eredménye tartós legyen.
+          <strong className="block text-brand-800">
+            {en ? "Long-term care" : "Hosszú távú gondozás"}
+          </strong>
+          {en
+            ? "Regular check-ups and follow-up so the result lasts."
+            : "Rendszeres kontroll és utánkövetés, hogy a kezelés eredménye tartós legyen."}
         </li>
       </ul>
     </div>
@@ -165,12 +224,14 @@ function PlaceholderContent({ name }: { name: string }) {
 function FullServiceContent({
   slug,
   fallbackName,
+  locale,
 }: {
   slug: string;
   fallbackName: string;
+  locale: "hu" | "en";
 }) {
   const Component = SERVICE_CONTENTS[slug];
-  if (Component) return <Component />;
-  return <PlaceholderContent name={fallbackName} />;
+  if (Component) return <Component locale={locale} />;
+  return <PlaceholderContent name={fallbackName} locale={locale} />;
 }
 
