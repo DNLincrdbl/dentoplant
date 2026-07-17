@@ -5,7 +5,13 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { GalleryImage } from "@/lib/gallery-data";
 
-export function GalleryGrid({ images }: { images: GalleryImage[] }) {
+export function GalleryGrid({
+  images,
+  labels = { close: "Bezárás", prev: "Előző kép", next: "Következő kép" },
+}: {
+  images: GalleryImage[];
+  labels?: { close: string; prev: string; next: string };
+}) {
   const [active, setActive] = useState<number | null>(null);
 
   const close = useCallback(() => setActive(null), []);
@@ -69,7 +75,7 @@ export function GalleryGrid({ images }: { images: GalleryImage[] }) {
           <button
             type="button"
             onClick={close}
-            aria-label="Bezárás"
+            aria-label={labels.close}
             className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
           >
             <X className="h-5 w-5" />
@@ -81,7 +87,7 @@ export function GalleryGrid({ images }: { images: GalleryImage[] }) {
               e.stopPropagation();
               prev();
             }}
-            aria-label="Előző kép"
+            aria-label={labels.prev}
             className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 md:left-6"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -93,7 +99,7 @@ export function GalleryGrid({ images }: { images: GalleryImage[] }) {
               e.stopPropagation();
               next();
             }}
-            aria-label="Következő kép"
+            aria-label={labels.next}
             className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 md:right-6"
           >
             <ChevronRight className="h-6 w-6" />

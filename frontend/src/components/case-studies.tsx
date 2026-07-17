@@ -7,8 +7,27 @@ import type { CaseStudy } from "@/lib/cases-data";
 
 type Active = { c: number; i: number } | null;
 
-export function CaseStudies({ cases }: { cases: CaseStudy[] }) {
+type Labels = {
+  caseTag: string;
+  before: string;
+  after: string;
+  close: string;
+  prev: string;
+  next: string;
+};
+
+const DEFAULT_LABELS: Labels = {
+  caseTag: "Eset",
+  before: "előtte",
+  after: "utána",
+  close: "Bezárás",
+  prev: "Előző kép",
+  next: "Következő kép",
+};
+
+export function CaseStudies({ cases, labels = DEFAULT_LABELS }: { cases: CaseStudy[]; labels?: Labels }) {
   const [active, setActive] = useState<Active>(null);
+  const labelText = (l?: string) => (l === "előtte" ? labels.before : l === "utána" ? labels.after : l);
 
   const close = useCallback(() => setActive(null), []);
   const step = useCallback(
@@ -48,7 +67,7 @@ export function CaseStudies({ cases }: { cases: CaseStudy[] }) {
         return (
           <article key={cs.slug} id={cs.slug} className="scroll-mt-24">
             <header className="mx-auto max-w-3xl text-center">
-              <span className="eyebrow justify-center">Eset</span>
+              <span className="eyebrow justify-center">{labels.caseTag}</span>
               <h2 className="mt-4 font-display text-2xl text-brand-900 md:text-3xl">{cs.title}</h2>
               {cs.description && (
                 <p className="mt-4 text-base leading-relaxed text-foreground/85">{cs.description}</p>
@@ -67,7 +86,7 @@ export function CaseStudies({ cases }: { cases: CaseStudy[] }) {
                         className="relative block w-full overflow-hidden rounded-2xl border border-border bg-muted/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
                       >
                         <span className="absolute left-3 top-3 z-10 rounded-full bg-brand-700/90 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-                          {im.label}
+                          {labelText(im.label)}
                         </span>
                         <Image
                           src={im.src}
@@ -95,7 +114,7 @@ export function CaseStudies({ cases }: { cases: CaseStudy[] }) {
                 >
                   {im.label && (
                     <span className="absolute left-2 top-2 z-10 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
-                      {im.label}
+                      {labelText(im.label)}
                     </span>
                   )}
                   <Image
@@ -124,7 +143,7 @@ export function CaseStudies({ cases }: { cases: CaseStudy[] }) {
           <button
             type="button"
             onClick={close}
-            aria-label="Bezárás"
+            aria-label={labels.close}
             className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
           >
             <X className="h-5 w-5" />
@@ -135,7 +154,7 @@ export function CaseStudies({ cases }: { cases: CaseStudy[] }) {
               e.stopPropagation();
               step(-1);
             }}
-            aria-label="Előző kép"
+            aria-label={labels.prev}
             className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 md:left-6"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -146,7 +165,7 @@ export function CaseStudies({ cases }: { cases: CaseStudy[] }) {
               e.stopPropagation();
               step(1);
             }}
-            aria-label="Következő kép"
+            aria-label={labels.next}
             className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 md:right-6"
           >
             <ChevronRight className="h-6 w-6" />
@@ -165,7 +184,7 @@ export function CaseStudies({ cases }: { cases: CaseStudy[] }) {
               priority
             />
             <figcaption className="mt-3 max-w-2xl text-center text-sm text-white/80">
-              {current.label ? `${current.label.toUpperCase()} — ` : ""}
+              {current.label ? `${(labelText(current.label) ?? "").toUpperCase()} — ` : ""}
               {current.alt}
             </figcaption>
           </figure>

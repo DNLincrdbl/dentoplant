@@ -238,9 +238,96 @@ export const TEAM: TeamGroup[] = RAW_TEAM.map((group) => ({
   members: group.members.map(mergeMember),
 }));
 
+type MemberEn = Partial<
+  Pick<TeamMember, "role" | "focus" | "credentials" | "bio" | "quote" | "affiliations">
+>;
+
+const GROUP_EN: Record<string, string> = {
+  Fogorvosok: "Dentists",
+  Rendelővezető: "Clinic manager",
+  Asszisztensek: "Assistants",
+};
+
+const MEMBER_EN: Record<string, MemberEn> = {
+  "dr-maraz-kinga": {
+    role: "Dentoalveolar surgery specialist",
+    credentials: [
+      "Master of Implantology, University of California, Los Angeles",
+      "Specialist in conservative dentistry and prosthodontics",
+      "Specialist in dental and oral diseases",
+    ],
+    focus: "Periodontal disease treatment, bone grafting, implantology",
+    bio: [
+      "As a participant in countless domestic and international scientific programmes, I regard the highest professional preparedness as the foundation of a well-functioning practice.",
+    ],
+    quote:
+      "I am fortunate to be able to work with such a wonderful team at the Dentoplant Dental and Implantology Clinic. What we have in common is that we are passionately devoted to our profession and strive to give our best. Precision, reliability and respect for patients are what I expect from every colleague in our joint work. Up-to-date professional knowledge, thorough preparation and many years of clinical experience are the measure of my work.",
+    affiliations: [
+      "Member of the International Team for Implantology (ITI)",
+      "Hungarian Society of Periodontology",
+      "Hungarian Society of Implantology",
+      "Member of the Hungarian Association of Oral and Maxillofacial Surgery",
+      "Member of the Dental Section of the Hungarian Medical Chamber",
+    ],
+  },
+  "dr-vadasz-anna": {
+    role: "Orthodontist",
+    focus: "Aesthetic dentistry and smile design",
+  },
+  "dr-meszaros-csongor": {
+    role: "Dentist",
+    credentials: ["Dentoalveolar surgery specialist candidate"],
+    focus: "Oral surgery procedures, digital dental solutions",
+  },
+  "dr-sebok-eszter": {
+    role: "Dentist, endodontics specialist",
+    focus: "Root canal treatments, restorative dentistry, aesthetic dentistry",
+  },
+  "dr-roszik-melitta": {
+    role: "Anaesthesiologist",
+    focus: "Pain relief, anaesthesia",
+  },
+  "biacsine-krivan-anett": {
+    role: "Clinic manager",
+  },
+  "dobo-huanita": {
+    role: "Lead dental hygienist",
+  },
+  "olajos-katalin": {
+    role: "Dental nurse, dental hygienist",
+  },
+  "ludanyi-dora": {
+    role: "Dental nurse",
+  },
+  "megyes-fanni": {
+    role: "Dental nurse",
+  },
+};
+
+/** Lokalizált csapatlista (szerepkörök, szakterületek, csoportcímek EN-ben). */
+export function getTeam(locale: string): TeamGroup[] {
+  if (locale !== "en") return TEAM;
+  return TEAM.map((group) => ({
+    heading: GROUP_EN[group.heading] ?? group.heading,
+    members: group.members.map((m) => {
+      const en = MEMBER_EN[m.slug];
+      if (!en) return m;
+      return {
+        ...m,
+        role: en.role ?? m.role,
+        focus: en.focus ?? m.focus,
+        credentials: en.credentials ?? m.credentials,
+        bio: en.bio ?? m.bio,
+        quote: en.quote ?? m.quote,
+        affiliations: en.affiliations ?? m.affiliations,
+      };
+    }),
+  }));
+}
+
 /** Egy adott munkatárs lekérése slug alapján (minden csoportból). */
-export function getMember(slug: string): TeamMember | undefined {
-  for (const group of TEAM) {
+export function getMember(slug: string, locale: string = "hu"): TeamMember | undefined {
+  for (const group of getTeam(locale)) {
     const found = group.members.find((m) => m.slug === slug);
     if (found) return found;
   }

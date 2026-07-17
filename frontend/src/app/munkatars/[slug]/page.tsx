@@ -4,10 +4,15 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Award, GraduationCap, Quote, Sparkles } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { CtaContact } from "@/components/home/cta-contact";
-import { TEAM, type TeamMember, initials } from "@/lib/team";
+import { TEAM, getTeam, type TeamMember, initials } from "@/lib/team";
+import { getLocale } from "@/lib/i18n/server";
+import { localizeHref } from "@/lib/i18n/config";
 
-function findMember(slug: string): { member: TeamMember; group: string } | null {
-  for (const g of TEAM) {
+function findMember(
+  slug: string,
+  locale: string,
+): { member: TeamMember; group: string } | null {
+  for (const g of getTeam(locale)) {
     const m = g.members.find((x) => x.slug === slug);
     if (m) return { member: m, group: g.heading };
   }
@@ -21,21 +26,44 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const locale = await getLocale();
+  const en = locale === "en";
   const { slug } = await params;
-  const found = findMember(slug);
-  if (!found) return { title: "Munkatárs nem található — Dentoplant" };
+  const found = findMember(slug, locale);
+  if (!found) {
+    return { title: en ? "Team member not found — Dentoplant" : "Munkatárs nem található — Dentoplant" };
+  }
   const { member } = found;
   return {
-    title: `${member.name} — Dentoplant Fogászat Szeged`,
-    description: `${member.name}, ${member.role}${member.focus ? ". Szakterülete: " + member.focus : ""}.`,
+    title: en
+      ? `${member.name} — Dentoplant Dental Clinic Szeged`
+      : `${member.name} — Dentoplant Fogászat Szeged`,
+    description: en
+      ? `${member.name}, ${member.role}${member.focus ? ". Specialty: " + member.focus : ""}.`
+      : `${member.name}, ${member.role}${member.focus ? ". Szakterülete: " + member.focus : ""}.`,
   };
 }
 
 export default async function ProfilePage({ params }: { params: Promise<{ slug: string }> }) {
+  const locale = await getLocale();
+  const en = locale === "en";
   const { slug } = await params;
-  const found = findMember(slug);
+  const found = findMember(slug, locale);
   if (!found || !found.member.hasProfile) notFound();
   const { member, group } = found;
+  const t = {
+    home: en ? "Home" : "Főoldal",
+    doctors: en ? "Our doctors" : "Orvosaink",
+    credentials: en ? "Education and specialties" : "Végzettség és szakvizsgák",
+    focus: en ? "Specialty" : "Szakterülete",
+    book: en ? "Book appointment" : "Időpontkérés",
+    affiliations: en ? "Professional organisations, memberships" : "Szakmai szervezetek, tagságok",
+    career: en ? "Professional career" : "Szakmai életpálya",
+    careerSub: en
+      ? "Continuous training, congresses and specialty exams — in reverse chronological order."
+      : "Folyamatos képzések, kongresszusok és szakvizsgák — visszafelé időrendben.",
+    back: en ? "Back to the team" : "Vissza a csapathoz",
+  };
 
   return (
     <>
@@ -44,15 +72,14 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
         title={member.name}
         description={member.role}
         crumbs={[
-          { label: "Főoldal", href: "/" },
-          { label: "Orvosaink", href: "/munkatarsaink" },
+          { label: t.home, href: "/" },
+          { label: t.doctors, href: "/munkatarsaink" },
           { label: member.name },
         ]}
       />
 
       <section className="container-page py-14 md:py-20">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
-          {/* Bal oszlop — fotó + alapinfó */}
           <aside className="space-y-6">
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500 shadow-lg shadow-brand-900/10">
               {member.image ? (
@@ -81,7 +108,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
                 <div className="flex items-center gap-2 text-brand-700">
                   <GraduationCap className="h-5 w-5" />
                   <span className="text-[10px] font-semibold uppercase tracking-[0.18em]">
-                    Végzettség és szakvizsgák
+                    {t.credentials}
                   </span>
                 </div>
                 <ul className="mt-4 space-y-2.5 text-sm leading-relaxed text-foreground/85">
@@ -100,19 +127,18 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
                 <div className="flex items-center gap-2 text-white/80">
                   <Sparkles className="h-5 w-5" />
                   <span className="text-[10px] font-semibold uppercase tracking-[0.18em]">
-                    Szakterülete
+                    {t.focus}
                   </span>
                 </div>
                 <p className="mt-3 text-base leading-relaxed">{member.focus}</p>
               </div>
             )}
 
-            <Link href="/kapcsolat" className="btn-primary !w-full">
-              Időpontkérés <ArrowRight className="h-4 w-4" />
+            <Link href={localizeHref("/kapcsolat", locale)} className="btn-primary !w-full">
+              {t.book} <ArrowRight className="h-4 w-4" />
             </Link>
           </aside>
 
-          {/* Jobb oszlop — szöveges tartalom */}
           <div className="space-y-12">
             {member.bio && member.bio.length > 0 && (
               <div className="space-y-4 text-base leading-relaxed text-foreground/85 md:text-lg">
@@ -126,7 +152,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
               <blockquote className="relative rounded-3xl border border-brand-200/70 bg-brand-50/60 p-7 md:p-9">
                 <Quote className="absolute -top-3 left-7 h-7 w-7 rounded-full bg-brand-700 p-1.5 text-white" />
                 <p className="font-display text-lg italic leading-relaxed text-brand-900 md:text-xl">
-                  „{member.quote}"
+                  {en ? `“${member.quote}”` : `„${member.quote}"`}
                 </p>
                 <footer className="mt-4 text-sm font-semibold text-brand-700">
                   — {member.name}
@@ -139,7 +165,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
                 <div className="flex items-center gap-2 text-brand-700">
                   <Award className="h-5 w-5" />
                   <span className="text-[10px] font-semibold uppercase tracking-[0.18em]">
-                    Szakmai szervezetek, tagságok
+                    {t.affiliations}
                   </span>
                 </div>
                 <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
@@ -158,12 +184,8 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
 
             {member.career && member.career.length > 0 && (
               <div>
-                <h2 className="font-display text-3xl text-brand-900 md:text-4xl">
-                  Szakmai életpálya
-                </h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Folyamatos képzések, kongresszusok és szakvizsgák — visszafelé időrendben.
-                </p>
+                <h2 className="font-display text-3xl text-brand-900 md:text-4xl">{t.career}</h2>
+                <p className="mt-2 text-sm text-muted-foreground">{t.careerSub}</p>
 
                 <ol className="mt-8 relative space-y-5 border-l border-brand-200 pl-7">
                   {member.career.map((c, i) => (
@@ -189,11 +211,11 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
 
         <div className="mt-16 border-t border-border pt-8">
           <Link
-            href="/munkatarsaink"
+            href={localizeHref("/munkatarsaink", locale)}
             className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 hover:text-brand-600"
           >
             <ArrowLeft className="h-4 w-4" />
-            Vissza a csapathoz
+            {t.back}
           </Link>
         </div>
       </section>

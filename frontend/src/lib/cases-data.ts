@@ -3,6 +3,72 @@
 export type CaseImage = { src: string; alt: string; width: number; height: number; label?: "előtte" | "utána" };
 export type CaseStudy = { slug: string; title: string; description: string; images: CaseImage[] };
 
+/** Angol cím/leírás slug szerint. */
+export const CASE_EN: Record<string, { title: string; description: string }> = {
+  "esztetikus-e-max-preskeramia-koronak": {
+    title: "Aesthetic e.max pressed-ceramic crowns",
+    description: "",
+  },
+  "keramia-korona-felepitett-fogra": {
+    title: "Ceramic crown on a built-up tooth",
+    description: "…and what happened in between:",
+  },
+  "egyszeres-inyrecesszio-sebeszeti-megoldasa": {
+    title: "Surgical solution of a single gingival recession",
+    description: "",
+  },
+  "esztetikai-zonaban-azonnali-implantacio-elotte-utana": {
+    title: "Immediate implantation in the aesthetic zone, before – after",
+    description: "…and what happened with the patient in between:",
+  },
+  "molaris-fog-potlasa-implantatummal": {
+    title: "Replacing a molar tooth with an implant",
+    description: "…and what happened in between:",
+  },
+  "tobbszoros-inyrecesszio-kezelese-tunnel-technikaval-es-palat": {
+    title: "Treatment of multiple gingival recessions with the tunnel technique and a palatal connective-tissue free graft",
+    description:
+      "Cases where gum recession affects several teeth are common. It is especially important to solve these situations in the aesthetic zone, when the front teeth are at risk or very sensitive. In the case of the following patient we also performed a periodontal microsurgical plastic procedure after preparation, but with the so-called “tunnel” technique, without opening the interdental spaces. We drew the connective-tissue free graft taken from the palate into the prepared “tunnel”, then suspended and positioned the gum using special sutures. The value of the case presented here is significant in that we can show our results 1 year and then 7 years after the surgery. The success of the recession coverage is still close to 100% after 7 years. These results hold their own on any international professional forum.",
+  },
+  "alveolus-prezervacio-elotte-utana": {
+    title: "Alveolar preservation, before – after",
+    description: "",
+  },
+  "agressziv-fogagybetegseg-soran-elvandorolt-nagymetszofog": {
+    title: "Central incisor that migrated during aggressive periodontal disease",
+    description: "…and what happened in between, over nearly 1.5 years:",
+  },
+  "teljes-fogatlansag-kezelese-implantatummal": {
+    title: "Treatment of complete edentulism with implants",
+    description: "",
+  },
+  "cirkon-korona-elotte-utana": {
+    title: "Zirconia crown, before – after",
+    description: "",
+  },
+  "ketoldali-sorvegi-foghiany-potlasa-implantatumokkal-az-also": {
+    title: "Replacing bilateral free-end tooth loss with implants in the lower jaw",
+    description: "",
+  },
+};
+
+export function getCases(locale: string): CaseStudy[] {
+  if (locale !== "en") return CASES;
+  return CASES.map((cs) => {
+    const en = CASE_EN[cs.slug];
+    const title = en?.title ?? cs.title;
+    return {
+      ...cs,
+      title,
+      description: en?.description ?? cs.description,
+      images: cs.images.map((im, i) => ({
+        ...im,
+        alt: `${title} – image ${i + 1}${im.label === "előtte" ? " (before)" : im.label === "utána" ? " (after)" : ""}`,
+      })),
+    };
+  });
+}
+
 export const CASES: CaseStudy[] = [
   {
     "slug": "esztetikus-e-max-preskeramia-koronak",

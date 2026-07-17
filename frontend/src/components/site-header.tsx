@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ChevronDown, Menu, Phone, X } from "lucide-react";
@@ -35,16 +34,22 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background/85 backdrop-blur-md">
       <div className="container-page flex h-20 items-center justify-between gap-6">
-        <Link href={l("/")} aria-label={t.home} className="flex items-center">
-          <Image
+        <a href={l("/")} aria-label={t.home} className="flex items-center">
+          {/*
+            Natív <img> (nem next/image): a nyelvváltás teljes újratöltéssel jár,
+            és a next/image soft-nav/cache kombinációja egyes böngészőkben üresen
+            hagyta a logót a magyar gyökér-útvonalon.
+          */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/logo.png"
-            alt="Dentoplant fogászati rendelő"
+            alt={locale === "en" ? "Dentoplant dental clinic" : "Dentoplant fogászati rendelő"}
             width={220}
             height={56}
-            priority
             className="h-10 w-auto md:h-12"
+            decoding="async"
           />
-        </Link>
+        </a>
 
         <nav className="hidden items-center gap-1 lg:flex">
           {NAV.map((item) => (
@@ -84,7 +89,7 @@ export function SiteHeader() {
         )}
       >
         <div className="min-h-0 overflow-hidden">
-          <div className="border-t border-border bg-background">
+          <div className="max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain border-t border-border bg-background">
             <div className="container-page flex flex-col py-4">
               {NAV.map((item) => (
                 <div key={item.href} className="border-b border-border/60 py-2 last:border-0">

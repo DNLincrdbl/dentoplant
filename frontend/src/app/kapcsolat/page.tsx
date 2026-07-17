@@ -1,45 +1,48 @@
 import Link from "next/link";
 import { ArrowRight, Clock, Mail, MapPin, Phone } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
-import { SITE } from "@/lib/site-data";
+import { SITE, getHours } from "@/lib/site-data";
+import { getLocale } from "@/lib/i18n/server";
+import { localizeHref } from "@/lib/i18n/config";
 
-export const metadata = {
-  title: "Bejelentkezés — Dentoplant Fogászat Szeged",
-  description:
-    "Fogászati magánrendelőnk előzetes bejelentkezés alapján működik: az időpontokat úgy egyeztetjük, hogy a kezelési tervnek megfelelő időben végezhessük el a beavatkozásokat.",
-};
+export async function generateMetadata() {
+  const locale = await getLocale();
+  const en = locale === "en";
+  return {
+    title: en ? "Booking — Dentoplant Dental Clinic Szeged" : "Bejelentkezés — Dentoplant Fogászat Szeged",
+    description: en
+      ? "Our private dental clinic operates by prior appointment: we arrange the times so that procedures can be carried out at the right time according to the treatment plan."
+      : "Fogászati magánrendelőnk előzetes bejelentkezés alapján működik: az időpontokat úgy egyeztetjük, hogy a kezelési tervnek megfelelő időben végezhessük el a beavatkozásokat.",
+  };
+}
 
 const CLINIC_ADDRESS = "6726 Szeged, Fő fasor 45.";
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const locale = await getLocale();
+  const en = locale === "en";
+  const c = en ? EN : HU;
+  const hours = getHours(locale);
   return (
     <>
       <PageHero
-        eyebrow="Kapcsolat"
-        title="Bejelentkezés"
-        description="Fogászati magánrendelőnk előzetes bejelentkezés alapján működik — az időpontokat úgy egyeztetjük, hogy az egymásra épülő beavatkozásokat a kezelési terv szerinti megfelelő időben végezhessük el."
-        crumbs={[{ label: "Főoldal", href: "/" }, { label: "Bejelentkezés" }]}
+        eyebrow={c.eyebrow}
+        title={c.title}
+        description={c.heroDesc}
+        crumbs={[{ label: c.home, href: "/" }, { label: c.title }]}
       />
 
       <section className="container-page py-14 md:py-20">
-        {/* Bevezető */}
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="font-display text-2xl text-brand-900 md:text-3xl">Kedves érdeklődő!</h2>
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Fogászati magánrendelőnk előzetes bejelentkezés alapján működik. Az időpontokat Önnel úgy
-            egyeztetjük, hogy az egymásra épülő beavatkozásokat a kezelési terv szerinti megfelelő
-            időben végezhessük el. Telefonos bejelentkezéskor recepciósunkkal veszi fel a kapcsolatot.
-            Igyekszünk mindent elkövetni, hogy a megbeszélt időpontban ne várakoztassuk meg Önt, de
-            kisebb csúszások előfordulhatnak, amelyekről időben értesítjük.
-          </p>
+          <h2 className="font-display text-2xl text-brand-900 md:text-3xl">{c.dearTitle}</h2>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">{c.dearBody}</p>
         </div>
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.05fr] lg:items-start lg:gap-14">
-          {/* Elérhetőségeink */}
           <div>
-            <span className="eyebrow">Elérhetőségeink</span>
+            <span className="eyebrow">{c.reach}</span>
             <h3 className="mt-4 font-display text-2xl text-brand-900">
-              Dentoplant Fogászati és Implantológiai Rendelő
+              Dentoplant {en ? "Dental and Implantology Clinic" : "Fogászati és Implantológiai Rendelő"}
             </h3>
 
             <div className="mt-8 space-y-4">
@@ -52,7 +55,7 @@ export default function ContactPage() {
                 </span>
                 <span>
                   <span className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Mobil
+                    {c.mobile}
                   </span>
                   <span className="font-semibold text-brand-900">{SITE.phone}</span>
                 </span>
@@ -79,7 +82,7 @@ export default function ContactPage() {
                 </span>
                 <span>
                   <span className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Cím
+                    {c.address}
                   </span>
                   <span className="font-semibold text-brand-900">{CLINIC_ADDRESS}</span>
                 </span>
@@ -91,11 +94,11 @@ export default function ContactPage() {
                     <Clock className="h-5 w-5" />
                   </span>
                   <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Nyitvatartás
+                    {c.hours}
                   </span>
                 </div>
                 <ul className="mt-4 space-y-2 text-sm">
-                  {SITE.hours.map((h) => (
+                  {hours.map((h) => (
                     <li key={h.day} className="flex justify-between gap-3">
                       <span className="text-muted-foreground">{h.day}</span>
                       <span className="font-medium text-brand-900">{h.value}</span>
@@ -105,10 +108,9 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Térkép */}
             <div className="mt-6 overflow-hidden rounded-2xl border border-border">
               <iframe
-                title="Dentoplant rendelő térképe"
+                title={c.mapTitle}
                 src="https://maps.google.com/maps?q=Szeged%20F%C5%91%20fasor%2045&z=15&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -117,43 +119,40 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Online bejelentkezés */}
           <div className="rounded-3xl border border-border bg-muted/30 p-6 md:p-8">
-            <h3 className="font-display text-2xl text-brand-900">Online bejelentkezés</h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Töltse ki az űrlapot, és kollégánk hamarosan felveszi Önnel a kapcsolatot.
-            </p>
+            <h3 className="font-display text-2xl text-brand-900">{c.formTitle}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">{c.formSub}</p>
             <form className="mt-6 grid gap-4">
-              <Field label="Név" name="name" required />
+              <Field label={c.name} name="name" required />
               <Field label="Email" name="email" type="email" required />
-              <Field label="Tárgy" name="subject" />
+              <Field label={c.subject} name="subject" />
               <div>
                 <label
                   htmlFor="message"
                   className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-muted-foreground"
                 >
-                  Üzenet
+                  {c.message}
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   rows={5}
                   className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-brand-500"
-                  placeholder="Miben segíthetünk?"
+                  placeholder={c.messagePlaceholder}
                 />
               </div>
               <label className="flex items-start gap-2 text-xs text-muted-foreground">
                 <input type="checkbox" required className="mt-0.5 h-4 w-4 accent-[var(--brand-600)]" />
                 <span>
-                  Az űrlap kitöltésével elfogadom az{" "}
-                  <Link href="/adatvedelem" className="text-brand-700 underline">
-                    adatvédelmi irányelveket
+                  {c.consentBefore}
+                  <Link href={localizeHref("/adatvedelem", locale)} className="text-brand-700 underline">
+                    {c.consentLink}
                   </Link>
                   .
                 </span>
               </label>
               <button type="submit" className="btn-primary w-full">
-                Üzenet küldése <ArrowRight className="h-4 w-4" />
+                {c.submit} <ArrowRight className="h-4 w-4" />
               </button>
             </form>
           </div>
@@ -192,3 +191,53 @@ function Field({
     </div>
   );
 }
+
+const HU = {
+  eyebrow: "Kapcsolat",
+  home: "Főoldal",
+  title: "Bejelentkezés",
+  heroDesc:
+    "Fogászati magánrendelőnk előzetes bejelentkezés alapján működik — az időpontokat úgy egyeztetjük, hogy az egymásra épülő beavatkozásokat a kezelési terv szerinti megfelelő időben végezhessük el.",
+  dearTitle: "Kedves érdeklődő!",
+  dearBody:
+    "Fogászati magánrendelőnk előzetes bejelentkezés alapján működik. Az időpontokat Önnel úgy egyeztetjük, hogy az egymásra épülő beavatkozásokat a kezelési terv szerinti megfelelő időben végezhessük el. Telefonos bejelentkezéskor recepciósunkkal veszi fel a kapcsolatot. Igyekszünk mindent elkövetni, hogy a megbeszélt időpontban ne várakoztassuk meg Önt, de kisebb csúszások előfordulhatnak, amelyekről időben értesítjük.",
+  reach: "Elérhetőségeink",
+  mobile: "Mobil",
+  address: "Cím",
+  hours: "Nyitvatartás",
+  mapTitle: "Dentoplant rendelő térképe",
+  formTitle: "Online bejelentkezés",
+  formSub: "Töltse ki az űrlapot, és kollégánk hamarosan felveszi Önnel a kapcsolatot.",
+  name: "Név",
+  subject: "Tárgy",
+  message: "Üzenet",
+  messagePlaceholder: "Miben segíthetünk?",
+  consentBefore: "Az űrlap kitöltésével elfogadom az ",
+  consentLink: "adatvédelmi irányelveket",
+  submit: "Üzenet küldése",
+};
+
+const EN = {
+  eyebrow: "Contact",
+  home: "Home",
+  title: "Booking",
+  heroDesc:
+    "Our private dental clinic operates by prior appointment — we arrange the times so that consecutive procedures can be carried out at the right time according to the treatment plan.",
+  dearTitle: "Dear enquirer!",
+  dearBody:
+    "Our private dental clinic operates by prior appointment. We arrange the times with you so that consecutive procedures can be carried out at the right time according to the treatment plan. When booking by phone, you get in touch with our receptionist. We do everything we can not to keep you waiting at the agreed time, but small delays can occur, of which we notify you in time.",
+  reach: "Our contact details",
+  mobile: "Mobile",
+  address: "Address",
+  hours: "Opening hours",
+  mapTitle: "Map of the Dentoplant clinic",
+  formTitle: "Online booking",
+  formSub: "Fill in the form and our colleague will contact you shortly.",
+  name: "Name",
+  subject: "Subject",
+  message: "Message",
+  messagePlaceholder: "How can we help you?",
+  consentBefore: "By filling in this form I accept the ",
+  consentLink: "privacy policy",
+  submit: "Send message",
+};

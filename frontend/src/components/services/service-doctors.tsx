@@ -10,13 +10,13 @@ import { localizeHref } from "@/lib/i18n/config";
  * A `slugs` a `lib/team.ts` munkatárs-azonosítóit tartalmazza.
  */
 export async function ServiceDoctors({ slugs }: { slugs?: string[] }) {
+  const locale = await getLocale();
   const members = (slugs ?? [])
-    .map((slug) => getMember(slug))
+    .map((slug) => getMember(slug, locale))
     .filter((m): m is TeamMember => Boolean(m));
 
   if (members.length === 0) return null;
 
-  const locale = await getLocale();
   const heading =
     locale === "en" ? "Specialists providing this treatment" : "A kezelést végző szakembereink";
   const profileLabel = locale === "en" ? "Profile" : "Bemutatkozás";

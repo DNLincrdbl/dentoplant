@@ -262,6 +262,255 @@ export const PRICE_CATEGORIES: PriceCategory[] = [
   },
 ];
 
+export const PRICE_CATEGORIES_EN: PriceCategory[] = [
+  {
+    title: "Diagnostics",
+    rows: [
+      { label: "Consultation, status assessment", price: "18.000,-" },
+      {
+        label: "Focus investigation with a written expert opinion (+ the cost of the necessary imaging)",
+        price: "25.000,-",
+      },
+      {
+        label: "Specialist consultation and/or focus investigation (Dr. Kinga Maráz)",
+        price: "28.000,-",
+      },
+      { label: "Digital intraoral X-ray", price: "6.000,-" },
+      { label: "Digital panoramic X-ray", price: "12.000,-" },
+      { label: "Sending the X-ray by email", price: "Free" },
+      { label: "Writing the X-ray to CD", price: "1.000,-" },
+      { label: "Scan (for status, smile recording)", price: "24.000,-" },
+      {
+        label: "3D dental CBCT scan – large, comprehensive, upper-lower jaw (implantology)",
+        price: "29.000,-",
+        highlight: true,
+      },
+      {
+        label: "3D CBCT ENDO scan – of the surface of 3 teeth, extra resolution (for root canal treatment)",
+        price: "26.000,-",
+        highlight: true,
+      },
+    ],
+  },
+  {
+    title: "Digital Smile Design",
+    rows: [
+      { label: "Digital Smile Design photography and creating a visual plan", price: "78.000,-" },
+      { label: "DSD smile design, 2nd consultation", price: "28.000.-" },
+      {
+        label:
+          "3D plan following DSD computer design to present the shape of the future restoration (digital wax-up)",
+        price: "11.000,-/tooth",
+      },
+      {
+        label: "Intraoral scan (for planning, status recording, if no restoration is made)",
+        price: "24.000,-",
+      },
+      {
+        label: "3D-printed model following digital design, with scanning",
+        price: "32.000,-",
+      },
+      {
+        label: "Facebow transfer, recording position bites, setting an individual-value SAM articulator",
+        price: "55.000,-",
+      },
+    ],
+  },
+  {
+    title: "Prevention and dental hygiene",
+    intro:
+      "Prevention and oral hygiene treatments are especially important in our clinic. A healthy periodontium is a foundation without which neither a lasting aesthetic result nor a long-term well-functioning restoration can be maintained. So it is no exaggeration to say that acquiring and applying the proper oral care routine is one of the guarantees of the long-term success of our work. Our personalised dental hygiene practice has been operating in the Dentoplant clinic in Szeged for 15 years, where we perform tartar removal, guided biofilm therapy, teeth whitening and the care of returning patients with the most modern methods. Here, air-polishing — the cleaning known by many as salt polishing — is part of a professional oral hygiene treatment. Tartar removal performed on a small area is very rare, because the deposition of tartar can be slowed down with a full treatment and full polishing.",
+    rows: [
+      {
+        label:
+          "Comprehensive professional oral hygiene treatment on the lower + upper arch – Piezo tartar removal + air-polishing + micro-polishing (dental hygienist) – dental hygienist (depending on the amount of tartar)",
+        price: "32.000.-36.000,-",
+      },
+      {
+        label:
+          "Comprehensive professional oral hygiene treatment on the lower + upper arch – Piezo tartar removal + air-polishing + micro-polishing (dental hygienist) – for our patients undergoing orthodontic treatment in our clinic",
+        price: "27.000,-",
+      },
+      {
+        label:
+          "Cleaning an implant with a special scaler – Piezon PI MAX® (for 1-3 implants, on top of the oral hygiene treatment)",
+        price: "9.000,-",
+      },
+      {
+        label:
+          "Cleaning an implant with a special scaler – Piezon PI MAX® (from 4 implants, on top of the oral hygiene treatment)",
+        price: "17.000,-",
+      },
+      {
+        label: "Guided biofilm therapy, EMS AIRFLOW® Prophylaxis Master",
+        price: "42.000,-",
+      },
+    ],
+  },
+  {
+    title: "Paediatric dentistry",
+    rows: [
+      { label: "Filling a milk tooth", price: "23.000,-" },
+      { label: "Fissure sealing", price: "21.000,-" },
+      {
+        label: "Oral hygiene advice with plaque disclosing, education, 1 free Curaprox toothbrush",
+        price: "27.000,-",
+      },
+    ],
+  },
+  {
+    title: "Conservative dentistry",
+    rows: [
+      { label: "Tooth-neck filling", price: "30.000,-" },
+      { label: "Aesthetic light-cured filling (GC Essentia)", price: "from 34.000,-" },
+      { label: "Placing a fibreglass post to reinforce a root-treated tooth", price: "49.000,-" },
+      { label: "Everx fibreglass-reinforced base", price: "16.000,- (on top of the filling)" },
+      { label: "Placing a rubber dam", price: "6.000,-" },
+      { label: "ICON treatment (for 4 teeth)", price: "47.000,-/tooth" },
+      { label: "ICON treatment (over 4 teeth)", price: "26.000,-/tooth" },
+    ],
+  },
+  {
+    title: "Endodontics, root canal treatment",
+    intro:
+      "The basic view of our clinic is that preserving your own tooth substance is valuable. Root canal treatment can save the tooth from extraction and allows the patient to keep their natural teeth for longer. In our Dentoplant Dental Clinic, root canal treatment is performed by a specialist endodontist. For the treatments, in addition to the most modern instrument set, we also use a Zeiss Extaro 300 microscope in line with Western European standards. With the microscope's strong light and magnification, we have the opportunity to preserve a larger amount of intact tooth substance, to explore more complex canal systems and to correct old root canal treatments with a much more precise concept.\nThe root canal treatment of a tooth is done not on a single occasion but over several sessions. The prices set out cover a treatment process; e.g. the first step is trepanation: it includes anaesthesia, opening the tooth, cleaning the infected root canal, disinfecting, shaping and temporarily filling it. Shaping the root canal is the next important step, which often happens at the same time as trepanation, but there are situations when our specialist performs it as a separate treatment. The course of the treatment, or whether a given treatment needs to be performed with or without a microscope, are medical questions that our endodontist colleague decides on. The detailed price list of the various root canal treatment processes can be viewed at our clinic during opening hours. Before starting root canal treatment, a personal consultation is recommended, during which — assessing the specific case — our specialist colleague can inform you of the exact price of the treatment.",
+    rows: [
+      { label: "Trepanation for 1 root canal", price: "35.000,-" },
+      { label: "Trepanation for 2 root canals", price: "39.000,-" },
+      { label: "Trepanation for 3 root canals", price: "44.000,-" },
+      {
+        label: "Trepanation through a crown",
+        price: "+ 13.000,- for a metal-ceramic crown\n+ 19.000,- for a zirconia crown",
+      },
+      { label: "Root canal shaping per canal", price: "15.000,-" },
+      { label: "Removing an old root filling for retreatment", price: "from 28.000,-" },
+      { label: "Laser treatment complementing root canal treatment / canal", price: "38.000,-" },
+      { label: "Microscopic endo diagnostics", price: "42.000,-" },
+      { label: "Microscope root canal surcharge", price: "55.000-82.000,-" },
+      { label: "MTA retrograde root filling (plug)", price: "45.000,-" },
+      {
+        label: "Removing a broken instrument from a root canal with a microscope",
+        price: "84.000,-",
+      },
+    ],
+  },
+  {
+    title: "Prosthetics / Dental prosthetics",
+    rows: [
+      { label: "Metal-ceramic crown /pc", price: "from 95.000,-" },
+      {
+        label: "Metal-free aesthetic Prettau zirconia CAD/CAM crown /pc",
+        price: "from 114.000,-",
+      },
+      { label: "Metal-free veneered zirconia crown /pc", price: "112.000,-" },
+      { label: "Metal-free aesthetic e.Max pressed-ceramic crown /pc", price: "118.000,-" },
+      { label: "Gold inlay (+ price of gold)", price: "110.000,- + Au" },
+      { label: "Gradia inlay", price: "95.000,-" },
+      { label: "Pressed-ceramic inlay", price: "140.000,-" },
+      {
+        label: "Precision digital impression surcharge with scanning (on top of the restoration)",
+        price: "16.000,-",
+      },
+    ],
+  },
+  {
+    title: "Periodontology",
+    rows: [
+      { label: "Taking and reporting a bacteriological culture", price: "48.000,-" },
+      {
+        label: "Laser periodontal treatment with Photolase agent /jaw (aPDT)",
+        price: "68.000,-",
+      },
+      { label: "Surgical pocket treatment with laser", price: "from 48.000,-" },
+      { label: "Vestibuloplasty", price: "143.000,-" },
+      { label: "Laser lip-frenulum removal (child)", price: "58.000,-" },
+    ],
+  },
+  {
+    title: "Oral surgery",
+    rows: [
+      { label: "Tooth removal", price: "26.000,-" },
+      { label: "Root removal", price: "32.000,-" },
+      { label: "Wisdom tooth removal", price: "from 36.000,-" },
+      { label: "Surgical wisdom tooth removal", price: "from 68.000,-" },
+      { label: "Dissection", price: "26.000,-" },
+      { label: "Cyst removal under 2 cm", price: "48.000,-" },
+      { label: "Cyst removal over 2 cm", price: "87.000,-" },
+      { label: "Sinus closure (on top of the extraction)", price: "68.000,-" },
+      { label: "Apicoectomy (surgical fee)", price: "98.000,-" },
+    ],
+    note: "We schedule our operated patients back frequently for check-ups to monitor wound healing and clean the sutures. The surgical fee includes wound cleaning and the fee for check-ups, so there is no separate charge, only for suture removal.",
+  },
+  {
+    title: "Implantology, dental implantation",
+    intro:
+      "Dental implantation is a method of replacing missing teeth in which the specialist, after prior planning, places an implant into the jawbone. The placed implant serves as a fixed abutment, so a fixed bridge can be made on it. If the amount of bone is not sufficient for placing the implant, additional surgical procedures may be needed: bone grafting for vertical and horizontal bone deficiencies, sinus lift, or plastic correction of the soft tissues. In our clinic we offer implants in several price ranges and you can choose from many types of screw-retained restoration. The choice of modern superstructures is case- and individual-dependent, so we can present it during a personal consultation.",
+    rows: [
+      {
+        label:
+          "Implant (includes 1 implant, an impression cap, a healing screw and a gingiva former; not the prosthetic superstructure!)",
+        price: "from 198.000,-",
+      },
+      { label: "Implant prosthetic superstructure", price: "from 78.000,-" },
+      { label: "Implant uncovering /pc", price: "24.000,-" },
+      {
+        label: "Screw-retained metal-ceramic crown on an implant /pc",
+        price: "108.000,-",
+      },
+      {
+        label: "Screw-retained monolithic zirconia CAD/CAM crown on an implant /pc",
+        price: "142.000,-",
+      },
+      { label: "Conscious sedation with an anaesthesiologist (1 hour)", price: "170.000,- /hour" },
+      {
+        label: "Bone grafting surgical fee – in a simple case, without bone graft material",
+        price: "from 187.000,-",
+      },
+      {
+        label: "Surgical consultation, detailed treatment plan and quotation*",
+        price: "46.000,-",
+      },
+    ],
+    note: "* The above amount is deducted from the price of the surgery if you undergo the treatment in our clinic.",
+  },
+  {
+    title: "Orthodontics",
+    rows: [
+      { label: "First examination", price: "23.000,-" },
+      {
+        label: "Documentation (lower-upper alginate impression, extra- and intraoral photos)",
+        price: "28.000,-",
+      },
+      { label: "Treatment plan", price: "38.000,-" },
+      { label: "Fixed metal orthodontic appliance per arch", price: "from 295.000,-" },
+      {
+        label: "Fixed aesthetic orthodontic appliance per arch",
+        price: "from 355.000,-",
+      },
+      { label: "Removable orthodontic appliance", price: "from 120.000,-" },
+      { label: "Check-up of a removable orthodontic appliance", price: "18.000,-" },
+      { label: "Check-up of a fixed orthodontic appliance, 1 arch", price: "18.000,-" },
+      { label: "Check-up of a fixed orthodontic appliance, 2 arches", price: "28.000,-" },
+      { label: "Hyrax", price: "from 130.000,-" },
+      { label: "Hyrax check-up", price: "from 21.000,-" },
+      { label: "Hyrax removal", price: "38.000,-" },
+      { label: "Fixed space maintainer", price: "from 45.000,-" },
+      { label: "Removal of a fixed orthodontic appliance and polishing", price: "42.000,-" },
+      { label: "Retainer bonding per jaw", price: "49.000,- /jaw" },
+      { label: "Retainer repair", price: "28.000,-" },
+      {
+        label:
+          "ALIGNER (orthodontics with clear trays) treatment plan\n(Individual price depending on type and case difficulty – Clear Correct, Angel Aligner)",
+        price: "40.000,-",
+      },
+    ],
+  },
+];
+
+export function getPriceCategories(locale: string): PriceCategory[] {
+  return locale === "en" ? PRICE_CATEGORIES_EN : PRICE_CATEGORIES;
+}
+
 export const HEALTH_FUNDS: string[] = [
   "ADOSZT Egészségpénztár",
   "TEMPO Önkéntes Kiegészítő Egészségpénztár",

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { localizeHref, locales, stripLocale, type Locale } from "@/lib/i18n/config";
 import { useLocale } from "@/lib/i18n/context";
@@ -11,6 +10,10 @@ const LABELS: Record<Locale, string> = { hu: "HU", en: "EN" };
 /**
  * Nyelvváltó. Az aktuális oldalt nyitja meg a másik nyelven
  * (a `/en` előtag alapján számolva).
+ *
+ * Teljes oldalújratöltéssel navigál (`<a>`), mert az App Router gyökér-layout
+ * nem renderelődik újra kliens-oldali navigációnál, így a szerverről jövő
+ * nyelv (x-locale) csak teljes újratöltéskor frissül minden komponensben.
  */
 export function LanguageSwitcher({ className }: { className?: string }) {
   const active = useLocale();
@@ -25,7 +28,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       )}
     >
       {locales.map((loc) => (
-        <Link
+        <a
           key={loc}
           href={localizeHref(base, loc)}
           hrefLang={loc}
@@ -38,7 +41,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
           )}
         >
           {LABELS[loc]}
-        </Link>
+        </a>
       ))}
     </div>
   );

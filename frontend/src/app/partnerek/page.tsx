@@ -1,12 +1,18 @@
 import Image from "next/image";
 import { PageHero } from "@/components/page-hero";
 import { CtaContact } from "@/components/home/cta-contact";
+import { getLocale } from "@/lib/i18n/server";
 
-export const metadata = {
-  title: "Partnerek — Dentoplant Fogászat Szeged",
-  description:
-    "A Dentoplant Fogászati Rendelő együttműködő partnerei és szerződött egészségbiztosító (egészségpénztári) partnereink.",
-};
+export async function generateMetadata() {
+  const locale = await getLocale();
+  const en = locale === "en";
+  return {
+    title: en ? "Partners — Dentoplant Dental Clinic Szeged" : "Partnerek — Dentoplant Fogászat Szeged",
+    description: en
+      ? "The cooperating partners of the Dentoplant Dental Clinic and our contracted health insurance (health fund) partners."
+      : "A Dentoplant Fogászati Rendelő együttműködő partnerei és szerződött egészségbiztosító (egészségpénztári) partnereink.",
+  };
+}
 
 type Supplier = { name: string; address?: string; links?: { label: string; href: string }[] };
 
@@ -84,20 +90,23 @@ const FUNDS: Fund[] = [
   { name: "ERSTE Egészségpénztár", logo: "/partnerek/erste_ep2.jpg", w: 267, h: 80 },
 ];
 
-export default function PartnersPage() {
+export default async function PartnersPage() {
+  const locale = await getLocale();
+  const en = locale === "en";
+  const c = en ? EN : HU;
   return (
     <>
       <PageHero
-        eyebrow="Partnerek"
-        title="Együttműködő partnereink"
-        description="A Dentoplant Fogászati Rendelő szakmai beszállító partnerei és szerződött egészségbiztosító partnereink."
-        crumbs={[{ label: "Főoldal", href: "/" }, { label: "Partnerek" }]}
+        eyebrow={c.eyebrow}
+        title={c.title}
+        description={c.heroDesc}
+        crumbs={[{ label: c.home, href: "/" }, { label: c.eyebrow }]}
       />
 
       <section className="container-page py-14 md:py-20">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="eyebrow justify-center">Szakmai partnerek</span>
-          <h2 className="mt-4 font-display text-3xl text-brand-900">Beszállítóink</h2>
+          <span className="eyebrow justify-center">{c.suppliersEyebrow}</span>
+          <h2 className="mt-4 font-display text-3xl text-brand-900">{c.suppliersTitle}</h2>
         </div>
 
         <div className="mt-10 grid gap-4 md:grid-cols-2">
@@ -128,14 +137,9 @@ export default function PartnersPage() {
       <section className="border-t border-border bg-muted/40">
         <div className="container-page py-14 md:py-20">
           <div className="mx-auto max-w-2xl text-center">
-            <span className="eyebrow justify-center">Egészségpénztárak</span>
-            <h2 className="mt-4 font-display text-3xl text-brand-900">
-              Szerződött egészségbiztosító partnereink
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-              Kezeléseink költségét az alábbi egészségpénztárak elszámolják. Kérjük, érdeklődjön
-              pénztáránál a részletekről.
-            </p>
+            <span className="eyebrow justify-center">{c.fundsEyebrow}</span>
+            <h2 className="mt-4 font-display text-3xl text-brand-900">{c.fundsTitle}</h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">{c.fundsDesc}</p>
           </div>
 
           <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -147,7 +151,7 @@ export default function PartnersPage() {
                 <div className="grid h-20 w-24 flex-shrink-0 place-items-center rounded-xl bg-white p-2">
                   <Image
                     src={f.logo}
-                    alt={`${f.name} logó`}
+                    alt={`${f.name} ${en ? "logo" : "logó"}`}
                     width={f.w}
                     height={f.h}
                     className="h-auto max-h-16 w-auto max-w-full object-contain"
@@ -155,9 +159,7 @@ export default function PartnersPage() {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold leading-snug text-brand-900">{f.name}</h3>
-                  {f.address && (
-                    <p className="mt-1 text-xs text-muted-foreground">{f.address}</p>
-                  )}
+                  {f.address && <p className="mt-1 text-xs text-muted-foreground">{f.address}</p>}
                 </div>
               </div>
             ))}
@@ -169,3 +171,31 @@ export default function PartnersPage() {
     </>
   );
 }
+
+const HU = {
+  eyebrow: "Partnerek",
+  home: "Főoldal",
+  title: "Együttműködő partnereink",
+  heroDesc:
+    "A Dentoplant Fogászati Rendelő szakmai beszállító partnerei és szerződött egészségbiztosító partnereink.",
+  suppliersEyebrow: "Szakmai partnerek",
+  suppliersTitle: "Beszállítóink",
+  fundsEyebrow: "Egészségpénztárak",
+  fundsTitle: "Szerződött egészségbiztosító partnereink",
+  fundsDesc:
+    "Kezeléseink költségét az alábbi egészségpénztárak elszámolják. Kérjük, érdeklődjön pénztáránál a részletekről.",
+};
+
+const EN = {
+  eyebrow: "Partners",
+  home: "Home",
+  title: "Our cooperating partners",
+  heroDesc:
+    "The professional supplier partners of the Dentoplant Dental Clinic and our contracted health insurance partners.",
+  suppliersEyebrow: "Professional partners",
+  suppliersTitle: "Our suppliers",
+  fundsEyebrow: "Health funds",
+  fundsTitle: "Our contracted health insurance partners",
+  fundsDesc:
+    "The following health funds reimburse the cost of our treatments. Please ask your fund for details.",
+};
