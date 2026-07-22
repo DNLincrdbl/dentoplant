@@ -2,6 +2,13 @@ import { PROFILES } from "./team-profiles.generated";
 
 export type CareerEntry = { year: string; event: string };
 
+export type TeamImageCrop = {
+  /** CSS object-position, pl. "50% 18%". */
+  position?: string;
+  /** 1 = természetes méret (Csongor-féle waist-up); <1 = szoros headshot kicsinyítése. */
+  scale?: number;
+};
+
 export type TeamMember = {
   slug: string;
   name: string;
@@ -12,6 +19,8 @@ export type TeamMember = {
   focus?: string;
   /** Kép útvonal a /public mappához képest. Ha nincs, gradient placeholder jelenik meg. */
   image?: string;
+  /** Egységes portrékép-méret a listán / profilon (object-position + scale). */
+  imageCrop?: TeamImageCrop;
   /** Ha true, a listaoldalon a kártya az /munkatars/[slug] profilra mutat. */
   hasProfile?: boolean;
   /** Hosszabb bemutatkozó bekezdések a profiloldalon. */
@@ -207,20 +216,38 @@ const RAW_TEAM: TeamGroup[] = [
 ];
 
 /**
+ * Egységes headroom / arcpozíció a 4:5 keretben.
+ * A waist-up clinic fotók természetes méretben maradnak (mint Csongoré);
+ * Melitta szoros headshotját kicsinyítjük, hogy hasonló arcméretet adjon.
+ */
+const IMAGE_CROPS: Record<string, TeamImageCrop> = {
+  "dr-maraz-kinga": { position: "50% 20%", scale: 1 },
+  "dr-vadasz-anna": { position: "50% 18%", scale: 1 },
+  "dr-meszaros-csongor": { position: "50% 18%", scale: 1 },
+  "dr-sebok-eszter": { position: "50% 18%", scale: 1 },
+  "dr-roszik-melitta": { position: "50% 30%", scale: 0.72 },
+  "biacsine-krivan-anett": { position: "50% 18%", scale: 1 },
+  "dobo-huanita": { position: "50% 18%", scale: 1 },
+  "olajos-katalin": { position: "50% 18%", scale: 1 },
+  "ludanyi-dora": { position: "50% 18%", scale: 1 },
+  "megyes-fanni": { position: "50% 18%", scale: 1 },
+};
+
+/**
  * Összefésüli a kézi (RAW_TEAM) és a generált (PROFILES) adatokat.
  * A kézzel megadott mezők MINDIG elsőbbséget élveznek a scraperrel szemben.
  * A `hasProfile` automatikusan true lesz, ha van érdemi profilszöveg.
  */
 function mergeMember(member: TeamMember): TeamMember {
   const gen = PROFILES[member.slug];
-  if (!gen) return member;
   const merged: TeamMember = {
     ...member,
-    image: member.image ?? gen.image,
-    bio: member.bio ?? gen.bio,
-    career: member.career ?? gen.career,
-    affiliations: member.affiliations ?? gen.affiliations,
-    quote: member.quote ?? gen.quote,
+    image: member.image ?? gen?.image,
+    bio: member.bio ?? gen?.bio,
+    career: member.career ?? gen?.career,
+    affiliations: member.affiliations ?? gen?.affiliations,
+    quote: member.quote ?? gen?.quote,
+    imageCrop: member.imageCrop ?? IMAGE_CROPS[member.slug],
   };
   const hasContent = Boolean(
     merged.bio?.length ||

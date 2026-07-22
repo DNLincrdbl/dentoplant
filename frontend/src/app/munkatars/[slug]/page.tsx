@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Award, GraduationCap, Quote, Sparkles } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { CtaContact } from "@/components/home/cta-contact";
+import { TeamPortrait } from "@/components/team-portrait";
 import { TEAM, getTeam, type TeamMember, initials } from "@/lib/team";
 import { getLocale } from "@/lib/i18n/server";
 import { localizeHref } from "@/lib/i18n/config";
@@ -83,13 +83,10 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
           <aside className="space-y-6">
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500 shadow-lg shadow-brand-900/10">
               {member.image ? (
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  fill
+                <TeamPortrait
+                  member={member}
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   priority
-                  className="object-cover"
                 />
               ) : (
                 <>

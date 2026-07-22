@@ -9,7 +9,7 @@ import {
   Section,
   VideoEmbed,
 } from "../ui";
-import { SmileArch } from "../smile-arch";
+import { ToothModelViewer } from "../tooth-model-viewer-lazy";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
 
@@ -35,7 +35,7 @@ export default function DsdContent({ locale }: ServiceContentProps) {
 
       <Section title={c.archTitle}>
         <p>{c.archIntro}</p>
-        <SmileArch locale={locale as Locale} />
+        <ToothModelViewer locale={locale as Locale} />
       </Section>
 
       <Section title={c.whatTitle}>
@@ -121,7 +121,7 @@ export default function DsdContent({ locale }: ServiceContentProps) {
 const HU = {
   archTitle: "Fedezze fel a mosolyát",
   archIntro:
-    "A mosoly minden foga saját szerepet tölt be az esztétikában és a rágásban. Vigye a kurzort az alábbi fogívre — az egyes fogak felizzanak, és megjelenik a nevük.",
+    "A mosoly minden foga saját szerepet tölt be az esztétikában és a rágásban. Kattintson az alábbi 3D fogsor bármely fogára — a kamera ráközelít, a fog kiemelkedik és megjelenik a neve.",
   videoTitle: "Nézze meg, hogyan tervezzük meg mosolyát",
   videoCaption:
     "A digitális mosolytervezés segítségével egyedi és személyes mosolyterv készül Önnek! A számítógépes tervezés során be tudjuk mutatni, hogy milyen esztétikai változtatások lehetnek előnyösek ahhoz, hogy mosolya hibátlan legyen. Kérjen időpontot konzultációra!",
@@ -213,7 +213,7 @@ const HU = {
 const EN = {
   archTitle: "Explore your smile",
   archIntro:
-    "Every tooth in a smile plays its own role in both aesthetics and chewing. Hover over the dental arch below — each tooth lights up and its name appears.",
+    "Every tooth in a smile plays its own role in both aesthetics and chewing. Click any tooth on the 3D model below — the camera zooms in, the tooth lights up and its name appears.",
   videoTitle: "See how we design your smile",
   videoCaption:
     "With Digital Smile Design, a unique and personal smile plan is created for you! During the computer-aided planning we can show which aesthetic changes would be beneficial to make your smile flawless. Book an appointment for a consultation!",

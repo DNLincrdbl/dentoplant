@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getMember, initials, type TeamMember } from "@/lib/team";
+import { TeamPortrait } from "@/components/team-portrait";
 import { getLocale } from "@/lib/i18n/server";
 import { localizeHref } from "@/lib/i18n/config";
 
@@ -46,13 +46,7 @@ function DoctorCard({
     <>
       <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500">
         {member.image ? (
-          <Image
-            src={member.image}
-            alt={member.name}
-            fill
-            sizes="64px"
-            className="object-cover"
-          />
+          <TeamPortrait member={member} sizes="64px" />
         ) : (
           <div className="grid h-full w-full place-items-center">
             <span className="font-display text-xl font-semibold text-white/90">

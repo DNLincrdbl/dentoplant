@@ -1,8 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { CtaContact } from "@/components/home/cta-contact";
+import { TeamPortrait } from "@/components/team-portrait";
 import { getTeam, type TeamMember, initials } from "@/lib/team";
 import { getLocale } from "@/lib/i18n/server";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
@@ -50,7 +50,7 @@ export default async function TeamPage() {
                 <div className="hidden h-px flex-1 bg-border md:block" />
               </div>
 
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid auto-rows-fr gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {group.members.map((m) => (
                   <TeamCard
                     key={m.slug}
@@ -83,7 +83,7 @@ function TeamCard({
   detailsLabel: string;
 }) {
   const cardClass =
-    "group flex flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-sm shadow-brand-900/5 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-900/10";
+    "group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-sm shadow-brand-900/5 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-900/10";
 
   const body = (
     <TeamCardBody member={member} focusLabel={focusLabel} detailsLabel={detailsLabel} />
@@ -112,12 +112,10 @@ function TeamCardBody({
     <>
       <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500">
         {member.image ? (
-          <Image
-            src={member.image}
-            alt={member.name}
-            fill
+          <TeamPortrait
+            member={member}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            hoverZoom
           />
         ) : (
           <>
@@ -137,17 +135,8 @@ function TeamCardBody({
           <p className="mt-1 text-sm font-medium text-brand-700">{member.role}</p>
         </div>
 
-        {member.credentials && member.credentials.length > 0 && (
-          <ul className="space-y-1.5 text-sm leading-relaxed text-muted-foreground">
-            {member.credentials.map((c) => (
-              <li key={c} className="flex items-start gap-2">
-                <span className="mt-2 h-1 w-1 flex-shrink-0 rounded-full bg-brand-400" />
-                <span>{c}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-
+        {/* A hosszú végzettséglista a profiloldalon van — a listakártyákon
+            egységes magasság miatt csak a szakterület jelenik meg. */}
         {member.focus && (
           <div className="rounded-xl bg-brand-50/60 px-4 py-3">
             <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-700">
