@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
-import { Html, OrbitControls, useGLTF } from "@react-three/drei";
+import { ContactShadows, Environment, Html, OrbitControls, useGLTF } from "@react-three/drei";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import type { Locale } from "@/lib/i18n/config";
 
@@ -270,9 +270,22 @@ function TeethModel({
 
     scene.traverse((obj) => {
       const m = obj as THREE.Mesh;
-      if (m.isMesh) {
-        m.castShadow = false;
-        m.receiveShadow = false;
+      if (!m.isMesh) return;
+      m.castShadow = false;
+      m.receiveShadow = false;
+      // Enyhe anyagfinomítás — ne legyen túl fényes.
+      const mats = Array.isArray(m.material) ? m.material : [m.material];
+      for (const mat of mats) {
+        if (!mat) continue;
+        if (
+          mat instanceof THREE.MeshStandardMaterial ||
+          mat instanceof THREE.MeshPhysicalMaterial
+        ) {
+          mat.envMapIntensity = 0.55;
+          mat.roughness = Math.max(mat.roughness ?? 0.5, 0.55);
+          mat.metalness = Math.min(mat.metalness ?? 0, 0.04);
+          mat.needsUpdate = true;
+        }
       }
     });
   }, [scene]);
@@ -432,7 +445,7 @@ export function ToothModelViewer({ locale = "hu" }: { locale?: Locale }) {
   const [selection, setSelection] = useState<Selection | null>(null);
 
   return (
-    <div className="tooth-viewer relative overflow-hidden rounded-3xl border border-brand-200/60 bg-gradient-to-b from-brand-50/80 via-background to-background">
+    <div className="tooth-viewer relative overflow-hidden rounded-3xl border border-brand-300/50 bg-gradient-to-b from-[#efe3f5] via-[#f6eef9] to-[#ebe0f2]">
       <style>{`
         .tooth-viewer .tooth-label {
           animation: toothLabelIn 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -523,19 +536,39 @@ export function ToothModelViewer({ locale = "hu" }: { locale?: Locale }) {
         }
       `}</style>
 
-      <div className="h-[420px] w-full md:h-[520px]">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(255,255,255,0.55)_0%,transparent_55%),radial-gradient(ellipse_at_80%_90%,rgba(140,75,162,0.14)_0%,transparent_45%)]" />
+
+      <div className="relative h-[420px] w-full md:h-[520px]">
         <Canvas
           camera={{ position: DEFAULT_CAM.toArray(), fov: 42 }}
-          dpr={[1, 2]}
+          dpr={[1, 2.5]}
           onPointerMissed={() => setSelection(null)}
-          gl={{ antialias: true, alpha: true }}
+          gl={{
+            antialias: true,
+            alpha: true,
+            powerPreference: "high-performance",
+            toneMapping: THREE.ACESFilmicToneMapping,
+            toneMappingExposure: 0.95,
+          }}
         >
-          <color attach="background" args={["#faf7fb"]} />
-          <ambientLight intensity={0.85} />
-          <directionalLight position={[4, 6, 5]} intensity={1.35} />
-          <directionalLight position={[-4, 2, -4]} intensity={0.45} color={BRAND_LIGHT} />
+          <color attach="background" args={["#efe3f5"]} />
+          <hemisphereLight args={["#ffffff", BRAND_SOFT, 0.45]} />
+          <ambientLight intensity={0.42} />
+          <directionalLight position={[3.8, 5.8, 4.2]} intensity={0.95} color="#ffffff" />
+          <directionalLight position={[-4.2, 2.2, 1.5]} intensity={0.4} color={BRAND_LIGHT} />
+          <directionalLight position={[0.4, 1.2, -4.5]} intensity={0.35} color={BRAND_SOFT} />
+          <pointLight position={[0, 0.35, 2.8]} intensity={0.25} distance={9} color="#fff7ff" />
           <Suspense fallback={null}>
+            <Environment preset="studio" environmentIntensity={0.28} />
             <TeethModel en={en} selection={selection} onSelect={setSelection} />
+            <ContactShadows
+              position={[0, -1.72, 0]}
+              opacity={0.22}
+              scale={14}
+              blur={2.8}
+              far={5}
+              color="#5a2d6e"
+            />
             {selection && (
               <Html
                 key={selection.mesh.uuid}
@@ -553,12 +586,12 @@ export function ToothModelViewer({ locale = "hu" }: { locale?: Locale }) {
         </Canvas>
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center px-4">
+      <div className="pointer-events-none absolute inset-x-0 bottom-4 z-10 flex justify-center px-4">
         <div
           className={`tooth-hud rounded-2xl border px-4 py-2 text-center text-sm backdrop-blur-md ${
             selection
-              ? "tooth-hud-active border-brand-300/70 bg-white/85 text-brand-900"
-              : "tooth-hud-idle border-brand-200/60 bg-brand-50/80 text-brand-700"
+              ? "tooth-hud-active border-brand-300/70 bg-white/90 text-brand-900"
+              : "tooth-hud-idle border-brand-300/50 bg-white/70 text-brand-800"
           }`}
         >
           {selection ? (
