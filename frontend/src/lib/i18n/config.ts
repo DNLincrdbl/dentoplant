@@ -20,9 +20,11 @@ export function isLocale(value: string | null | undefined): value is Locale {
 export function localizeHref(href: string, locale: Locale): string {
   // Külső / speciális linkeket nem bántunk.
   if (!href.startsWith("/")) return href;
-  if (locale === defaultLocale) return href;
-  if (href === "/") return `/${locale}`;
-  return `/${locale}${href}`;
+  // Mindig locale-mentes base-ből indulunk (ne legyen /en/en vagy beragadt /en HU-nál).
+  const { pathname } = stripLocale(href);
+  if (locale === defaultLocale) return pathname;
+  if (pathname === "/") return `/${locale}`;
+  return `/${locale}${pathname}`;
 }
 
 /** Levágja a `/en` (vagy más locale) előtagot egy útvonalról. */

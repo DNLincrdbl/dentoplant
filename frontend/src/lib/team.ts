@@ -5,7 +5,7 @@ export type CareerEntry = { year: string; event: string };
 export type TeamImageCrop = {
   /** CSS object-position, pl. "50% 18%". */
   position?: string;
-  /** 1 = természetes méret (Csongor-féle waist-up); <1 = szoros headshot kicsinyítése. */
+  /** 1 = Csongor-féle waist-up; <1 = kiközelítés, hogy az arcméret egyezzen. */
   scale?: number;
 };
 
@@ -52,7 +52,7 @@ const RAW_TEAM: TeamGroup[] = [
           "Fog- és szájbetegségek szakorvosa",
         ],
         focus: "Fogágybetegségek kezelése, csontpótlás, implantológia",
-        image: "/munkatarsak/dr-maraz-kinga.jpg",
+        image: "/munkatarsak/drmarazkinga.jpg",
         hasProfile: true,
         bio: [
           "Számtalan hazai és külföldi tudományos program résztvevőjeként a legmagasabb szakmai felkészültséget tekintem egy jól működő praxis alapjául.",
@@ -175,6 +175,7 @@ const RAW_TEAM: TeamGroup[] = [
         name: "Dr. Roszik Melitta",
         role: "Aneszteziológus szakorvos",
         focus: "Fájdalom csillapítás, anesztézia",
+        image: "/munkatarsak/drroszikmelitta.jpg",
       },
     ],
   },
@@ -216,21 +217,20 @@ const RAW_TEAM: TeamGroup[] = [
 ];
 
 /**
- * Egységes headroom / arcpozíció a 4:5 keretben.
- * A waist-up clinic fotók természetes méretben maradnak (mint Csongoré);
- * Melitta szoros headshotját kicsinyítjük, hogy hasonló arcméretet adjon.
+ * Egységes arcméret a 4:5 keretben — Csongor waist-up a referencia (scale: 1).
+ * A clinic-sorozat ugyanaz a beállítás; eltérő cropú fotók pad-elve / scale-elve.
  */
 const IMAGE_CROPS: Record<string, TeamImageCrop> = {
-  "dr-maraz-kinga": { position: "50% 20%", scale: 1 },
-  "dr-vadasz-anna": { position: "50% 18%", scale: 1 },
-  "dr-meszaros-csongor": { position: "50% 18%", scale: 1 },
-  "dr-sebok-eszter": { position: "50% 18%", scale: 1 },
-  "dr-roszik-melitta": { position: "50% 30%", scale: 0.72 },
-  "biacsine-krivan-anett": { position: "50% 18%", scale: 1 },
-  "dobo-huanita": { position: "50% 18%", scale: 1 },
-  "olajos-katalin": { position: "50% 18%", scale: 1 },
-  "ludanyi-dora": { position: "50% 18%", scale: 1 },
-  "megyes-fanni": { position: "50% 18%", scale: 1 },
+  "dr-maraz-kinga": { position: "50% 28%", scale: 2.7 },
+  "dr-vadasz-anna": { position: "50% 14%", scale: 1 },
+  "dr-meszaros-csongor": { position: "50% 14%", scale: 1 },
+  "dr-sebok-eszter": { position: "50% 14%", scale: 1 },
+  "dr-roszik-melitta": { position: "50% 28%", scale: 2.7 },
+  "biacsine-krivan-anett": { position: "50% 14%", scale: 1 },
+  "dobo-huanita": { position: "50% 14%", scale: 1 },
+  "olajos-katalin": { position: "50% 14%", scale: 1 },
+  "ludanyi-dora": { position: "50% 14%", scale: 1 },
+  "megyes-fanni": { position: "50% 14%", scale: 1 },
 };
 
 /**

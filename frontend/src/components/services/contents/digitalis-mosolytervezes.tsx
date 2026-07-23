@@ -21,17 +21,17 @@ export default function DsdContent({ locale }: ServiceContentProps) {
 
   return (
     <div className="space-y-12">
-      <Section title={c.introTitle}>
-        <Lead>{c.introLead}</Lead>
-        <p>{c.introBody}</p>
-      </Section>
-
       <BeforeAfter
         before={{ src: `${DIR}/dsd-elotte.jpg`, alt: c.altBefore, width: 1800, height: 1098 }}
         after={{ src: `${DIR}/dsd-utana.jpg`, alt: c.altAfter, width: 1800, height: 1098 }}
         beforeLabel={c.beforeLabel}
         afterLabel={c.afterLabel}
       />
+
+      <Section title={c.introTitle}>
+        <Lead>{c.introLead}</Lead>
+        <p>{c.introBody}</p>
+      </Section>
 
       <Section title={c.archTitle}>
         <p>{c.archIntro}</p>
@@ -102,7 +102,7 @@ export default function DsdContent({ locale }: ServiceContentProps) {
       <Section title={c.benefitsTitle}>
         <MediaText
           reverse
-          image={{ src: `${DIR}/dsd-tervezes.jpg`, alt: c.altPlanning, width: 1200, height: 1452 }}
+          image={{ src: "/csongor_dm.jpg", alt: c.altPlanning, width: 4032, height: 1872 }}
         >
           <p>{c.benefitsBody}</p>
         </MediaText>

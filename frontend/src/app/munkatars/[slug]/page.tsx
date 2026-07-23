@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, Award, GraduationCap, Quote, Sparkles } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import { TeamPortrait } from "@/components/team-portrait";
 import { TEAM, getTeam, type TeamMember, initials } from "@/lib/team";
@@ -76,12 +77,13 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
           { label: t.doctors, href: "/munkatarsaink" },
           { label: member.name },
         ]}
+        image={PAGE_HEROES.munkatars}
       />
 
       <section className="container-page py-14 md:py-20">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
           <aside className="space-y-6">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500 shadow-lg shadow-brand-900/10">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-[#e9e5ea] shadow-lg shadow-brand-900/10">
               {member.image ? (
                 <TeamPortrait
                   member={member}
@@ -90,6 +92,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
                 />
               ) : (
                 <>
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500" />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.55),transparent_60%)]" />
                   <div className="absolute inset-0 grid place-items-center">
                     <span className="font-display text-8xl font-semibold text-white/90 drop-shadow-sm">

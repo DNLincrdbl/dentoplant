@@ -1,9 +1,9 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
-import { useLocale, useLocalizedHref } from "@/lib/i18n/context";
-import { getHours } from "@/lib/site-data";
+import { getLocale } from "@/lib/i18n/server";
+import { localizeHref } from "@/lib/i18n/config";
+import { SITE, getHours } from "@/lib/site-data";
 
 function FacebookIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -22,7 +22,6 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-import { SITE } from "@/lib/site-data";
 
 const FOOTER_LINKS: { hu: string; en: string; href: string }[] = [
   { hu: "Jogi nyilatkozat", en: "Legal notice", href: "/jogi-nyilatkozat" },
@@ -42,10 +41,10 @@ const FOOTER_SERVICES: { hu: string; en: string; href: string }[] = [
   { hu: "Mikroszkópos fogászat", en: "Microscope dentistry", href: "/szolgaltatasok/mikroszkopos-fogaszat" },
 ];
 
-export function SiteFooter() {
-  const locale = useLocale();
-  const l = useLocalizedHref();
+export async function SiteFooter() {
+  const locale = await getLocale();
   const en = locale === "en";
+  const l = (href: string) => localizeHref(href, locale);
   const t = {
     tagline: en
       ? "Dental and implantology clinic in Szeged. Up-to-date professional knowledge, thorough preparation, many years of clinical experience and the most effective treatment methods in one place."
@@ -55,35 +54,35 @@ export function SiteFooter() {
     hours: en ? "Opening hours" : "Nyitvatartás",
     legalNav: en ? "Legal and other information" : "Jogi és egyéb információk",
     rights: en ? "All rights reserved." : "Minden jog fenntartva.",
+    madeBy: en ? "Created by" : "Készítette",
   };
   const hours = getHours(locale);
   return (
-    <footer className="mt-24 bg-brand-900 text-brand-50">
+    <footer className="mt-16 overflow-hidden rounded-t-[2.75rem] bg-brand-900 text-brand-50 sm:rounded-t-[3.25rem] md:mt-24 md:rounded-t-[3.75rem]">
       <div className="container-page grid gap-12 py-16 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-2 font-display text-2xl font-semibold">
-            <span className="grid h-9 w-9 place-items-center rounded-full bg-white text-brand-700 text-sm font-sans font-bold">
-              D
-            </span>
-            <span>
-              Dento<span className="text-brand-200">plant</span>
-            </span>
-          </div>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-brand-100/80">
-            {t.tagline}
-          </p>
+          <Link href={l("/")} className="inline-flex items-center" aria-label="Dentoplant">
+            <Image
+              src="/media/dentoplant-logo-light.png"
+              alt="Dentoplant"
+              width={220}
+              height={85}
+              className="h-10 w-auto max-w-[200px] object-contain object-left md:h-12"
+            />
+          </Link>
+          <p className="mt-4 max-w-md text-sm leading-relaxed text-brand-100/80">{t.tagline}</p>
           <div className="mt-6 flex gap-3">
             <a
               href={SITE.social.facebook}
               aria-label="Facebook"
-              className="grid h-10 w-10 place-items-center rounded-full border border-white/20 hover:bg-white/10"
+              className="grid h-10 w-10 place-items-center rounded-full border border-white/20 transition-colors hover:bg-white/10"
             >
               <FacebookIcon className="h-4 w-4" />
             </a>
             <a
               href={SITE.social.instagram}
               aria-label="Instagram"
-              className="grid h-10 w-10 place-items-center rounded-full border border-white/20 hover:bg-white/10"
+              className="grid h-10 w-10 place-items-center rounded-full border border-white/20 transition-colors hover:bg-white/10"
             >
               <InstagramIcon className="h-4 w-4" />
             </a>
@@ -91,13 +90,11 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h4 className="font-sans text-sm font-semibold uppercase tracking-wider text-brand-200">
-            {t.services}
-          </h4>
+          <h4 className="font-sans text-sm font-semibold uppercase tracking-wider text-brand-200">{t.services}</h4>
           <ul className="mt-4 space-y-3 text-sm">
             {FOOTER_SERVICES.map((s) => (
               <li key={s.href}>
-                <Link href={l(s.href)} className="hover:text-white">
+                <Link href={l(s.href)} className="transition-colors hover:text-white">
                   {en ? s.en : s.hu}
                 </Link>
               </li>
@@ -106,9 +103,7 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h4 className="font-sans text-sm font-semibold uppercase tracking-wider text-brand-200">
-            {t.contact}
-          </h4>
+          <h4 className="font-sans text-sm font-semibold uppercase tracking-wider text-brand-200">{t.contact}</h4>
           <ul className="mt-4 space-y-3 text-sm text-brand-100/90">
             <li className="flex items-start gap-3">
               <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0" />
@@ -116,20 +111,18 @@ export function SiteFooter() {
             </li>
             <li className="flex items-start gap-3">
               <Phone className="mt-0.5 h-4 w-4 flex-shrink-0" />
-              <a href={SITE.phoneHref} className="hover:text-white">
+              <a href={SITE.phoneHref} className="transition-colors hover:text-white">
                 {SITE.phone}
               </a>
             </li>
             <li className="flex items-start gap-3">
               <Mail className="mt-0.5 h-4 w-4 flex-shrink-0" />
-              <a href={`mailto:${SITE.email}`} className="hover:text-white">
+              <a href={`mailto:${SITE.email}`} className="transition-colors hover:text-white">
                 {SITE.email}
               </a>
             </li>
           </ul>
-          <h4 className="mt-8 font-sans text-sm font-semibold uppercase tracking-wider text-brand-200">
-            {t.hours}
-          </h4>
+          <h4 className="mt-8 font-sans text-sm font-semibold uppercase tracking-wider text-brand-200">{t.hours}</h4>
           <ul className="mt-4 space-y-2 text-sm text-brand-100/90">
             {hours.map((h) => (
               <li key={h.day} className="flex justify-between gap-3">
@@ -147,14 +140,27 @@ export function SiteFooter() {
             className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs font-medium uppercase tracking-wider text-brand-100/80"
           >
             {FOOTER_LINKS.map((link) => (
-              <Link key={link.href} href={l(link.href)} className="hover:text-white">
+              <Link key={link.href} href={l(link.href)} className="transition-colors hover:text-white">
                 {en ? link.en : link.hu}
               </Link>
             ))}
           </nav>
-          <p className="mt-5 text-center text-xs text-brand-100/60">
-            © {new Date().getFullYear()} Dentoplant. {t.rights}
-          </p>
+          <div className="mt-5 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-8">
+            <p className="text-center text-xs text-brand-100/60">
+              © {new Date().getFullYear()} Dentoplant. {t.rights}
+            </p>
+            <a
+              href="https://www.noctra.hu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2.5 text-xs text-brand-100/60 transition-opacity hover:opacity-100"
+            >
+              <span>{t.madeBy}</span>
+              <span className="rounded-full bg-brand-600 px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.14em] text-white transition-colors group-hover:bg-brand-500">
+                NOCTRA
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </footer>

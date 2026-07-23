@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Clock, Mail, MapPin, Phone } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { PAGE_HEROES } from "@/lib/page-heroes";
 import { SITE, getHours } from "@/lib/site-data";
 import { getLocale } from "@/lib/i18n/server";
 import { localizeHref } from "@/lib/i18n/config";
@@ -30,6 +31,7 @@ export default async function ContactPage() {
         title={c.title}
         description={c.heroDesc}
         crumbs={[{ label: c.home, href: "/" }, { label: c.title }]}
+        image={PAGE_HEROES.kapcsolat}
       />
 
       <section className="container-page py-14 md:py-20">

@@ -1,17 +1,31 @@
 "use client";
 
-import { createContext, useContext, useMemo } from "react";
-import { defaultLocale, localizeHref, type Locale } from "./config";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { usePathname } from "next/navigation";
+import { defaultLocale, localizeHref, stripLocale, type Locale } from "./config";
 
 const LocaleContext = createContext<Locale>(defaultLocale);
 
+/**
+ * A proxy rewrite miatt a Next `usePathname()` NEM tartalmazza az `/en` előtagot.
+ * Ezért a locale-t a böngésző URL-jéből olvassuk (window.location.pathname).
+ */
 export function LocaleProvider({
-  locale,
+  locale: serverLocale = defaultLocale,
   children,
 }: {
-  locale: Locale;
+  locale?: Locale;
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const [locale, setLocale] = useState<Locale>(serverLocale);
+
+  useEffect(() => {
+    const next = stripLocale(window.location.pathname).locale;
+    setLocale(next);
+    document.documentElement.lang = next;
+  }, [pathname, serverLocale]);
+
   return <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>;
 }
 

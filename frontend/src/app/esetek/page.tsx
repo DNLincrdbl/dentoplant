@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PageHero } from "@/components/page-hero";
+import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import { CaseStudies } from "@/components/case-studies";
 import { getCases } from "@/lib/cases-data";
@@ -39,6 +40,7 @@ export default async function CasesPage() {
             : "Egyedi fogászati problémák és megoldásaik a Dentoplant Fogászati Rendelőből. Tekintse meg a kezelés előtti és utáni állapotokat, lépésről lépésre."
         }
         crumbs={[{ label: en ? "Home" : "Főoldal", href: "/" }, { label: en ? "Cases" : "Esetek" }]}
+        image={PAGE_HEROES.esetek}
       />
 
       <section className="container-page py-10 md:py-14">

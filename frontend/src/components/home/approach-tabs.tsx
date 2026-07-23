@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import * as Tabs from "@radix-ui/react-tabs";
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
@@ -9,6 +10,11 @@ const items = [
   {
     id: "elso-talalkozas",
     href: "/kapcsolat",
+    image: "/galeria/14-elso-talalkozas-dentoplant-fogaszat-szeged.jpg",
+    imageAlt: {
+      hu: "Első találkozás a Dentoplant Fogászaton",
+      en: "First visit at Dentoplant Dental Clinic",
+    },
     hu: {
       label: "Első találkozás",
       title: "A pácienseinkkel történő első találkozáskor",
@@ -35,6 +41,11 @@ const items = [
   {
     id: "dsd",
     href: "/szolgaltatasok/digitalis-mosolytervezes",
+    image: "/szolgaltatasok/dsd/dsd-fotodokumentacio.jpg",
+    imageAlt: {
+      hu: "Digitális mosolytervezés fotódokumentáció",
+      en: "Digital Smile Design photo documentation",
+    },
     hu: {
       label: "Digitális mosolytervezés",
       title: "Lássa előre a jövőbeli mosolyát",
@@ -61,6 +72,11 @@ const items = [
   {
     id: "gyermek",
     href: "/szolgaltatasok/gyermekfogaszat",
+    image: "/galeria/32-gyermekfogaszat-a-dentoplant-fogaszati-rendeloben.jpg",
+    imageAlt: {
+      hu: "Gyermekfogászat a Dentoplant Fogászaton",
+      en: "Paediatric dentistry at Dentoplant",
+    },
     hu: {
       label: "Gyermekfogászat",
       title: "Megelőzéssel a felnőttkori egészséges fogazatért",
@@ -126,8 +142,14 @@ export function ApproachTabs() {
           return (
             <Tabs.Content key={it.id} value={it.id} className="tab-fade">
               <div className="overflow-hidden rounded-3xl border border-border bg-background">
-                <div className="aspect-[16/8] bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500">
-                  <div className="h-full w-full bg-[radial-gradient(circle_at_30%_70%,rgba(255,255,255,0.5),transparent_55%)]" />
+                <div className="relative aspect-[16/8] bg-brand-100">
+                  <Image
+                    src={it.image}
+                    alt={en ? it.imageAlt.en : it.imageAlt.hu}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 55vw"
+                  />
                 </div>
                 <div className="p-8 md:p-10">
                   <h3 className="font-display text-2xl text-brand-900 md:text-3xl">{c.title}</h3>

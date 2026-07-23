@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import {
   SERVICE_CATEGORIES,
@@ -39,6 +40,7 @@ export default async function ServicesIndex() {
         title={t.title}
         description={t.description}
         crumbs={[{ label: t.home, href: "/" }, { label: t.services }]}
+        image={PAGE_HEROES.szolgaltatasok}
       />
 
       <section className="container-page py-16 md:py-24">

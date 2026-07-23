@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Award, GraduationCap, HeartHandshake, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import { getLocale } from "@/lib/i18n/server";
 import { localizeHref } from "@/lib/i18n/config";
@@ -64,6 +65,7 @@ export default async function AboutPage() {
         title={c.title}
         description={c.heroDesc}
         crumbs={[{ label: c.home, href: "/" }, { label: c.eyebrow }]}
+        image={PAGE_HEROES.bemutatkozas}
       />
 
       <section className="container-page py-14 md:py-20">

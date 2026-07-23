@@ -584,3 +584,4 @@ export function ToothModelViewer({ locale = "hu" }: { locale?: Locale }) {
 if (typeof window !== "undefined") {
   useGLTF.preload(TOOTH_MODEL_URL);
 }
+

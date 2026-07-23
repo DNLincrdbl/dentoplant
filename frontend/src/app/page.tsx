@@ -1,6 +1,6 @@
 import { Hero } from "@/components/home/hero";
 import { Usp } from "@/components/home/usp";
-import { ServicesTabs } from "@/components/home/services-tabs";
+import { ServicesBento } from "@/components/home/services-bento";
 import { ApproachTabs } from "@/components/home/approach-tabs";
 import { Process } from "@/components/home/process";
 import { Testimonials } from "@/components/home/testimonials";
@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <Hero />
       <Usp />
-      <ServicesTabs />
+      <ServicesBento />
       <ApproachTabs />
       <Process />
       <Testimonials />

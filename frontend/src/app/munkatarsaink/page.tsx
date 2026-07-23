@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import { TeamPortrait } from "@/components/team-portrait";
 import { getTeam, type TeamMember, initials } from "@/lib/team";
@@ -39,6 +40,7 @@ export default async function TeamPage() {
         title={t.title}
         description={t.desc}
         crumbs={[{ label: t.home, href: "/" }, { label: t.eyebrow }]}
+        image={PAGE_HEROES.munkatarsaink}
       />
 
       <section className="container-page py-14 md:py-20">
@@ -110,7 +112,7 @@ function TeamCardBody({
 }) {
   return (
     <>
-      <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500">
+      <div className="relative aspect-[4/5] overflow-hidden bg-[#e9e5ea]">
         {member.image ? (
           <TeamPortrait
             member={member}
@@ -119,6 +121,7 @@ function TeamCardBody({
           />
         ) : (
           <>
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.55),transparent_60%)]" />
             <div className="absolute inset-0 grid place-items-center">
               <span className="font-display text-7xl font-semibold text-white/90 drop-shadow-sm">

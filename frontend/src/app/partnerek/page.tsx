@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { PageHero } from "@/components/page-hero";
+import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import { getLocale } from "@/lib/i18n/server";
 
@@ -101,6 +102,7 @@ export default async function PartnersPage() {
         title={c.title}
         description={c.heroDesc}
         crumbs={[{ label: c.home, href: "/" }, { label: c.eyebrow }]}
+        image={PAGE_HEROES.partnerek}
       />
 
       <section className="container-page py-14 md:py-20">

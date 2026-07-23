@@ -1,4 +1,5 @@
 import { PageHero } from "@/components/page-hero";
+import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import { GalleryGrid } from "@/components/gallery-grid";
 import { getGalleryImages } from "@/lib/gallery-data";
@@ -30,6 +31,7 @@ export default async function GalleryPage() {
             : "Új rendelőnkben várjuk Önöket — Szeged, Fő fasor 45. Tekintse meg a Dentoplant Fogászati és Implantológiai Rendelőt és csapatunkat munka közben."
         }
         crumbs={[{ label: en ? "Home" : "Főoldal", href: "/" }, { label: en ? "Gallery" : "Galéria" }]}
+        image={PAGE_HEROES.galeria}
       />
 
       <section className="container-page py-14 md:py-20">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { PublicChrome } from "@/components/public-chrome";
+import { SiteFooter } from "@/components/site-footer";
 import { LocaleProvider } from "@/lib/i18n/context";
 import { getLocale } from "@/lib/i18n/server";
 
@@ -27,11 +28,12 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
+      data-scroll-behavior="smooth"
       className={`${geist.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <LocaleProvider locale={locale}>
-          <PublicChrome>{children}</PublicChrome>
+          <PublicChrome footer={<SiteFooter />}>{children}</PublicChrome>
         </LocaleProvider>
       </body>
     </html>

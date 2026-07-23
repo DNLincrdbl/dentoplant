@@ -188,10 +188,7 @@ h1, h2, h3, .font-display {
 }
 
 .page-enter {
-  /* backwards: a kezdő (rejtett) állapot már a start előtt érvényes (nincs villanás),
-     a végén viszont visszaáll a natúr stílusra → nem marad transform (nem tör el a fixed). */
-  animation: page-enter 600ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
-  will-change: opacity, transform;
+  animation: page-enter 420ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -221,90 +218,46 @@ h1, h2, h3, .font-display {
   }
 }
 
-/* Blog cikk tipográfia — dangerouslySetInnerHTML által renderelt tartalomhoz */
-.prose-blog {
-  font-size: 1.0625rem;
-  line-height: 1.75;
+/* FAQ accordion — lágy magasság-animáció (Radix --radix-accordion-content-height) */
+@keyframes accordion-down {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
 }
 
-.prose-blog > * + * {
-  margin-top: 1.25rem;
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
 }
 
-.prose-blog h2 {
-  font-family: var(--font-geist), system-ui, sans-serif;
-  font-size: 1.75rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--brand-900);
-  margin-top: 2.5rem;
-  margin-bottom: 0.75rem;
+.accordion-content {
+  overflow: hidden;
 }
 
-.prose-blog h3 {
-  font-family: var(--font-geist), system-ui, sans-serif;
-  font-size: 1.375rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  color: var(--brand-900);
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
+.accordion-content[data-state="open"] {
+  animation: accordion-down 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.prose-blog p {
-  color: rgba(26, 19, 32, 0.85);
+.accordion-content[data-state="closed"] {
+  animation: accordion-up 240ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.prose-blog a {
-  color: var(--brand-700);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.prose-blog a:hover {
-  color: var(--brand-600);
-}
-
-.prose-blog ul,
-.prose-blog ol {
-  padding-left: 1.25rem;
-}
-
-.prose-blog ul {
-  list-style: disc;
-}
-
-.prose-blog ol {
-  list-style: decimal;
-}
-
-.prose-blog li + li {
-  margin-top: 0.4rem;
-}
-
-.prose-blog blockquote {
-  border-left: 3px solid var(--brand-600);
-  padding: 0.25rem 0 0.25rem 1.25rem;
-  font-style: italic;
-  color: var(--brand-900);
-}
-
-.prose-blog img {
-  border-radius: 1rem;
-  margin-top: 1.5rem;
-}
-
-.prose-blog strong {
-  color: var(--brand-900);
-  font-weight: 600;
-}
-
-.prose-blog code {
-  background: var(--brand-50);
-  color: var(--brand-800);
-  padding: 0.15em 0.4em;
-  border-radius: 6px;
-  font-size: 0.9em;
+@media (prefers-reduced-motion: reduce) {
+  .accordion-content[data-state="open"],
+  .accordion-content[data-state="closed"] {
+    animation: none;
+  }
 }
 
 /* Blog cikk tipográfia — dangerouslySetInnerHTML által renderelt tartalomhoz */

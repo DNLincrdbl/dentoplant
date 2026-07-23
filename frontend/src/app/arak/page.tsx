@@ -1,5 +1,6 @@
 import { Info, ShieldCheck, Wallet } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import { HEALTH_FUNDS, getPriceCategories, type PriceCategory } from "@/lib/prices";
 import { getLocale } from "@/lib/i18n/server";
@@ -27,6 +28,7 @@ export default async function PricesPage() {
         title={c.title}
         description={c.heroDesc}
         crumbs={[{ label: c.home, href: "/" }, { label: c.eyebrow }]}
+        image={PAGE_HEROES.arak}
       />
 
       <section className="container-page py-14 md:py-20">

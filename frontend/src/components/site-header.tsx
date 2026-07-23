@@ -33,31 +33,32 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background/85 backdrop-blur-md">
-      <div className="container-page flex h-20 items-center justify-between gap-6">
-        <a href={l("/")} aria-label={t.home} className="flex items-center">
+      <div className="container-page flex h-20 items-center justify-between gap-4">
+        <a href={l("/")} aria-label={t.home} className="flex shrink-0 items-center">
           {/*
-            Natív <img> (nem next/image): a nyelvváltás teljes újratöltéssel jár,
-            és a next/image soft-nav/cache kombinációja egyes böngészőkben üresen
-            hagyta a logót a magyar gyökér-útvonalon.
+            Natív <img> + locale `key`: a nyelvváltáskor a header soft-navnál
+            Új /media/ útvonal a logónak (a /brand/ útvonalat egyes adblockerek blokkolják).
           */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/logo.png"
+            key={locale}
+            src="/media/dentoplant-logo.png"
             alt={locale === "en" ? "Dentoplant dental clinic" : "Dentoplant fogászati rendelő"}
             width={220}
-            height={56}
-            className="h-10 w-auto md:h-12"
+            height={85}
+            className="h-9 w-auto max-w-[160px] object-contain object-left md:h-11 md:max-w-[200px]"
             decoding="async"
+            fetchPriority="high"
           />
         </a>
 
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-0.5 xl:flex 2xl:gap-1">
           {NAV.map((item) => (
             <NavDesktopItem key={item.href} item={item} />
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-3 xl:flex">
           <LanguageSwitcher />
           <a
             href={SITE.phoneHref}
@@ -67,14 +68,14 @@ export function SiteHeader() {
           >
             <Phone className="h-4 w-4" />
           </a>
-          <Link href={l("/kapcsolat")} className="btn-primary !h-11 !px-5 !text-sm">
+          <Link href={l("/kapcsolat")} className="btn-primary !h-11 !px-5 !text-sm whitespace-nowrap">
             {t.book}
           </Link>
         </div>
 
         <button
           aria-label={t.menu}
-          className="grid h-11 w-11 place-items-center rounded-full border border-border lg:hidden"
+          className="grid h-11 w-11 place-items-center rounded-full border border-border xl:hidden"
           onClick={() => setOpen((o) => !o)}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -84,7 +85,7 @@ export function SiteHeader() {
       <div
         aria-hidden={!open}
         className={cn(
-          "grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out lg:hidden",
+          "grid overflow-hidden transition-[grid-template-rows,opacity] duration-300 ease-out xl:hidden",
           open ? "grid-rows-[1fr] opacity-100" : "pointer-events-none grid-rows-[0fr] opacity-0"
         )}
       >
@@ -183,25 +184,21 @@ function NavDesktopItem({ item }: { item: ReturnType<typeof getNav>[number] }) {
         : "Nem találja, amit keres? Nézze meg az összes szolgáltatást.",
     allServices: locale === "en" ? "All services →" : "Összes szolgáltatás →",
   };
+  const linkClass =
+    "whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-brand-50 hover:text-brand-700 2xl:px-3.5";
   const hasDropdown = !!item.children || !!item.groups;
   if (!hasDropdown) {
     return (
-      <Link
-        href={l(item.href)}
-        className="rounded-full px-3.5 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-brand-50 hover:text-brand-700"
-      >
+      <Link href={l(item.href)} className={linkClass}>
         {item.label}
       </Link>
     );
   }
   return (
     <div className="group relative">
-      <Link
-        href={l(item.href)}
-        className="flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-brand-50 hover:text-brand-700"
-      >
+      <Link href={l(item.href)} className={cn(linkClass, "flex items-center gap-1")}>
         {item.label}
-        <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover:rotate-180" />
+        <ChevronDown className="h-3.5 w-3.5 shrink-0 transition-transform group-hover:rotate-180" />
       </Link>
       <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
         {item.groups ? (

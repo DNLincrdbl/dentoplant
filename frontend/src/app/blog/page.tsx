@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar, Clock, User } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import {
   formatBlogDate,
@@ -65,6 +66,7 @@ export default async function BlogIndexPage({
         title={t.title}
         description={t.desc}
         crumbs={[{ label: t.home, href: "/" }, { label: "Blog" }]}
+        image={PAGE_HEROES.blog}
       />
 
       <section className="border-b border-border bg-background">

@@ -3,6 +3,7 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import { Plus } from "lucide-react";
 import { useLocale } from "@/lib/i18n/context";
+import { TonedSection } from "./toned-section";
 
 const faqs = [
   {
@@ -80,7 +81,7 @@ export function Faq() {
       : "Ha nem találja meg a választ, vegye fel velünk a kapcsolatot — készséggel segítünk a személyes igényei alapján.",
   };
   return (
-    <section className="bg-muted py-20 md:py-28">
+    <TonedSection className="py-28 md:py-36">
       <div className="container-page grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         <div>
           <span className="eyebrow">{t.eyebrow}</span>
@@ -106,7 +107,7 @@ export function Faq() {
                     <Plus className="h-5 w-5 flex-shrink-0 text-brand-600 transition-transform group-data-[state=open]:rotate-45" />
                   </Accordion.Trigger>
                 </Accordion.Header>
-                <Accordion.Content className="overflow-hidden data-[state=closed]:animate-none">
+                <Accordion.Content className="accordion-content">
                   <div className="px-6 pb-6 text-sm leading-relaxed text-muted-foreground">{c.a}</div>
                 </Accordion.Content>
               </Accordion.Item>
@@ -114,6 +115,6 @@ export function Faq() {
           })}
         </Accordion.Root>
       </div>
-    </section>
+    </TonedSection>
   );
 }

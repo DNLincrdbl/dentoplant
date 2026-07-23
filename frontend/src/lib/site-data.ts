@@ -17,7 +17,8 @@ export const SITE = {
   email: "info@dentoplant.hu",
   address: "6726 Szeged, Fő fasor 45.",
   hours: [
-    { day: "Hétfő – Csütörtök", value: "08:00 – 19:00" },
+    { day: "Hétfő", value: "12:00 – 19:00" },
+    { day: "Kedd – Csütörtök", value: "08:00 – 19:00" },
     { day: "Péntek", value: "08:00 – 16:00" },
     { day: "Szombat – Vasárnap", value: "Zárva" },
   ],
@@ -79,7 +80,8 @@ export const NAV: NavItem[] = getNav("hu");
 
 /** Nyitvatartás lokalizálva (a napnevek fordítása). */
 const HOURS_EN: Record<string, string> = {
-  "Hétfő – Csütörtök": "Monday – Thursday",
+  Hétfő: "Monday",
+  "Kedd – Csütörtök": "Tuesday – Thursday",
   Péntek: "Friday",
   "Szombat – Vasárnap": "Saturday – Sunday",
   Zárva: "Closed",

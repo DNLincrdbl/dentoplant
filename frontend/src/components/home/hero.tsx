@@ -13,7 +13,7 @@ import { useLocale, useLocalizedHref } from "@/lib/i18n/context";
  */
 let heroHasAnimated = false;
 
-const REVEAL = "transition-all duration-[900ms] ease-out will-change-transform";
+const REVEAL = "transition-all duration-700 ease-out";
 
 export function Hero() {
   const locale = useLocale();
@@ -83,7 +83,7 @@ export function Hero() {
         >
           <div className="relative aspect-square w-full">
             <Image
-              src="/herologo.png"
+              src="/herologo.webp"
               alt="Dentoplant fogászati és implantológiai rendelő – stilizált fog ikon"
               fill
               priority
