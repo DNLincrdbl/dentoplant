@@ -3,13 +3,13 @@
 import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { SiteHeader } from "./site-header";
+import { PageTransition } from "./page-transition";
 import { useLocale } from "@/lib/i18n/context";
 
 /**
- * Publikus chrome — a footert server componentként kapja propban
- * (így nem kell client bundle a footernek).
- * Nincs page-level loading skeleton / belépő fade: a soft-nav a régi
- * oldalt tartja, amíg az új kész, majd azonnal cserél.
+ * Publikus chrome — a footert server componentként kapja propban.
+ * Nincs route-level loading.tsx: kattintáskor a régi oldal marad, majd
+ * az új tartalom azonnal cserélődik és page-enter animációval beúszik.
  */
 export function PublicChrome({
   children,
@@ -23,13 +23,15 @@ export function PublicChrome({
   const isAdmin = pathname?.startsWith("/admin");
 
   if (isAdmin) {
-    return <>{children}</>;
+    return <PageTransition>{children}</PageTransition>;
   }
 
   return (
     <>
       <SiteHeader key={locale} />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1">
+        <PageTransition>{children}</PageTransition>
+      </main>
       {footer}
     </>
   );
