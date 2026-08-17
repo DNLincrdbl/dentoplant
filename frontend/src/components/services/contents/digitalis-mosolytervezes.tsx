@@ -2,6 +2,7 @@ import {
   BeforeAfter,
   BulletList,
   Callout,
+  Figure,
   InfoPanel,
   Lead,
   MediaText,
@@ -10,10 +11,12 @@ import {
   VideoEmbed,
 } from "../ui";
 import { ToothModelViewer } from "../tooth-model-viewer-lazy";
+import { GalleryGrid } from "@/components/gallery-grid";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
 
 const DIR = "/szolgaltatasok/dsd";
+const NEW = "/Digitalis_mosolytevezes_kepek";
 
 export default function DsdContent({ locale }: ServiceContentProps) {
   const en = locale === "en";
@@ -32,6 +35,13 @@ export default function DsdContent({ locale }: ServiceContentProps) {
         <Lead>{c.introLead}</Lead>
         <p>{c.introBody}</p>
       </Section>
+
+      <Figure
+        src={`${NEW}/dentoplant_digitalis_mosolytervezes_kep1.jpg`}
+        alt={c.altThree}
+        width={630}
+        height={462}
+      />
 
       <Section title={c.archTitle}>
         <p>{c.archIntro}</p>
@@ -74,6 +84,13 @@ export default function DsdContent({ locale }: ServiceContentProps) {
         <ProcessSteps steps={c.steps} />
       </Section>
 
+      <Figure
+        src={`${NEW}/dentoplant_digitalis_mosolytervezes_kep2.jpg`}
+        alt={c.altMirror}
+        width={5760}
+        height={3840}
+      />
+
       <InfoPanel title={c.scanTitle}>
         <p>
           {c.scanBody1}
@@ -114,9 +131,76 @@ export default function DsdContent({ locale }: ServiceContentProps) {
       <Section title={c.forWhomTitle}>
         <BulletList items={c.forWhom} />
       </Section>
+
+      <Section title={c.casesTitle}>
+        <div className="space-y-10">
+          <div className="space-y-4">
+            <h3 className="font-display text-xl text-brand-800 md:text-2xl">{c.case1Title}</h3>
+            <GalleryGrid images={CASE1} labels={c.galleryLabels} />
+          </div>
+          <div className="space-y-4">
+            <h3 className="font-display text-xl text-brand-800 md:text-2xl">{c.case2Title}</h3>
+            <GalleryGrid images={CASE2} labels={c.galleryLabels} />
+          </div>
+        </div>
+      </Section>
     </div>
   );
 }
+
+const CASE1 = [
+  {
+    src: `${NEW}/Esetek/Eset1/dentoplant_digitalis_mosolytervezes_elotte_e1.jpg`,
+    alt: "Digitális mosolytervezés 1. eset — kiindulási állapot",
+    width: 3000,
+    height: 2143,
+  },
+  {
+    src: `${NEW}/Esetek/Eset1/dentoplant_digitalis_mosolytervezes_utana_e1.jpg`,
+    alt: "Digitális mosolytervezés 1. eset — tervezés után",
+    width: 3000,
+    height: 2143,
+  },
+  {
+    src: `${NEW}/Esetek/Eset1/dentoplant_digitalis_mosolytervezes_teljes_e1.jpg`,
+    alt: "Digitális mosolytervezés 1. eset — előtte és utána",
+    width: 3000,
+    height: 3000,
+  },
+];
+
+const CASE2 = [
+  {
+    src: `${NEW}/Esetek/Eset2/dentoplant_digitalis_mosolytervezes_elotte_e2.jpg`,
+    alt: "Digitális mosolytervezés 2. eset — kiindulási állapot",
+    width: 2500,
+    height: 1406,
+  },
+  {
+    src: `${NEW}/Esetek/Eset2/dentoplant_digitalis_mosolytervezes_utana_e2.jpg`,
+    alt: "Digitális mosolytervezés 2. eset — kezelés után",
+    width: 3718,
+    height: 2122,
+  },
+  {
+    src: `${NEW}/Esetek/Eset2/dentoplant_digitalis_mosolytervezes_elotte_utana_e2.jpg`,
+    alt: "Digitális mosolytervezés 2. eset — előtte és utána",
+    width: 2500,
+    height: 3080,
+  },
+  {
+    src: `${NEW}/Esetek/Eset2/dentoplant_digitalis_mosolytervezes_teljes_e2.jpg`,
+    alt: "Digitális mosolytervezés 2. eset — teljes mosoly",
+    width: 1080,
+    height: 1350,
+  },
+  {
+    src: `${NEW}/Esetek/Eset2/dentoplant_digitalis_mosolytervezes_foto_e2.jpeg`,
+    alt: "Digitális mosolytervezés 2. eset — páciens a rendelőben",
+    width: 4032,
+    height: 3024,
+  },
+];
 
 const HU = {
   archTitle: "Fedezze fel a mosolyát",
@@ -134,6 +218,13 @@ const HU = {
   altScanner: "Medit i700 intraorális szkenner",
   altScanning: "Páciens intraorális szkennelése",
   altPlanning: "Digitális mosolytervezés a rendelőben",
+  altThree:
+    "Páciens a tervezett mosolyát nézi a tükörben a Dentoplant kezelőorvosaival",
+  altMirror: "Páciens tükrös portréja digitális mosolytervezés közben",
+  casesTitle: "Esetek",
+  case1Title: "1. eset",
+  case2Title: "2. eset",
+  galleryLabels: { close: "Bezárás", prev: "Előző kép", next: "Következő kép" },
   introTitle: "Digitális mosolytervezés",
   introLead:
     "A Dentoplant Fogászati Rendelőben a frontfogakra készülő fogpótlásokat és a teljes szájrekonstrukciókat az esztétikai fogászat korszerű irányelveit követve, digitális mosolytervezéssel (Digital Smile Design, DSD) végezzük.",
@@ -226,6 +317,12 @@ const EN = {
   altScanner: "Medit i700 intraoral scanner",
   altScanning: "Intraoral scanning of a patient",
   altPlanning: "Digital smile design at the clinic",
+  altThree: "Patient viewing the planned smile in a mirror with Dentoplant dentists",
+  altMirror: "Patient portrait reflected in a dental mirror during Digital Smile Design",
+  casesTitle: "Cases",
+  case1Title: "Case 1",
+  case2Title: "Case 2",
+  galleryLabels: { close: "Close", prev: "Previous image", next: "Next image" },
   introTitle: "Digital Smile Design",
   introLead:
     "At the Dentoplant Dental Clinic we create restorations for the front teeth and complete oral reconstructions following the modern principles of aesthetic dentistry, using Digital Smile Design (DSD).",
