@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { CaseStudy } from "@/lib/cases-data";
+import { Lightbox } from "@/components/lightbox";
 
 type Active = { c: number; i: number } | null;
 
@@ -30,32 +30,7 @@ export function CaseStudies({ cases, labels = DEFAULT_LABELS }: { cases: CaseStu
   const labelText = (l?: string) => (l === "előtte" ? labels.before : l === "utána" ? labels.after : l);
 
   const close = useCallback(() => setActive(null), []);
-  const step = useCallback(
-    (dir: number) =>
-      setActive((a) => {
-        if (!a) return a;
-        const imgs = cases[a.c].images;
-        return { c: a.c, i: (a.i + dir + imgs.length) % imgs.length };
-      }),
-    [cases],
-  );
-
-  useEffect(() => {
-    if (!active) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      else if (e.key === "ArrowLeft") step(-1);
-      else if (e.key === "ArrowRight") step(1);
-    };
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [active, close, step]);
-
-  const current = active ? cases[active.c].images[active.i] : null;
+  const activeImages = active ? cases[active.c].images : [];
 
   return (
     <div className="space-y-16 md:space-y-24">
@@ -133,63 +108,19 @@ export function CaseStudies({ cases, labels = DEFAULT_LABELS }: { cases: CaseStu
         );
       })}
 
-      {current && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          onClick={close}
-        >
-          <button
-            type="button"
-            onClick={close}
-            aria-label={labels.close}
-            className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
-          >
-            <X className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              step(-1);
-            }}
-            aria-label={labels.prev}
-            className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 md:left-6"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              step(1);
-            }}
-            aria-label={labels.next}
-            className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 md:right-6"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </button>
-          <figure
-            className="flex max-h-[88vh] max-w-[92vw] flex-col items-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Image
-              src={current.src}
-              alt={current.alt}
-              width={current.width || 1600}
-              height={current.height || 1067}
-              sizes="92vw"
-              className="max-h-[82vh] w-auto rounded-lg object-contain"
-              priority
-            />
-            <figcaption className="mt-3 max-w-2xl text-center text-sm text-white/80">
-              {current.label ? `${(labelText(current.label) ?? "").toUpperCase()} — ` : ""}
-              {current.alt}
-            </figcaption>
-          </figure>
-        </div>
-      )}
+      <Lightbox
+        images={activeImages}
+        index={active ? active.i : null}
+        onClose={close}
+        onIndexChange={(i) => setActive((a) => (a ? { ...a, i } : a))}
+        labels={{ close: labels.close, prev: labels.prev, next: labels.next }}
+        caption={(_, i) => {
+          const im = activeImages[i];
+          if (!im) return "";
+          const tag = im.label ? labelText(im.label) : "";
+          return tag ? `${tag.toUpperCase()} — ${im.alt}` : im.alt;
+        }}
+      />
     </div>
   );
 }

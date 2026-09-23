@@ -175,15 +175,14 @@ h1, h2, h3, .font-display {
   gap: 0.75rem;
 }
 
-/* Oldal belépő — soft-nav után azonnali csere + rövid fade/felúszás (nincs loading skeleton) */
+/* Oldal belépő — csak opacity. A transform containing blockot hozna létre,
+   és a position:fixed gyerekek (képnézegető) elcsúsznának görgetéskor. */
 @keyframes page-enter {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
