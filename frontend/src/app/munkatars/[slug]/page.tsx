@@ -6,6 +6,8 @@ import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import { TeamPortrait } from "@/components/team-portrait";
 import { TEAM, getTeam, type TeamMember, initials } from "@/lib/team";
+import { getBlogPosts, type BlogPostMeta } from "@/lib/blog";
+import { BlogPostCard } from "@/components/blog-post-card";
 import { getLocale } from "@/lib/i18n/server";
 import { localizeHref } from "@/lib/i18n/config";
 
@@ -45,6 +47,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
+export const revalidate = 60;
+
 export default async function ProfilePage({ params }: { params: Promise<{ slug: string }> }) {
   const locale = await getLocale();
   const en = locale === "en";
@@ -52,6 +56,12 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
   const found = findMember(slug, locale);
   if (!found || !found.member.hasProfile) notFound();
   const { member, group } = found;
+  let posts: BlogPostMeta[] = [];
+  try {
+    posts = await getBlogPosts({ author: slug });
+  } catch {
+    posts = [];
+  }
   const t = {
     home: en ? "Home" : "Főoldal",
     doctors: en ? "Our doctors" : "Orvosaink",
@@ -63,6 +73,12 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
     careerSub: en
       ? "Continuous training, congresses and specialty exams — in reverse chronological order."
       : "Folyamatos képzések, kongresszusok és szakvizsgák — visszafelé időrendben.",
+    articles: en ? "Articles" : "Szakmai írások",
+    articlesSub: en
+      ? `Posts by ${member.name} on the Dentoplant blog.`
+      : `${member.name} cikkei a Dentoplant blogon.`,
+    more: en ? "More →" : "Tovább →",
+    minRead: en ? "min read" : "perc olvasás",
     back: en ? "Back to the team" : "Vissza a csapathoz",
   };
 
@@ -208,6 +224,25 @@ export default async function ProfilePage({ params }: { params: Promise<{ slug: 
             )}
           </div>
         </div>
+
+        {posts.length > 0 && (
+          <div className="mt-16 border-t border-border pt-12 md:mt-20 md:pt-16">
+            <h2 className="font-display text-3xl text-brand-900 md:text-4xl">{t.articles}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">{t.articlesSub}</p>
+            <div className="mt-8 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+              {posts.map((p) => (
+                <BlogPostCard
+                  key={p.slug}
+                  post={p}
+                  locale={locale}
+                  more={t.more}
+                  minRead={t.minRead}
+                  showAuthor={false}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="mt-16 border-t border-border pt-8">
           <Link

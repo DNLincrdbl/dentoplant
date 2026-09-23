@@ -37,7 +37,12 @@ export default function DsdContent({ locale }: ServiceContentProps) {
 
   return (
     <div className="space-y-12">
-      <Crossfade frames={fades[0] ?? []} caption={c.fadeCaption} />
+      <BeforeAfter
+        before={{ src: `${DIR}/dsd-elotte.jpg`, alt: c.altBefore, width: 1800, height: 1098 }}
+        after={{ src: `${DIR}/dsd-utana.jpg`, alt: c.altAfter, width: 1800, height: 1098 }}
+        beforeLabel={c.beforeLabel}
+        afterLabel={c.afterLabel}
+      />
 
       <Section title={c.introTitle}>
         <Lead>{c.introLead}</Lead>
@@ -81,7 +86,9 @@ export default function DsdContent({ locale }: ServiceContentProps) {
         >
           <p>{c.stepsIntro}</p>
         </MediaText>
-        <ProcessSteps steps={c.steps} />
+        <ProcessSteps steps={c.steps.slice(0, 3)} />
+        <Crossfade frames={fades[0] ?? []} caption={c.fadeCaption} />
+        <ProcessSteps steps={c.steps.slice(3)} start={4} />
       </Section>
 
       <Figure {...(work[7] ?? work[2]!)} />
@@ -146,12 +153,6 @@ export default function DsdContent({ locale }: ServiceContentProps) {
         </div>
       </Section>
 
-      <BeforeAfter
-        before={{ src: `${DIR}/dsd-elotte.jpg`, alt: c.altBefore, width: 1800, height: 1098 }}
-        after={{ src: `${DIR}/dsd-utana.jpg`, alt: c.altAfter, width: 1800, height: 1098 }}
-        beforeLabel={c.beforeLabel}
-        afterLabel={c.afterLabel}
-      />
     </div>
   );
 }

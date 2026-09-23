@@ -180,8 +180,10 @@ export function NumberedList({ items }: { items: ReactNode[] }) {
 /** Larger numbered "process" steps (like DSD process). */
 export function ProcessSteps({
   steps,
+  start = 1,
 }: {
   steps: { title: string; body: ReactNode }[];
+  start?: number;
 }) {
   return (
     <ol className="grid gap-3">
@@ -191,7 +193,7 @@ export function ProcessSteps({
           className="flex gap-5 rounded-2xl border border-border bg-background p-5"
         >
           <div className="font-display text-3xl text-brand-300">
-            {String(i + 1).padStart(2, "0")}
+            {String(start + i).padStart(2, "0")}
           </div>
           <div>
             <h3 className="font-display text-lg text-brand-900">{s.title}</h3>

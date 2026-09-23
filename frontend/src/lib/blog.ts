@@ -51,22 +51,20 @@ const USE_API = Boolean(API_BASE);
 
 export async function getBlogPosts(opts?: {
   category?: string;
+  author?: string;
   limit?: number;
 }): Promise<BlogPostMeta[]> {
   if (USE_API) {
-    const raw = await apiGet<BackendPost[]>("/api/blog/public/posts");
-    let posts = raw.map(mapBackendPost).map(stripContent);
-    if (opts?.category) posts = posts.filter((p) => p.category?.slug === opts.category);
-    posts.sort((a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt));
-    if (opts?.limit) posts = posts.slice(0, opts.limit);
-    return posts;
+    try {
+      const raw = await apiGet<BackendPost[]>("/api/blog/public/posts");
+      return applyPostFilters(raw.map(mapBackendPost).map(stripContent), opts);
+    } catch {
+      // Backend nem elérhető (pl. helyi fejlesztés) — mock lista, hogy a
+      // orvosprofilok és a /blog továbbra is kitöltöttek maradjanak.
+    }
   }
 
-  let arr = MOCK_POSTS.map(stripContent);
-  if (opts?.category) arr = arr.filter((p) => p.category?.slug === opts.category);
-  arr.sort((a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt));
-  if (opts?.limit) arr = arr.slice(0, opts.limit);
-  return arr;
+  return applyPostFilters(MOCK_POSTS.map(stripContent), opts);
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | null> {
@@ -75,7 +73,8 @@ export async function getBlogPost(slug: string): Promise<BlogPost | null> {
       const raw = await apiGet<BackendPost>(`/api/blog/public/posts/${slug}`);
       return mapBackendPost(raw);
     } catch (e) {
-      // 404 → null, minden más feldob
+      const mock = MOCK_POSTS.find((p) => p.slug === slug);
+      if (mock) return mock;
       if ((e as { status?: number }).status === 404) return null;
       throw e;
     }
@@ -101,15 +100,8 @@ export async function getBlogCategories(): Promise<BlogCategory[]> {
 
 /** SSG / generateStaticParams számára. */
 export async function getAllBlogSlugs(): Promise<string[]> {
-  if (USE_API) {
-    try {
-      const posts = await getBlogPosts();
-      return posts.map((p) => p.slug);
-    } catch {
-      return [];
-    }
-  }
-  return MOCK_POSTS.map((p) => p.slug);
+  const posts = await getBlogPosts();
+  return posts.map((p) => p.slug);
 }
 
 export function formatBlogDate(iso: string): string {
@@ -129,6 +121,34 @@ function stripContent(p: BlogPost): BlogPostMeta {
   const { contentHtml: _, ...meta } = p;
   void _;
   return meta;
+}
+
+function slugifyAuthor(value: string): string {
+  return value
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function matchesAuthor(post: BlogPostMeta, author: string): boolean {
+  if (post.author?.slug === author) return true;
+  if (post.author?.name && slugifyAuthor(post.author.name) === author) return true;
+  return false;
+}
+
+function applyPostFilters(
+  posts: BlogPostMeta[],
+  opts?: { category?: string; author?: string; limit?: number },
+): BlogPostMeta[] {
+  let list = posts;
+  if (opts?.category) list = list.filter((p) => p.category?.slug === opts.category);
+  if (opts?.author) list = list.filter((p) => matchesAuthor(p, opts.author!));
+  list.sort((a, b) => +new Date(b.publishedAt) - +new Date(a.publishedAt));
+  if (opts?.limit) list = list.slice(0, opts.limit);
+  return list;
 }
 
 /* -------------------------------------------------------------------------- */

@@ -1,15 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, Calendar, Clock, User } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { BlogCoverImage } from "@/components/blog-cover-image";
 import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
-import {
-  formatBlogDate,
-  getBlogCategories,
-  getBlogPosts,
-  type BlogPostMeta,
-} from "@/lib/blog";
+import { getBlogCategories, getBlogPosts, type BlogPostMeta } from "@/lib/blog";
+import { BlogPostCard, BlogPostMetaRow } from "@/components/blog-post-card";
 import { getLocale } from "@/lib/i18n/server";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 
@@ -125,7 +121,7 @@ export default async function BlogIndexPage({
             {rest.length > 0 && (
               <div className="mt-12 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
                 {rest.map((p) => (
-                  <PostCard
+                  <BlogPostCard
                     key={p.slug}
                     post={p}
                     locale={locale}
@@ -180,7 +176,7 @@ function FeaturedCard({
       </div>
 
       <div className="flex flex-col justify-center p-8 md:p-12">
-        <PostMeta post={post} minRead={minRead} />
+        <BlogPostMetaRow post={post} minRead={minRead} />
         <h2 className="mt-4 font-display text-2xl leading-tight text-brand-900 transition-colors group-hover:text-brand-700 md:text-3xl">
           {post.title}
         </h2>
@@ -190,91 +186,5 @@ function FeaturedCard({
         </span>
       </div>
     </Link>
-  );
-}
-
-function PostCard({
-  post,
-  locale,
-  more,
-  minRead,
-}: {
-  post: BlogPostMeta;
-  locale: Locale;
-  more: string;
-  minRead: string;
-}) {
-  return (
-    <Link
-      href={localizeHref(`/blog/${post.slug}`, locale)}
-      className="group flex flex-col overflow-hidden rounded-3xl border border-border bg-background shadow-sm shadow-brand-900/5 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-900/10"
-    >
-      <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500">
-        {post.coverImage ? (
-          <BlogCoverImage
-            src={post.coverImage}
-            alt={post.title}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.55),transparent_60%)]" />
-        )}
-        {post.category && (
-          <span className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold text-brand-700 shadow-sm">
-            {post.category.name}
-          </span>
-        )}
-      </div>
-
-      <div className="flex flex-1 flex-col p-6">
-        <PostMeta post={post} compact minRead={minRead} />
-        <h3 className="mt-3 font-display text-lg leading-snug text-brand-900 transition-colors group-hover:text-brand-700 md:text-xl">
-          {post.title}
-        </h3>
-        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
-          {post.excerpt}
-        </p>
-        <div className="mt-auto pt-4 text-sm font-semibold text-brand-700 transition-all group-hover:gap-2.5">
-          {more}
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function PostMeta({
-  post,
-  compact = false,
-  minRead,
-}: {
-  post: BlogPostMeta;
-  compact?: boolean;
-  minRead: string;
-}) {
-  return (
-    <div
-      className={`flex flex-wrap items-center gap-x-4 gap-y-1.5 ${
-        compact ? "text-[11px]" : "text-xs"
-      } text-muted-foreground`}
-    >
-      <span className="flex items-center gap-1.5">
-        <Calendar className="h-3.5 w-3.5" />
-        {formatBlogDate(post.publishedAt)}
-      </span>
-      {post.readingMinutes && (
-        <span className="flex items-center gap-1.5">
-          <Clock className="h-3.5 w-3.5" />
-          {post.readingMinutes} {minRead}
-        </span>
-      )}
-      {post.author && (
-        <span className="flex items-center gap-1.5">
-          <User className="h-3.5 w-3.5" />
-          {post.author.name}
-        </span>
-      )}
-    </div>
   );
 }
