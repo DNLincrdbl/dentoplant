@@ -36,6 +36,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Drive forrás (nyers, ékezetes mappanevek) — a webre a szolgaltatasok/ alá másolt, tömörített képek mennek
+/public/dento_web.zip
+/public/dento-web/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

@@ -1,10 +1,31 @@
-import { BulletList, Callout, CardGrid, InfoPanel, Lead, Section, SubSection } from "../ui";
+import { BulletList, Callout, CardGrid, Figure, InfoPanel, Lead, MediaText, Section, SubSection } from "../ui";
+import { GalleryGrid } from "@/components/gallery-grid";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
+import photos from "@/lib/service-photos.json";
 
 export default function BolcsessegfogContent({ locale }: ServiceContentProps) {
   const en = locale === "en";
   const c = en ? EN : HU;
+  const work = photos.bolcs_munka.map((p, i) => ({
+    src: p.src,
+    width: p.width,
+    height: p.height,
+    alt: `${c.altWork} (${i + 1})`,
+  }));
+  const ba = photos.bolcs_ba.map((p, i) => ({
+    src: p.src,
+    width: p.width,
+    height: p.height,
+    alt: `${c.altBa} (${i + 1})`,
+  }));
+  const fekvo = photos.bolcs_fekvo.map((p, i) => ({
+    src: p.src,
+    width: p.width,
+    height: p.height,
+    alt: `${c.altFekvo} (${i + 1})`,
+  }));
+
   return (
     <div className="space-y-12">
       <Section title={c.introTitle}>
@@ -12,14 +33,27 @@ export default function BolcsessegfogContent({ locale }: ServiceContentProps) {
         <p>{c.introBody}</p>
       </Section>
 
+      {work[0] && (
+        <MediaText image={work[0]}>
+          <p>{c.workLead}</p>
+        </MediaText>
+      )}
+
       <Section title={c.specialTitle}>
         {c.special.map((p, i) => (
           <p key={i}>{p}</p>
         ))}
       </Section>
 
+      {work[4] && <Figure {...work[4]} />}
+
       <Section title={c.impactedTitle}>
         <p>{c.impactedBody}</p>
+      </Section>
+
+      <Section title={c.baTitle}>
+        <p>{c.baIntro}</p>
+        <GalleryGrid images={ba} labels={c.galleryLabels} />
       </Section>
 
       <Callout
@@ -34,7 +68,9 @@ export default function BolcsessegfogContent({ locale }: ServiceContentProps) {
       </Section>
 
       <Section title={c.removalTitle}>
-        <p>{c.removalBody1}</p>
+        <MediaText reverse image={work[3] ?? work[1]!}>
+          <p>{c.removalBody1}</p>
+        </MediaText>
         <p>{c.removalBody2}</p>
       </Section>
 
@@ -53,6 +89,19 @@ export default function BolcsessegfogContent({ locale }: ServiceContentProps) {
         <p>{c.cbctBody2}</p>
       </InfoPanel>
 
+      <Section title={c.fekvoTitle}>
+        <p>{c.fekvoIntro}</p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {fekvo.map((img) => (
+            <Figure key={img.src} {...img} />
+          ))}
+        </div>
+      </Section>
+
+      <Section title={c.workTitle}>
+        <GalleryGrid images={work} labels={c.galleryLabels} />
+      </Section>
+
       <Section title={c.luckyTitle}>
         <p>{c.luckyBody1}</p>
         <p>{c.luckyBody2}</p>
@@ -62,6 +111,17 @@ export default function BolcsessegfogContent({ locale }: ServiceContentProps) {
 }
 
 const HU = {
+  workLead:
+    "A bölcsességfog eltávolítása rendelőnkben szájsebészeti környezetben, precíz tervezéssel történik.",
+  altWork: "Bölcsességfog eltávolítás munka közben a Dentoplant rendelőben",
+  altBa: "Bölcsességfog eset — előtte és utána",
+  altFekvo: "Fekvő bölcsességfog eltávolítás — előtte és utána egy képen",
+  baTitle: "Esetek — előtte és utána",
+  baIntro: "A képekre kattintva nagyban is megnézheti a beavatkozás előtti és utáni állapotot.",
+  fekvoTitle: "Fekvő helyzetű bölcsességfog",
+  fekvoIntro: "Egy képen a kiindulási állapot és az eltávolítás utáni helyzet.",
+  workTitle: "Munka közben",
+  galleryLabels: { close: "Bezárás", prev: "Előző kép", next: "Következő kép" },
   introTitle: "Amit a bölcsességfogakról tudni érdemes",
   introLead:
     "A bölcsességfogak jellemzően az utolsóként előtörő maradófogaink. 18-25 éves kor körül várható megjelenésük, viszont már jóval korábban okozhatnak gondot.",
@@ -153,6 +213,17 @@ const HU = {
 };
 
 const EN = {
+  workLead:
+    "Wisdom tooth removal in our clinic takes place in an oral-surgery setting, with precise planning.",
+  altWork: "Wisdom tooth removal in progress at the Dentoplant clinic",
+  altBa: "Wisdom tooth case — before and after",
+  altFekvo: "Horizontally impacted wisdom tooth — before and after on one image",
+  baTitle: "Cases — before and after",
+  baIntro: "Click the images to view the condition before and after the procedure in full size.",
+  fekvoTitle: "Horizontally impacted wisdom tooth",
+  fekvoIntro: "Starting condition and the situation after removal, on a single image.",
+  workTitle: "During treatment",
+  galleryLabels: { close: "Close", prev: "Previous image", next: "Next image" },
   introTitle: "What is worth knowing about wisdom teeth",
   introLead:
     "Wisdom teeth are typically the last of our permanent teeth to erupt. Their appearance is expected around the age of 18-25, but they can cause trouble much earlier.",

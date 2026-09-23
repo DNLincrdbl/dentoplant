@@ -278,6 +278,7 @@ h1, h2, h3, .font-display {
   color: var(--brand-900);
   margin-top: 2.5rem;
   margin-bottom: 0.75rem;
+  scroll-margin-top: 7rem;
 }
 
 .prose-blog h3 {
@@ -288,6 +289,7 @@ h1, h2, h3, .font-display {
   color: var(--brand-900);
   margin-top: 2rem;
   margin-bottom: 0.5rem;
+  scroll-margin-top: 7rem;
 }
 
 .prose-blog p {

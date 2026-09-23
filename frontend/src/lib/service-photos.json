@@ -1,0 +1,460 @@
+{
+  "dsd_munka": [
+    {
+      "src": "/szolgaltatasok/dsd/munka/01.jpg",
+      "width": 1024,
+      "height": 768,
+      "from": "1_.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/munka/02.jpg",
+      "width": 1024,
+      "height": 769,
+      "from": "2_.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/munka/03.jpg",
+      "width": 1500,
+      "height": 1999,
+      "from": "3_.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/munka/04.jpg",
+      "width": 2000,
+      "height": 1500,
+      "from": "4.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/munka/05.jpg",
+      "width": 1500,
+      "height": 2000,
+      "from": "IMG_5475.jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/munka/06.jpg",
+      "width": 1500,
+      "height": 2000,
+      "from": "IMG_5479 2 (1).jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/munka/07.jpg",
+      "width": 2000,
+      "height": 1500,
+      "from": "IMG_5480.jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/munka/08.jpg",
+      "width": 2000,
+      "height": 1500,
+      "from": "IMG_5481 2.jpeg"
+    }
+  ],
+  "dsd_bereczki": [
+    {
+      "src": "/szolgaltatasok/dsd/esetek/bereczki-eszter/01.jpg",
+      "width": 2000,
+      "height": 1124,
+      "from": "01.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/bereczki-eszter/02.jpg",
+      "width": 2000,
+      "height": 1124,
+      "from": "02.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/bereczki-eszter/03.jpg",
+      "width": 2000,
+      "height": 1124,
+      "from": "03.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/bereczki-eszter/04.jpg",
+      "width": 1333,
+      "height": 2000,
+      "from": "04.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/bereczki-eszter/05.jpg",
+      "width": 2000,
+      "height": 2000,
+      "from": "05.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/bereczki-eszter/06.jpg",
+      "width": 2000,
+      "height": 1498,
+      "from": "06.jpg"
+    }
+  ],
+  "dsd_emese": [
+    {
+      "src": "/szolgaltatasok/dsd/esetek/szabo-hejja-emese/01.jpg",
+      "width": 2000,
+      "height": 1124,
+      "from": "1.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/szabo-hejja-emese/02.jpg",
+      "width": 1778,
+      "height": 2000,
+      "from": "2.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/szabo-hejja-emese/03.jpg",
+      "width": 2000,
+      "height": 1124,
+      "from": "3.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/szabo-hejja-emese/04.jpg",
+      "width": 2000,
+      "height": 1124,
+      "from": "4.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/szabo-hejja-emese/05.jpg",
+      "width": 2000,
+      "height": 1124,
+      "from": "5.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/szabo-hejja-emese/06v2.jpg",
+      "width": 1428,
+      "height": 2000,
+      "from": "6.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/szabo-hejja-emese/07.jpg",
+      "width": 1778,
+      "height": 2000,
+      "from": "7.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/dsd/esetek/szabo-hejja-emese/08.jpg",
+      "width": 1503,
+      "height": 2000,
+      "from": "Sz-h e 3.jpg"
+    }
+  ],
+  "dsd_attuno": {
+    "1": [
+      {
+        "src": "/szolgaltatasok/dsd/attuno/1-1.jpg",
+        "width": 1999,
+        "height": 1125,
+        "from": "1.1"
+      },
+      {
+        "src": "/szolgaltatasok/dsd/attuno/1-2.jpg",
+        "width": 1999,
+        "height": 1125,
+        "from": "1.2"
+      },
+      {
+        "src": "/szolgaltatasok/dsd/attuno/1-3.jpg",
+        "width": 1905,
+        "height": 1077,
+        "from": "1.3.jpg"
+      }
+    ],
+    "2": [
+      {
+        "src": "/szolgaltatasok/dsd/attuno/2-1.jpg",
+        "width": 1999,
+        "height": 1125,
+        "from": "2.1"
+      },
+      {
+        "src": "/szolgaltatasok/dsd/attuno/2-2.jpg",
+        "width": 1999,
+        "height": 1125,
+        "from": "2.2.jpg"
+      },
+      {
+        "src": "/szolgaltatasok/dsd/attuno/2-3.jpg",
+        "width": 2000,
+        "height": 1125,
+        "from": "2.3"
+      }
+    ],
+    "3": [
+      {
+        "src": "/szolgaltatasok/dsd/attuno/3-1.jpg",
+        "width": 2000,
+        "height": 1428,
+        "from": "3.1.jpg"
+      },
+      {
+        "src": "/szolgaltatasok/dsd/attuno/3-2.jpg",
+        "width": 2000,
+        "height": 1428,
+        "from": "3.2.jpg"
+      },
+      {
+        "src": "/szolgaltatasok/dsd/attuno/3-3.jpg",
+        "width": 1484,
+        "height": 1060,
+        "from": "3.3.jpg"
+      }
+    ],
+    "4": [
+      {
+        "src": "/szolgaltatasok/dsd/attuno/4-1.jpg",
+        "width": 2000,
+        "height": 1125,
+        "from": "4.1.jpg"
+      },
+      {
+        "src": "/szolgaltatasok/dsd/attuno/4-2.jpg",
+        "width": 2000,
+        "height": 1125,
+        "from": "4.2.jpg"
+      },
+      {
+        "src": "/szolgaltatasok/dsd/attuno/4-3.jpg",
+        "width": 2000,
+        "height": 1125,
+        "from": "4.3.jpg"
+      }
+    ]
+  },
+  "bolcs_munka": [
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/munka/01.jpg",
+      "width": 1333,
+      "height": 2000,
+      "from": "Dr. Maráz Kinga dentoplant szeged (1).jpg"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/munka/02.jpg",
+      "width": 2000,
+      "height": 1157,
+      "from": "Dr.Maráz Kinga (1).jpg"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/munka/03.jpg",
+      "width": 1350,
+      "height": 2000,
+      "from": "IMG_2227.jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/munka/04.jpg",
+      "width": 1500,
+      "height": 2000,
+      "from": "IMG_2231.jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/munka/05.jpg",
+      "width": 2000,
+      "height": 1500,
+      "from": "IMG_2235.jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/munka/06.jpg",
+      "width": 2000,
+      "height": 1500,
+      "from": "IMG_2239.jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/munka/07.jpg",
+      "width": 1500,
+      "height": 2000,
+      "from": "IMG_6614 (1).jpeg"
+    }
+  ],
+  "bolcs_ba": [
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/eset-elotte-utana/01.jpg",
+      "width": 2000,
+      "height": 2000,
+      "from": "3.2.bölcsességfog dentoplant szeged fogászat (1).jpg"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/eset-elotte-utana/02.jpg",
+      "width": 1284,
+      "height": 1284,
+      "from": "5. Dentoplant szeged fogorvos bölcsességfog eltávolítás.H2023 másolat (1).jpg"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/eset-elotte-utana/03.jpg",
+      "width": 1292,
+      "height": 1292,
+      "from": "6. Jó bölcsfog (1).jpg"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/eset-elotte-utana/04.jpg",
+      "width": 1292,
+      "height": 1290,
+      "from": "7. Bölcsfog Dentoplant (1).jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/eset-elotte-utana/05.jpg",
+      "width": 1294,
+      "height": 1294,
+      "from": "Jó.görbe.bölcsfog..png"
+    }
+  ],
+  "bolcs_fekvo": [
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/eset-fekvo/01.jpg",
+      "width": 1724,
+      "height": 1160,
+      "from": "2. Dentoplant bölcsfog (1).png"
+    },
+    {
+      "src": "/szolgaltatasok/bolcsessegfog/eset-fekvo/02.jpg",
+      "width": 459,
+      "height": 305,
+      "from": "Dentoplant bölcsességfog.jpg"
+    }
+  ],
+  "micro_munka": [
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/01.jpg",
+      "width": 1500,
+      "height": 2000,
+      "from": "IMG_8967.jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/02.jpg",
+      "width": 1500,
+      "height": 2000,
+      "from": "IMG_8994.1.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/03.jpg",
+      "width": 1500,
+      "height": 2000,
+      "from": "IMG_8994.jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/04.jpg",
+      "width": 2000,
+      "height": 1500,
+      "from": "IMG_9006.jpeg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/05.jpg",
+      "width": 2000,
+      "height": 974,
+      "from": "Mikroszkópos fogászat szeged.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/06.jpg",
+      "width": 2000,
+      "height": 1484,
+      "from": "untitled-0001.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/07.jpg",
+      "width": 2000,
+      "height": 1414,
+      "from": "untitled-0002.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/08.jpg",
+      "width": 2000,
+      "height": 1396,
+      "from": "untitled-0003.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/09.jpg",
+      "width": 1732,
+      "height": 2000,
+      "from": "untitled-0004.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/10.jpg",
+      "width": 2000,
+      "height": 1404,
+      "from": "untitled-0005.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/11.jpg",
+      "width": 1962,
+      "height": 2000,
+      "from": "untitled-0006.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/12.jpg",
+      "width": 1430,
+      "height": 2000,
+      "from": "untitled-0007.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/13.jpg",
+      "width": 2000,
+      "height": 1581,
+      "from": "untitled-0008.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/14.jpg",
+      "width": 1710,
+      "height": 2000,
+      "from": "untitled-0009.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/15.jpg",
+      "width": 2000,
+      "height": 1574,
+      "from": "untitled-0010.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/16.jpg",
+      "width": 2000,
+      "height": 1404,
+      "from": "untitled-0011.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/17.jpg",
+      "width": 1757,
+      "height": 2000,
+      "from": "untitled-0012.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/18.jpg",
+      "width": 2000,
+      "height": 1518,
+      "from": "untitled-0013.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/19.jpg",
+      "width": 2000,
+      "height": 1514,
+      "from": "untitled-0014.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/munka/20.jpg",
+      "width": 2000,
+      "height": 1823,
+      "from": "untitled-0015.jpg"
+    }
+  ],
+  "micro_esetek": [
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/esetek/01.jpg",
+      "width": 1720,
+      "height": 1266,
+      "from": "2..png"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/esetek/02.jpg",
+      "width": 1720,
+      "height": 1266,
+      "from": "3.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/esetek/03.jpg",
+      "width": 1720,
+      "height": 1266,
+      "from": "4.jpg"
+    },
+    {
+      "src": "/szolgaltatasok/mikroszkopos-fogaszat/esetek/04.jpg",
+      "width": 2000,
+      "height": 1466,
+      "from": "5.jpg"
+    }
+  ]
+}

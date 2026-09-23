@@ -4,7 +4,7 @@
  * Csak kliens-oldalon használható (a fetch hívások cookie-t kísérnek).
  */
 
-import { apiGet, apiPost, apiPut, apiDelete, clearCsrfCache, resolveAsset } from "./api";
+import { apiGet, apiPost, apiPut, apiDelete, clearCsrfCache, setCsrfToken, resolveAsset } from "./api";
 
 /* -------------------------------------------------------------------------- */
 /*  Típusok                                                                    */
@@ -53,11 +53,14 @@ export type BlogPostInput = {
 /* -------------------------------------------------------------------------- */
 
 export async function adminLogin(email: string, password: string, remember = false) {
-  const r = await apiPost<{ ok: true; user: AdminUser }>("/auth/login", {
+  const r = await apiPost<{ ok: true; user: AdminUser; csrfToken?: string }>("/auth/login", {
     email,
     password,
     remember,
   });
+  // A login session.clear()-eli a régi CSRF-t — friss token kell a következő mentésekhez.
+  if (r.csrfToken) setCsrfToken(r.csrfToken);
+  else clearCsrfCache();
   return r.user;
 }
 

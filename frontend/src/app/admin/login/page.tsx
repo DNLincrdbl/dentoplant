@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Lock, Mail } from "lucide-react";
-import { ApiError } from "@/lib/api";
+import { formatApiError } from "@/lib/api";
 import { adminLogin } from "@/lib/admin";
 
 export default function AdminLoginPage() {
@@ -22,10 +22,7 @@ export default function AdminLoginPage() {
       await adminLogin(email.trim(), password, remember);
       router.replace("/admin");
     } catch (err) {
-      const e = err as ApiError;
-      if (e.status === 401) setError("Hibás email vagy jelszó.");
-      else if (e.status === 429) setError("Túl sok sikertelen próbálkozás — próbáld pár perc múlva.");
-      else setError(e.message || "Nem sikerült bejelentkezni.");
+      setError(formatApiError(err));
     } finally {
       setSubmitting(false);
     }

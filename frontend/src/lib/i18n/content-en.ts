@@ -26,6 +26,11 @@ export const SERVICE_EN: Record<string, { name: string; summary: string }> = {
     summary:
       "Root canal treatment to preserve your teeth. It is a tooth-saving procedure performed when the pulp — the living tissue inside the tooth — has suffered irreversible damage.",
   },
+  "mikroszkopos-fogaszat": {
+    name: "Microscope dentistry",
+    summary:
+      "The goal is to save your own tooth. With an operating microscope — Zeiss Extaro 300 — we work at up to 25× magnification: root canal treatment, removal of broken instruments, precision restorations and periodontal microsurgery.",
+  },
   parodontologia: {
     name: "Periodontology",
     summary:

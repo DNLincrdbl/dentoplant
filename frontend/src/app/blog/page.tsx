@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Calendar, Clock, User } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
+import { BlogCoverImage } from "@/components/blog-cover-image";
 import { PAGE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import {
@@ -162,7 +162,7 @@ function FeaturedCard({
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500 lg:aspect-auto">
         {post.coverImage ? (
-          <Image
+          <BlogCoverImage
             src={post.coverImage}
             alt={post.title}
             fill
@@ -211,7 +211,7 @@ function PostCard({
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500">
         {post.coverImage ? (
-          <Image
+          <BlogCoverImage
             src={post.coverImage}
             alt={post.title}
             fill

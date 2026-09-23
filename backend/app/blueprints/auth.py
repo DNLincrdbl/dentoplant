@@ -74,11 +74,17 @@ def login() -> tuple[Response, int]:
     session[const.SESSION_IS_ADMIN] = user.is_admin
     session[const.SESSION_EMAIL] = user.email
 
+    # Új CSRF a session.clear() után — a frontend cache-elt régi token különben 403-at ad.
+    import secrets
+    csrf = secrets.token_urlsafe(32)
+    session[const.SESSION_CSRF_TOKEN] = csrf
+
     utils.clear_failed_login_attempts(session)
 
     return jsonify({
         "ok": True,
-        "user": user.to_safe_dict()
+        "user": user.to_safe_dict(),
+        "csrfToken": csrf,
     }), 200
 
 @auth_bp.post("/logout")

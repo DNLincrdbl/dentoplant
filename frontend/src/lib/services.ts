@@ -83,6 +83,16 @@ export const SERVICES: Service[] = [
     hasFullContent: true,
   },
   {
+    slug: "mikroszkopos-fogaszat",
+    name: "Mikroszkópos fogászat",
+    category: "Fogmegtartás",
+    icon: Microscope,
+    doctors: ["dr-sebok-eszter", "dr-maraz-kinga"],
+    summary:
+      "A saját fog megmentése a cél. Operációs mikroszkóppal — Zeiss Extaro 300 — akár 25-szörös nagyításban dolgozunk: gyökérkezelés, betört műszer eltávolítása, precíziós fogpótlás és parodontológiai mikrosebészet.",
+    hasFullContent: true,
+  },
+  {
     slug: "parodontologia",
     name: "Parodontológia",
     category: "Fogmegtartás",

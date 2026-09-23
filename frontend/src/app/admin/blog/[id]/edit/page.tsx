@@ -17,7 +17,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
         const p = await adminGetPost(id);
         if (!cancelled) setPost(p);
       } catch (err) {
-        if (!cancelled) setError((err as ApiError).message || "Cikk nem található.");
+        if (!cancelled) setError((err as ApiError).message || "Bejegyzés nem található.");
       }
     })();
     return () => {
@@ -39,7 +39,9 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
 
   return (
     <div>
-      <h1 className="mb-6 font-display text-3xl text-brand-900 md:text-4xl">Cikk szerkesztése</h1>
+      <h1 className="mb-6 font-display text-3xl text-brand-900 md:text-4xl">
+        Bejegyzés szerkesztése
+      </h1>
       <PostForm post={post} />
     </div>
   );

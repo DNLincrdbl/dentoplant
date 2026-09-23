@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Calendar, Clock, User } from "lucide-react";
+import { BlogCoverImage } from "@/components/blog-cover-image";
 import { CtaContact } from "@/components/home/cta-contact";
 import {
   formatBlogDate,
@@ -9,6 +9,8 @@ import {
   getBlogPost,
   getBlogPosts,
 } from "@/lib/blog";
+import { withHeadingIds } from "@/lib/blog-toc";
+import { BlogToc } from "@/components/blog-toc";
 import { getLocale } from "@/lib/i18n/server";
 import { localizeHref } from "@/lib/i18n/config";
 
@@ -65,7 +67,10 @@ export default async function BlogPostPage({
     minRead: en ? "min read" : "perc olvasás",
     back: en ? "Back to all articles" : "Vissza az összes cikkhez",
     related: en ? "Related articles" : "Kapcsolódó cikkek",
+    toc: en ? "In this article" : "Tartalom",
   };
+
+  const { html: contentHtml, items: tocItems } = withHeadingIds(post.contentHtml);
 
   return (
     <>
@@ -143,7 +148,7 @@ export default async function BlogPostPage({
         {post.coverImage && (
           <div className="container-page mt-8">
             <div className="relative mx-auto aspect-[16/9] max-w-4xl overflow-hidden rounded-3xl bg-muted">
-              <Image
+              <BlogCoverImage
                 src={post.coverImage}
                 alt={post.title}
                 fill
@@ -157,10 +162,13 @@ export default async function BlogPostPage({
 
         {/* Tartalom */}
         <div className="container-page py-14 md:py-20">
-          <div
-            className="prose-blog mx-auto max-w-3xl text-foreground/85"
-            dangerouslySetInnerHTML={{ __html: post.contentHtml }}
-          />
+          <div className="mx-auto max-w-3xl">
+            <BlogToc items={tocItems} title={t.toc} />
+            <div
+              className="prose-blog text-foreground/85"
+              dangerouslySetInnerHTML={{ __html: contentHtml }}
+            />
+          </div>
         </div>
       </article>
 
@@ -194,7 +202,7 @@ export default async function BlogPostPage({
                   >
                     <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500">
                       {r.coverImage && (
-                        <Image
+                        <BlogCoverImage
                           src={r.coverImage}
                           alt={r.title}
                           fill

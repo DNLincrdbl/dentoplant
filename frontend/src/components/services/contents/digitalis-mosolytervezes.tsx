@@ -10,53 +10,53 @@ import {
   Section,
   VideoEmbed,
 } from "../ui";
-import { ToothModelViewer } from "../tooth-model-viewer-lazy";
+import { Crossfade } from "../crossfade";
 import { GalleryGrid } from "@/components/gallery-grid";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
+import photos from "@/lib/service-photos.json";
 
 const DIR = "/szolgaltatasok/dsd";
-const NEW = "/Digitalis_mosolytevezes_kepek";
+
+function labeled(
+  list: { src: string; width: number; height: number }[],
+  alt: (i: number) => string,
+) {
+  return list.map((p, i) => ({ src: p.src, width: p.width, height: p.height, alt: alt(i) }));
+}
 
 export default function DsdContent({ locale }: ServiceContentProps) {
   const en = locale === "en";
   const c = en ? EN : HU;
+  const work = labeled(photos.dsd_munka, (i) => `${c.altWork} (${i + 1})`);
+  const bereczki = labeled(photos.dsd_bereczki, (i) => `${c.caseBereczki} — ${i + 1}`);
+  const emese = labeled(photos.dsd_emese, (i) => `${c.caseEmese} — ${i + 1}`);
+  const fades = Object.values(photos.dsd_attuno).map((frames, n) =>
+    labeled(frames, (i) => `${c.fadeTitle} ${n + 1} — ${i + 1}`),
+  );
 
   return (
     <div className="space-y-12">
-      <BeforeAfter
-        before={{ src: `${DIR}/dsd-elotte.jpg`, alt: c.altBefore, width: 1800, height: 1098 }}
-        after={{ src: `${DIR}/dsd-utana.jpg`, alt: c.altAfter, width: 1800, height: 1098 }}
-        beforeLabel={c.beforeLabel}
-        afterLabel={c.afterLabel}
-      />
+      <Crossfade frames={fades[0] ?? []} caption={c.fadeCaption} />
 
       <Section title={c.introTitle}>
         <Lead>{c.introLead}</Lead>
         <p>{c.introBody}</p>
       </Section>
 
-      <Figure
-        src={`${NEW}/dentoplant_digitalis_mosolytervezes_kep1.jpg`}
-        alt={c.altThree}
-        width={630}
-        height={462}
-      />
-
-      <Section title={c.archTitle}>
-        <p>{c.archIntro}</p>
-        <ToothModelViewer locale={locale as Locale} />
-      </Section>
+      <MediaText image={work[4] ?? work[0]!}>
+        <p>{c.workLead}</p>
+      </MediaText>
 
       <Section title={c.whatTitle}>
-        <MediaText
-          image={{ src: `${DIR}/dsd-csapat.jpg`, alt: c.altTeam, width: 1600, height: 1066 }}
-        >
+        <MediaText image={work[6] ?? work[1]!}>
           <p>{c.whatBody[0]}</p>
         </MediaText>
         <p>{c.whatBody[1]}</p>
         <p>{c.whatBody[2]}</p>
       </Section>
+
+      <GalleryGrid images={work.slice(0, 4)} labels={c.galleryLabels} />
 
       <Section title={c.videoTitle}>
         <VideoEmbed id="mo90lrm2EBQ" title={c.videoTitle} />
@@ -84,12 +84,7 @@ export default function DsdContent({ locale }: ServiceContentProps) {
         <ProcessSteps steps={c.steps} />
       </Section>
 
-      <Figure
-        src={`${NEW}/dentoplant_digitalis_mosolytervezes_kep2.jpg`}
-        alt={c.altMirror}
-        width={5760}
-        height={3840}
-      />
+      <Figure {...(work[7] ?? work[2]!)} />
 
       <InfoPanel title={c.scanTitle}>
         <p>
@@ -117,10 +112,7 @@ export default function DsdContent({ locale }: ServiceContentProps) {
       </Section>
 
       <Section title={c.benefitsTitle}>
-        <MediaText
-          reverse
-          image={{ src: "/csongor_dm.jpg", alt: c.altPlanning, width: 4032, height: 1872 }}
-        >
+        <MediaText reverse image={work[3] ?? work[0]!}>
           <p>{c.benefitsBody}</p>
         </MediaText>
         {c.benefitsParas.map((p, i) => (
@@ -135,77 +127,46 @@ export default function DsdContent({ locale }: ServiceContentProps) {
       <Section title={c.casesTitle}>
         <div className="space-y-10">
           <div className="space-y-4">
-            <h3 className="font-display text-xl text-brand-800 md:text-2xl">{c.case1Title}</h3>
-            <GalleryGrid images={CASE1} labels={c.galleryLabels} />
+            <h3 className="font-display text-xl text-brand-800 md:text-2xl">{c.caseBereczki}</h3>
+            <GalleryGrid images={bereczki} labels={c.galleryLabels} />
           </div>
           <div className="space-y-4">
-            <h3 className="font-display text-xl text-brand-800 md:text-2xl">{c.case2Title}</h3>
-            <GalleryGrid images={CASE2} labels={c.galleryLabels} />
+            <h3 className="font-display text-xl text-brand-800 md:text-2xl">{c.caseEmese}</h3>
+            <GalleryGrid images={emese} labels={c.galleryLabels} />
           </div>
         </div>
       </Section>
+
+      <Section title={c.fadeTitle}>
+        <p>{c.fadeIntro}</p>
+        <div className="grid gap-6 sm:grid-cols-2">
+          {fades.map((frames, i) => (
+            <Crossfade key={i} frames={frames} caption={`${c.fadeCase} ${i + 1}`} />
+          ))}
+        </div>
+      </Section>
+
+      <BeforeAfter
+        before={{ src: `${DIR}/dsd-elotte.jpg`, alt: c.altBefore, width: 1800, height: 1098 }}
+        after={{ src: `${DIR}/dsd-utana.jpg`, alt: c.altAfter, width: 1800, height: 1098 }}
+        beforeLabel={c.beforeLabel}
+        afterLabel={c.afterLabel}
+      />
     </div>
   );
 }
 
-const CASE1 = [
-  {
-    src: `${NEW}/Esetek/Eset1/dentoplant_digitalis_mosolytervezes_elotte_e1.jpg`,
-    alt: "Digitális mosolytervezés 1. eset — kiindulási állapot",
-    width: 3000,
-    height: 2143,
-  },
-  {
-    src: `${NEW}/Esetek/Eset1/dentoplant_digitalis_mosolytervezes_utana_e1.jpg`,
-    alt: "Digitális mosolytervezés 1. eset — tervezés után",
-    width: 3000,
-    height: 2143,
-  },
-  {
-    src: `${NEW}/Esetek/Eset1/dentoplant_digitalis_mosolytervezes_teljes_e1.jpg`,
-    alt: "Digitális mosolytervezés 1. eset — előtte és utána",
-    width: 3000,
-    height: 3000,
-  },
-];
-
-const CASE2 = [
-  {
-    src: `${NEW}/Esetek/Eset2/dentoplant_digitalis_mosolytervezes_elotte_e2.jpg`,
-    alt: "Digitális mosolytervezés 2. eset — kiindulási állapot",
-    width: 2500,
-    height: 1406,
-  },
-  {
-    src: `${NEW}/Esetek/Eset2/dentoplant_digitalis_mosolytervezes_utana_e2.jpg`,
-    alt: "Digitális mosolytervezés 2. eset — kezelés után",
-    width: 3718,
-    height: 2122,
-  },
-  {
-    src: `${NEW}/Esetek/Eset2/dentoplant_digitalis_mosolytervezes_elotte_utana_e2.jpg`,
-    alt: "Digitális mosolytervezés 2. eset — előtte és utána",
-    width: 2500,
-    height: 3080,
-  },
-  {
-    src: `${NEW}/Esetek/Eset2/dentoplant_digitalis_mosolytervezes_teljes_e2.jpg`,
-    alt: "Digitális mosolytervezés 2. eset — teljes mosoly",
-    width: 1080,
-    height: 1350,
-  },
-  {
-    src: `${NEW}/Esetek/Eset2/dentoplant_digitalis_mosolytervezes_foto_e2.jpeg`,
-    alt: "Digitális mosolytervezés 2. eset — páciens a rendelőben",
-    width: 4032,
-    height: 3024,
-  },
-];
-
 const HU = {
-  archTitle: "Fedezze fel a mosolyát",
-  archIntro:
-    "A mosoly minden foga saját szerepet tölt be az esztétikában és a rágásban. Kattintson az alábbi 3D fogsor bármely fogára — a kamera ráközelít, a fog kiemelkedik és megjelenik a neve.",
+  workLead:
+    "A tervezés fotódokumentációval és intraorális szkenneléssel indul — a rendelőben, a pácienssel közösen.",
+  altWork: "Digitális mosolytervezés munka közben a Dentoplant rendelőben",
+  caseBereczki: "Bereczki Eszter",
+  caseEmese: "Szabó Héjja Emese",
+  fadeTitle: "Áttűnő esetek",
+  fadeCaption: "Előtte → utána",
+  fadeIntro:
+    "Az alábbi képpárok lassan váltanak a kiindulási állapot és a kész mosoly között.",
+  fadeCase: "Eset",
   videoTitle: "Nézze meg, hogyan tervezzük meg mosolyát",
   videoCaption:
     "A digitális mosolytervezés segítségével egyedi és személyes mosolyterv készül Önnek! A számítógépes tervezés során be tudjuk mutatni, hogy milyen esztétikai változtatások lehetnek előnyösek ahhoz, hogy mosolya hibátlan legyen. Kérjen időpontot konzultációra!",
@@ -302,9 +263,15 @@ const HU = {
 };
 
 const EN = {
-  archTitle: "Explore your smile",
-  archIntro:
-    "Every tooth in a smile plays its own role in both aesthetics and chewing. Click any tooth on the 3D model below — the camera zooms in, the tooth lights up and its name appears.",
+  workLead:
+    "Planning starts with photo documentation and intraoral scanning — in the clinic, together with the patient.",
+  altWork: "Digital Smile Design in progress at the Dentoplant clinic",
+  caseBereczki: "Bereczki Eszter",
+  caseEmese: "Szabó Héjja Emese",
+  fadeTitle: "Before–after transitions",
+  fadeCaption: "Before → after",
+  fadeIntro: "The image pairs below slowly fade from the starting condition to the finished smile.",
+  fadeCase: "Case",
   videoTitle: "See how we design your smile",
   videoCaption:
     "With Digital Smile Design, a unique and personal smile plan is created for you! During the computer-aided planning we can show which aesthetic changes would be beneficial to make your smile flawless. Book an appointment for a consultation!",

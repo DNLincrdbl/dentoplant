@@ -75,7 +75,7 @@ const tiles = [
     href: "/szolgaltatasok/mikroszkopos-fogaszat",
     span: "md:col-span-5",
     tone: "muted" as const,
-    image: null as string | null,
+    image: "/szolgaltatasok/mikroszkopos-fogaszat/munka/05.jpg" as string | null,
     icon: Microscope,
     hu: {
       label: "Mikroszkópos kezelések",

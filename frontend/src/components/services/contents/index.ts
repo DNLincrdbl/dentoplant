@@ -13,6 +13,7 @@ import EsztetikaiFogaszat from "./esztetikai-fogaszat";
 import Fogfeherites from "./fogfeherites";
 import Implantatum from "./implantatum";
 import Fogszabalyozas from "./fogszabalyozas";
+import MikroszkoposFogaszat from "./mikroszkopos-fogaszat";
 
 /**
  * Registry of fully-implemented service detail pages.
@@ -35,4 +36,5 @@ export const SERVICE_CONTENTS: Record<string, ComponentType<ServiceContentProps>
   fogfeherites: Fogfeherites,
   implantatum: Implantatum,
   fogszabalyozas: Fogszabalyozas,
+  "mikroszkopos-fogaszat": MikroszkoposFogaszat,
 };

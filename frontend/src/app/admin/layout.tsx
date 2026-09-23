@@ -62,10 +62,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </Link>
             <nav className="hidden items-center gap-1 md:flex">
               <AdminNavLink href="/admin" exact icon={<FileText className="h-4 w-4" />}>
-                Cikkek
+                Bejegyzések
               </AdminNavLink>
               <AdminNavLink href="/admin/blog/new" icon={<Plus className="h-4 w-4" />}>
-                Új cikk
+                Új bejegyzés
               </AdminNavLink>
             </nav>
           </div>
