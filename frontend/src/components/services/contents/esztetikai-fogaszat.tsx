@@ -1,9 +1,17 @@
-import { BulletList, Callout, Lead, Section } from "../ui";
+import { BulletList, Callout, Lead, MediaText, Section } from "../ui";
+import { GalleryGrid } from "@/components/gallery-grid";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
+import photos from "@/lib/service-photos.json";
 
 export default function EsztetikaiFogaszatContent({ locale }: ServiceContentProps) {
   const c = locale === "en" ? EN : HU;
+  const imgs = photos.esztetika.map((p, i) => ({
+    src: p.src,
+    width: p.width,
+    height: p.height,
+    alt: `${c.alt} (${i + 1})`,
+  }));
   return (
     <div className="space-y-12">
       <Section title={c.introTitle}>
@@ -12,9 +20,17 @@ export default function EsztetikaiFogaszatContent({ locale }: ServiceContentProp
         <p>{c.introBody2}</p>
       </Section>
 
+      {imgs[2] && (
+        <MediaText image={imgs[2]}>
+          <p>{c.introLead}</p>
+        </MediaText>
+      )}
+
       <Section title={c.listTitle}>
         <BulletList items={c.list} />
       </Section>
+
+      <GalleryGrid images={imgs} labels={c.galleryLabels} />
 
       <Callout
         title={c.calloutTitle}
@@ -27,6 +43,8 @@ export default function EsztetikaiFogaszatContent({ locale }: ServiceContentProp
 }
 
 const HU = {
+  alt: "Esztétikai fogászat a Dentoplant rendelőben",
+  galleryLabels: { close: "Bezárás", prev: "Előző kép", next: "Következő kép" },
   introTitle: "Smile Makeover — a mosoly esztétikája",
   introLead: "Az esztétikai fogászat napjainkra már nem egy esztétikus tömés készítéséről szól.",
   introBody:
@@ -63,6 +81,8 @@ const HU = {
 };
 
 const EN = {
+  alt: "Cosmetic dentistry at the Dentoplant clinic",
+  galleryLabels: { close: "Close", prev: "Previous image", next: "Next image" },
   introTitle: "Smile Makeover — the aesthetics of a smile",
   introLead: "Aesthetic dentistry today is no longer about making a single aesthetic filling.",
   introBody:

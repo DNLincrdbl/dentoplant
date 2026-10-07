@@ -36,6 +36,20 @@ export function MediaText({
   );
 }
 
+/** Kiemelt szakmai pecsét / tanúsítvány blokk. */
+export function CertPanel({ title, children }: { title?: string; children: ReactNode }) {
+  return (
+    <div className="rounded-2xl border-2 border-brand-600 bg-brand-50/70 p-6 shadow-sm">
+      {title && (
+        <h3 className="font-display text-lg text-brand-900 md:text-xl">{title}</h3>
+      )}
+      <div className={`text-base leading-relaxed text-brand-900/90 ${title ? "mt-3" : ""}`}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
 /** A single framed image with optional caption. */
 export function Figure({ src, alt, width, height, caption }: Media & { caption?: string }) {
   return (

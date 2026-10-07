@@ -49,7 +49,7 @@ export default function MikroszkoposFogaszatContent({ locale }: ServiceContentPr
         <p>{c.whyBody}</p>
       </Section>
 
-      {work[0] && <Figure {...work[0]} />}
+      {work[5] && <Figure {...work[5]} />}
 
       <Section title={c.useTitle}>
         <SubSection title={c.use1Title}>
@@ -75,10 +75,13 @@ export default function MikroszkoposFogaszatContent({ locale }: ServiceContentPr
         </SubSection>
       </Section>
 
-      <GalleryGrid images={work.slice(1, 7)} labels={c.galleryLabels} />
+      <GalleryGrid
+        images={[work[0], work[3], work[7]].filter(Boolean)}
+        labels={c.galleryLabels}
+      />
 
       <Section title={c.duringTitle}>
-        <MediaText reverse image={work[3] ?? work[1]!}>
+        <MediaText reverse image={cases[0] ?? work[3]!}>
           <p>{c.duringBody}</p>
         </MediaText>
       </Section>
@@ -95,11 +98,14 @@ export default function MikroszkoposFogaszatContent({ locale }: ServiceContentPr
           <p>{c.case3Body}</p>
         </SubSection>
         <p>{c.caseClose}</p>
-        <GalleryGrid images={cases} labels={c.galleryLabels} />
+        <GalleryGrid images={cases.slice(1)} labels={c.galleryLabels} />
       </Section>
 
       <Section title={c.workTitle}>
-        <GalleryGrid images={work.slice(7)} labels={c.galleryLabels} />
+        <GalleryGrid
+          images={[work[5], work[6], work[8], work[10], work[13]].filter(Boolean)}
+          labels={c.galleryLabels}
+        />
       </Section>
 
       <Section title={c.summaryTitle}>

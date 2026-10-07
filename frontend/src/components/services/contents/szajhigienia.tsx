@@ -1,9 +1,17 @@
-import { BulletList, Callout, CardGrid, Lead, ProcessSteps, Section, SubSection } from "../ui";
+import { BulletList, Callout, CardGrid, Lead, MediaText, ProcessSteps, Section, SubSection } from "../ui";
+import { GalleryGrid } from "@/components/gallery-grid";
 import type { ServiceContentProps } from "./index";
+import photos from "@/lib/service-photos.json";
 
 export default function SzajhigieniaContent({ locale }: ServiceContentProps) {
   const en = locale === "en";
   const c = en ? EN : HU;
+  const imgs = photos.fogko.map((p, i) => ({
+    src: p.src,
+    width: p.width,
+    height: p.height,
+    alt: `${c.alt} (${i + 1})`,
+  }));
   return (
     <div className="space-y-12">
       <Section title={c.introTitle}>
@@ -11,8 +19,13 @@ export default function SzajhigieniaContent({ locale }: ServiceContentProps) {
         <p>{c.introBody}</p>
       </Section>
 
+      {imgs[0] && (
+        <MediaText image={imgs[0]}>
+          <p>{c.programBody1}</p>
+        </MediaText>
+      )}
+
       <Section title={c.programTitle}>
-        <p>{c.programBody1}</p>
         <p>{c.programBody2}</p>
       </Section>
 
@@ -48,11 +61,15 @@ export default function SzajhigieniaContent({ locale }: ServiceContentProps) {
       <Section title={c.clinicTitle}>
         <ProcessSteps steps={c.clinic} />
       </Section>
+
+      <GalleryGrid images={imgs.slice(1)} labels={c.galleryLabels} />
     </div>
   );
 }
 
 const HU = {
+  alt: "Fogkőeltávolítás a Dentoplant rendelőben",
+  galleryLabels: { close: "Bezárás", prev: "Előző kép", next: "Következő kép" },
   introTitle: "Egészséges mosoly, hosszú távú eredmény",
   introLead:
     "Egészséges mosolya erősíti önbizalmát és sikereit a mindennapokban. Munkánk hosszú távú eredményességének feltétele az Ön szép és egészséges mosolya.",
@@ -128,6 +145,8 @@ const HU = {
 };
 
 const EN = {
+  alt: "Tartar removal at the Dentoplant clinic",
+  galleryLabels: { close: "Close", prev: "Previous image", next: "Next image" },
   introTitle: "A healthy smile, lasting results",
   introLead:
     "A healthy smile strengthens your confidence and success in everyday life. A condition for the long-term success of our work is your beautiful and healthy smile.",

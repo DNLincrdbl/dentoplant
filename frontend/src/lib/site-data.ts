@@ -2,7 +2,7 @@ import {
   SERVICE_CATEGORIES,
   categoryLabel,
   getServicesByCategory,
-  serviceName,
+  serviceNavName,
 } from "./services";
 import { TEAM } from "./team";
 import type { Locale } from "./i18n/config";
@@ -28,7 +28,12 @@ export const SITE = {
   },
 } as const;
 
-export type NavChild = { label: string; href: string; description?: string };
+export type NavChild = {
+  label: string;
+  href?: string;
+  description?: string;
+  children?: NavChild[];
+};
 export type NavGroup = { heading: string; description?: string; children: NavChild[] };
 export type NavItem = {
   label: string;
@@ -61,10 +66,7 @@ export function getNav(locale: Locale): NavItem[] {
       groups: SERVICE_CATEGORIES.map((cat) => ({
         heading: categoryLabel(cat.name, locale),
         description: cat.description,
-        children: getServicesByCategory(cat.name).map((s) => ({
-          label: serviceName(s, locale),
-          href: `/szolgaltatasok/${s.slug}`,
-        })),
+        children: navChildrenForCategory(cat.name, locale),
       })),
     },
     { label: label("Árak", locale), href: "/arak" },
@@ -74,6 +76,32 @@ export function getNav(locale: Locale): NavItem[] {
     { label: label("Blog", locale), href: "/blog" },
     { label: label("Kapcsolat", locale), href: "/kapcsolat" },
   ];
+}
+
+function navChildrenForCategory(
+  category: import("./services").ServiceCategory,
+  locale: Locale,
+): NavChild[] {
+  const services = getServicesByCategory(category);
+  const unclustered: NavChild[] = [];
+  const clusters = new Map<string, NavChild[]>();
+  for (const s of services) {
+    const item: NavChild = {
+      label: serviceNavName(s, locale),
+      href: `/szolgaltatasok/${s.slug}`,
+    };
+    if (s.cluster) {
+      const heading = label(s.cluster, locale);
+      clusters.set(heading, [...(clusters.get(heading) ?? []), item]);
+    } else {
+      unclustered.push(item);
+    }
+  }
+  const clustered: NavChild[] = [...clusters.entries()].map(([heading, children]) => ({
+    label: heading,
+    children,
+  }));
+  return [...unclustered, ...clustered];
 }
 
 export const NAV: NavItem[] = getNav("hu");

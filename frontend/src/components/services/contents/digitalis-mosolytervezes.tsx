@@ -2,7 +2,6 @@ import {
   BeforeAfter,
   BulletList,
   Callout,
-  Figure,
   InfoPanel,
   Lead,
   MediaText,
@@ -18,6 +17,15 @@ import photos from "@/lib/service-photos.json";
 
 const DIR = "/szolgaltatasok/dsd";
 
+/** First-row last image becomes first; the former last image takes its place. */
+function reorderGallery<T>(images: T[]): T[] {
+  if (images.length < 3) return images;
+  const last = images[images.length - 1]!;
+  const firstRowLast = images[2]!;
+  const rest = [images[0]!, images[1]!, ...images.slice(3, -1)];
+  return [firstRowLast, rest[0]!, last, ...rest.slice(1)];
+}
+
 function labeled(
   list: { src: string; width: number; height: number }[],
   alt: (i: number) => string,
@@ -30,10 +38,16 @@ export default function DsdContent({ locale }: ServiceContentProps) {
   const c = en ? EN : HU;
   const work = labeled(photos.dsd_munka, (i) => `${c.altWork} (${i + 1})`);
   const bereczki = labeled(photos.dsd_bereczki, (i) => `${c.caseBereczki} — ${i + 1}`);
-  const emese = labeled(photos.dsd_emese, (i) => `${c.caseEmese} — ${i + 1}`);
-  const fades = Object.values(photos.dsd_attuno).map((frames, n) =>
-    labeled(frames, (i) => `${c.fadeTitle} ${n + 1} — ${i + 1}`),
+  const emese = reorderGallery(
+    labeled(photos.dsd_emese, (i) => `${c.caseEmese} — ${i + 1}`).filter(
+      (p) => !p.src.endsWith("/01.jpg") && !p.src.endsWith("/02.jpg"),
+    ),
   );
+  const fadeNames = c.fadeNames;
+  const fades = Object.values(photos.dsd_attuno).map((frames, n) =>
+    labeled(frames, (i) => `${fadeNames[n] ?? c.fadeTitle} — ${i + 1}`),
+  );
+  const workGallery = [work[3], work[4], work[5], work[7]].filter(Boolean) as typeof work;
 
   return (
     <div className="space-y-12">
@@ -49,19 +63,19 @@ export default function DsdContent({ locale }: ServiceContentProps) {
         <p>{c.introBody}</p>
       </Section>
 
-      <MediaText image={work[4] ?? work[0]!}>
+      <MediaText image={work[6] ?? work[4]!}>
         <p>{c.workLead}</p>
       </MediaText>
 
       <Section title={c.whatTitle}>
-        <MediaText image={work[6] ?? work[1]!}>
+        <MediaText image={work[0]!}>
           <p>{c.whatBody[0]}</p>
         </MediaText>
         <p>{c.whatBody[1]}</p>
         <p>{c.whatBody[2]}</p>
       </Section>
 
-      <GalleryGrid images={work.slice(0, 4)} labels={c.galleryLabels} />
+      <GalleryGrid images={workGallery} labels={c.galleryLabels} />
 
       <Section title={c.videoTitle}>
         <VideoEmbed id="mo90lrm2EBQ" title={c.videoTitle} />
@@ -91,7 +105,7 @@ export default function DsdContent({ locale }: ServiceContentProps) {
         <ProcessSteps steps={c.steps.slice(3)} start={4} />
       </Section>
 
-      <Figure {...(work[7] ?? work[2]!)} />
+      <Crossfade frames={fades[2] ?? []} caption={c.fadeNames[2]} />
 
       <InfoPanel title={c.scanTitle}>
         <p>
@@ -148,7 +162,7 @@ export default function DsdContent({ locale }: ServiceContentProps) {
         <p>{c.fadeIntro}</p>
         <div className="grid gap-6 sm:grid-cols-2">
           {fades.map((frames, i) => (
-            <Crossfade key={i} frames={frames} caption={`${c.fadeCase} ${i + 1}`} />
+            <Crossfade key={i} frames={frames} caption={c.fadeNames[i] ?? `${c.fadeCase} ${i + 1}`} />
           ))}
         </div>
       </Section>
@@ -161,13 +175,19 @@ const HU = {
   workLead:
     "A tervezés fotódokumentációval és intraorális szkenneléssel indul — a rendelőben, a pácienssel közösen.",
   altWork: "Digitális mosolytervezés munka közben a Dentoplant rendelőben",
-  caseBereczki: "Bereczki Eszter",
-  caseEmese: "Szabó Héjja Emese",
+  caseBereczki: "Kismetsző foghiányok pótlása",
+  caseEmese: "Felső front fogak rekonstrukciója",
   fadeTitle: "Áttűnő esetek",
   fadeCaption: "Előtte → utána",
   fadeIntro:
     "Az alábbi képpárok lassan váltanak a kiindulási állapot és a kész mosoly között.",
   fadeCase: "Eset",
+  fadeNames: [
+    "Roller baleset",
+    "Héj kerámia fogpótlások",
+    "Íny mosoly korrekciója (Gum smile)",
+    "Letört fog korrekciója",
+  ],
   videoTitle: "Nézze meg, hogyan tervezzük meg mosolyát",
   videoCaption:
     "A digitális mosolytervezés segítségével egyedi és személyes mosolyterv készül Önnek! A számítógépes tervezés során be tudjuk mutatni, hogy milyen esztétikai változtatások lehetnek előnyösek ahhoz, hogy mosolya hibátlan legyen. Kérjen időpontot konzultációra!",
@@ -267,12 +287,18 @@ const EN = {
   workLead:
     "Planning starts with photo documentation and intraoral scanning — in the clinic, together with the patient.",
   altWork: "Digital Smile Design in progress at the Dentoplant clinic",
-  caseBereczki: "Bereczki Eszter",
-  caseEmese: "Szabó Héjja Emese",
+  caseBereczki: "Replacement of missing lateral incisors",
+  caseEmese: "Reconstruction of the upper front teeth",
   fadeTitle: "Before–after transitions",
   fadeCaption: "Before → after",
   fadeIntro: "The image pairs below slowly fade from the starting condition to the finished smile.",
   fadeCase: "Case",
+  fadeNames: [
+    "Scooter accident",
+    "Ceramic veneer restorations",
+    "Gum smile correction",
+    "Broken tooth correction",
+  ],
   videoTitle: "See how we design your smile",
   videoCaption:
     "With Digital Smile Design, a unique and personal smile plan is created for you! During the computer-aided planning we can show which aesthetic changes would be beneficial to make your smile flawless. Book an appointment for a consultation!",

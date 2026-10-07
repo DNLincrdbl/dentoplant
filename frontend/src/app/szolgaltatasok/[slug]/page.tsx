@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, Phone, Sparkles } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
-import { PAGE_HEROES, SERVICE_CATEGORY_HEROES } from "@/lib/page-heroes";
+import { PAGE_HEROES, SERVICE_CATEGORY_HEROES, SERVICE_HEROES } from "@/lib/page-heroes";
 import { CtaContact } from "@/components/home/cta-contact";
 import {
   SERVICES,
@@ -73,7 +73,11 @@ export default async function ServicePage({
           { label: t.services, href: "/szolgaltatasok" },
           { label: serviceName(service, locale) },
         ]}
-        image={SERVICE_CATEGORY_HEROES[service.category] ?? PAGE_HEROES.szolgaltatasok}
+        image={
+          SERVICE_HEROES[service.slug] ??
+          SERVICE_CATEGORY_HEROES[service.category] ??
+          PAGE_HEROES.szolgaltatasok
+        }
       />
 
       <section className="container-page py-16 md:py-20">

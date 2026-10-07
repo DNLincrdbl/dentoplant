@@ -132,28 +132,50 @@ export function SiteHeader() {
                                   <div className="pb-1 pt-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-600">
                                     {g.heading}
                                   </div>
-                                  {g.children.map((c) => (
-                                    <Link
-                                      key={c.href}
-                                      href={l(c.href)}
-                                      className="block py-1.5 text-sm text-muted-foreground hover:text-brand-700"
-                                      onClick={() => setOpen(false)}
-                                    >
-                                      {c.label}
-                                    </Link>
-                                  ))}
+                                  {g.children.map((c) =>
+                                    c.children ? (
+                                      <div key={c.label} className="mt-1">
+                                        <div className="pb-0.5 pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-600">
+                                          {c.label}
+                                        </div>
+                                        {c.children.map((n) =>
+                                          n.href ? (
+                                            <Link
+                                              key={n.href}
+                                              href={l(n.href)}
+                                              className="block whitespace-nowrap py-1.5 pl-2 text-sm text-muted-foreground hover:text-brand-700"
+                                              onClick={() => setOpen(false)}
+                                            >
+                                              {n.label}
+                                            </Link>
+                                          ) : null,
+                                        )}
+                                      </div>
+                                    ) : c.href ? (
+                                      <Link
+                                        key={c.href}
+                                        href={l(c.href)}
+                                        className="block py-1.5 text-sm text-muted-foreground hover:text-brand-700"
+                                        onClick={() => setOpen(false)}
+                                      >
+                                        {c.label}
+                                      </Link>
+                                    ) : null,
+                                  )}
                                 </div>
                               ))
-                            : item.children?.map((c) => (
-                                <Link
-                                  key={c.href}
-                                  href={l(c.href)}
-                                  className="py-2 text-sm text-muted-foreground hover:text-brand-700"
-                                  onClick={() => setOpen(false)}
-                                >
-                                  {c.label}
-                                </Link>
-                              ))}
+                            : item.children?.map((c) =>
+                                c.href ? (
+                                  <Link
+                                    key={c.href}
+                                    href={l(c.href)}
+                                    className="py-2 text-sm text-muted-foreground hover:text-brand-700"
+                                    onClick={() => setOpen(false)}
+                                  >
+                                    {c.label}
+                                  </Link>
+                                ) : null,
+                              )}
                         </div>
                       </div>
                     </div>
@@ -183,6 +205,7 @@ function NavDesktopItem({ item }: { item: ReturnType<typeof getNav>[number] }) {
         ? "Can't find what you're looking for? See all our services."
         : "Nem találja, amit keres? Nézze meg az összes szolgáltatást.",
     allServices: locale === "en" ? "All services →" : "Összes szolgáltatás →",
+    book: locale === "en" ? "Book appointment" : "Bejelentkezés",
   };
   const linkClass =
     "whitespace-nowrap rounded-full px-2.5 py-2 text-sm font-medium text-foreground/80 transition-colors hover:bg-brand-50 hover:text-brand-700 2xl:px-3.5";
@@ -202,49 +225,77 @@ function NavDesktopItem({ item }: { item: ReturnType<typeof getNav>[number] }) {
       </Link>
       <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
         {item.groups ? (
-          <div className="grid w-[min(880px,90vw)] grid-cols-3 gap-1 rounded-2xl border border-border bg-background p-3 shadow-2xl shadow-brand-900/10">
+          <div className="grid w-[min(920px,92vw)] grid-cols-3 gap-1 rounded-2xl border border-border bg-background p-3 shadow-2xl shadow-brand-900/10">
             {item.groups.map((g) => (
               <div key={g.heading} className="rounded-xl p-2">
                 <div className="px-2 pb-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-600">
                   {g.heading}
                 </div>
                 <div className="flex flex-col">
-                  {g.children.map((c) => (
-                    <Link
-                      key={c.href}
-                      href={l(c.href)}
-                      className="rounded-lg px-2 py-1.5 text-sm text-foreground/85 transition-colors hover:bg-brand-50 hover:text-brand-700"
-                    >
-                      {c.label}
-                    </Link>
-                  ))}
+                  {g.children.map((c) =>
+                    c.children ? (
+                      <div key={c.label} className="mt-1">
+                        <div className="px-2 pb-0.5 pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-600">
+                          {c.label}
+                        </div>
+                        <div className="flex flex-col">
+                          {c.children.map((n) =>
+                            n.href ? (
+                              <Link
+                                key={n.href}
+                                href={l(n.href)}
+                                className="whitespace-nowrap rounded-lg px-2 py-1 text-sm text-foreground/85 transition-colors hover:bg-brand-50 hover:text-brand-700"
+                              >
+                                {n.label}
+                              </Link>
+                            ) : null,
+                          )}
+                        </div>
+                      </div>
+                    ) : c.href ? (
+                      <Link
+                        key={c.href}
+                        href={l(c.href)}
+                        className="whitespace-nowrap rounded-lg px-2 py-1.5 text-sm text-foreground/85 transition-colors hover:bg-brand-50 hover:text-brand-700"
+                      >
+                        {c.label}
+                      </Link>
+                    ) : null,
+                  )}
                 </div>
               </div>
             ))}
-            <div className="col-span-3 mt-1 flex items-center justify-between rounded-xl bg-brand-50/60 px-4 py-3">
+            <div className="col-span-3 mt-1 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-brand-50/60 px-4 py-3">
               <span className="text-sm text-muted-foreground">{strings.notFound}</span>
-              <Link
-                href={l(item.href)}
-                className="text-sm font-semibold text-brand-700 hover:text-brand-600"
-              >
-                {strings.allServices}
-              </Link>
+              <div className="flex flex-wrap items-center gap-3">
+                <Link
+                  href={l(item.href)}
+                  className="text-sm font-semibold text-brand-700 hover:text-brand-600"
+                >
+                  {strings.allServices}
+                </Link>
+                <Link href={l("/kapcsolat")} className="btn-primary !h-10 !px-5 !text-sm">
+                  {strings.book}
+                </Link>
+              </div>
             </div>
           </div>
         ) : (
           <div className="min-w-[300px] rounded-2xl border border-border bg-background p-2 shadow-xl shadow-brand-900/5">
-            {item.children!.map((c) => (
-              <Link
-                key={c.href}
-                href={l(c.href)}
-                className="block rounded-xl px-4 py-3 transition-colors hover:bg-brand-50"
-              >
-                <div className="text-sm font-semibold text-foreground">{c.label}</div>
-                {c.description && (
-                  <div className="mt-0.5 text-xs text-muted-foreground">{c.description}</div>
-                )}
-              </Link>
-            ))}
+            {item.children!.map((c) =>
+              c.href ? (
+                <Link
+                  key={c.href}
+                  href={l(c.href)}
+                  className="block rounded-xl px-4 py-3 transition-colors hover:bg-brand-50"
+                >
+                  <div className="text-sm font-semibold text-foreground">{c.label}</div>
+                  {c.description && (
+                    <div className="mt-0.5 text-xs text-muted-foreground">{c.description}</div>
+                  )}
+                </Link>
+              ) : null,
+            )}
           </div>
         )}
       </div>

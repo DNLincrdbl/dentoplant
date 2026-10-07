@@ -36,10 +36,14 @@ export type Service = {
   icon: LucideIcon;
   /** Rövid leírás a listához és a hero alá. */
   summary: string;
+  /** Rövidebb cím csak a megamenu-ban (hosszú nevek ne törjenek). */
+  navName?: string;
   /** Igaz, ha a részletes tartalom is be van töltve a [slug] oldalra. */
   hasFullContent?: boolean;
   /** A kezelést végző orvosok/szakemberek slug-jai (lásd `lib/team.ts`). */
   doctors?: string[];
+  /** Lila alcím a szolgáltatások megamenu-ban (pl. Szájhigiénia). */
+  cluster?: string;
 };
 
 export const SERVICES: Service[] = [
@@ -54,12 +58,36 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "szajhigienia",
-    name: "Szájhigiénia",
+    name: "Fogkőeltávolítás",
     category: "Megelőzés és diagnosztika",
     icon: ShieldCheck,
+    cluster: "Szájhigiénia",
     doctors: ["dobo-huanita", "olajos-katalin"],
     summary:
       "Egészséges mosolya erősíti önbizalmát és sikereit a mindennapokban. Munkánk hosszú távú eredményességének feltétele az Ön szép és egészséges mosolya. Ennek alapja, hogy pácienseink elsajátítsák az esetüknek megfelelő fogmosási technikát, melyet egyéni szájhigiéniás programunk valósít meg.",
+    hasFullContent: true,
+  },
+  {
+    slug: "iranyitott-biofilm-kezeles",
+    name: "Irányított biofilm kezelés – GBT",
+    navName: "GBT",
+    category: "Megelőzés és diagnosztika",
+    icon: ShieldCheck,
+    cluster: "Szájhigiénia",
+    doctors: ["dobo-huanita", "olajos-katalin"],
+    summary:
+      "A Guided Biofilm Therapy (GBT) a szájhigiéniás kezelések legkorszerűbb, 8 lépéses svájci protokollja — kíméletes, fájdalommentes biofilm-eltávolítás a fogkőeltávolításon túl.",
+    hasFullContent: true,
+  },
+  {
+    slug: "implantatum-higenia",
+    name: "Implantátum higiénia",
+    category: "Megelőzés és diagnosztika",
+    icon: ShieldCheck,
+    cluster: "Szájhigiénia",
+    doctors: ["dobo-huanita", "olajos-katalin"],
+    summary:
+      "Az implantátumos fogpótlás hosszú távú sikeréhez speciális, implantátumokra kifejlesztett tisztítás és rendszeres gondozás szükséges — nem hagyományos fogkőeltávolító eszközökkel.",
     hasFullContent: true,
   },
   {
@@ -67,6 +95,7 @@ export const SERVICES: Service[] = [
     name: "Gyermekfogászat",
     category: "Megelőzés és diagnosztika",
     icon: Baby,
+    doctors: ["dr-vadasz-anna", "dr-meszaros-csongor"],
     summary:
       "Hiszünk abban, hogy személyes példamutatással és rendszeres fél évenkénti kontrollal a gyermekeink fogazata is egészségesen megőrizhető. Egy gyermek úgy viszonyul a fogmosáshoz, fogászati ellenőrzésekhez, amennyire a szülőnek ez fontos, ezért alkalmazzuk a családi fogászati modellt.",
     hasFullContent: true,
@@ -114,12 +143,61 @@ export const SERVICES: Service[] = [
   },
   {
     slug: "fogagybetegseg-kezelese",
-    name: "Fogágybetegség kezelése",
+    name: "Fogágybetegségről",
     category: "Fogmegtartás",
     icon: HeartPulse,
+    cluster: "Fogágybetegség kezelése",
     doctors: ["dr-maraz-kinga"],
     summary:
-      "Fogágybetegség esetén erre vonatkozó protokoll szerint végezzük a tisztítási lépéseket. Több fogágybetegség típusról tudományos bizonyítást nyert, hogy hátterében jellegzetes baktériumok jelenléte áll.",
+      "A fogágybetegség a fogakat körülvevő ínyt, csontot és a parodontális ligamentumokat együttesen érintő gyulladás. Kezelése protokoll szerint, fázisokban történik.",
+    hasFullContent: true,
+  },
+  {
+    slug: "hyadent-bg",
+    name: "hyaDENT BG alkalmazása",
+    navName: "hyaDENT BG",
+    category: "Fogmegtartás",
+    icon: HeartPulse,
+    cluster: "Fogágybetegség kezelése",
+    doctors: ["dr-maraz-kinga"],
+    summary:
+      "Sebészi hialuronsav a nyitott kürett műtétek során: gyorsabb gyógyulás, kevesebb panasz, a fogágy tasak szöveteinek támogatása.",
+    hasFullContent: true,
+  },
+  {
+    slug: "emdogain",
+    name: "Emdogain alkalmazása",
+    navName: "Emdogain",
+    category: "Fogmegtartás",
+    icon: HeartPulse,
+    cluster: "Fogágybetegség kezelése",
+    doctors: ["dr-maraz-kinga"],
+    summary:
+      "Emdogain® (Straumann) enamel mátrix protein a nyitott kürett során — új cement, új rostok, kedvező ínygyógyulás.",
+    hasFullContent: true,
+  },
+  {
+    slug: "csontpotlas-fogak-mellett",
+    name: "Csontpótlás fogak mellett",
+    navName: "Csontpótlás",
+    category: "Fogmegtartás",
+    icon: Bone,
+    cluster: "Fogágybetegség kezelése",
+    doctors: ["dr-maraz-kinga"],
+    summary:
+      "Megtartott fogak körül, megfelelő előkészítés után a tartószövetek csontpótlással is felépíthetők.",
+    hasFullContent: true,
+  },
+  {
+    slug: "inyplasztika",
+    name: "Ínyplasztika",
+    category: "Fogmegtartás",
+    icon: HeartPulse,
+    cluster: "Fogágybetegség kezelése",
+    doctors: ["dr-maraz-kinga"],
+    summary:
+      "Ínylehúzódások, gum smile és esztétikai zónában lévő lágyrész-eltérések műtéti korrekciója — tunnel technikával és kötőszövetes grafttal.",
+    hasFullContent: true,
   },
 
   {
@@ -265,6 +343,13 @@ export function getServicesByCategory(category: ServiceCategory): Service[] {
 
 export function serviceName(service: Service, locale: Locale): string {
   return locale === "en" ? SERVICE_EN[service.slug]?.name ?? service.name : service.name;
+}
+
+export function serviceNavName(service: Service, locale: Locale): string {
+  if (locale === "en") {
+    return SERVICE_EN[service.slug]?.navName ?? SERVICE_EN[service.slug]?.name ?? service.navName ?? service.name;
+  }
+  return service.navName ?? service.name;
 }
 
 export function serviceSummary(service: Service, locale: Locale): string {

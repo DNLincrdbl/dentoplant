@@ -1,16 +1,43 @@
-import { BulletList, Callout, CardGrid, InfoPanel, Lead, ProcessSteps, Section, SubSection } from "../ui";
+import { BulletList, Callout, CardGrid, InfoPanel, Lead, MediaText, ProcessSteps, Section, SubSection } from "../ui";
+import { Crossfade } from "../crossfade";
+import { GalleryGrid } from "@/components/gallery-grid";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
+import photos from "@/lib/service-photos.json";
+
+function labeled(
+  list: { src: string; width: number; height: number }[],
+  alt: (i: number) => string,
+) {
+  return list.map((p, i) => ({ src: p.src, width: p.width, height: p.height, alt: alt(i) }));
+}
 
 export default function FogszabalyozasContent({ locale }: ServiceContentProps) {
   const en = locale === "en";
   const c = en ? EN : HU;
+  const gal = labeled(
+    photos.fogszabalyozas.filter((p) => p.width >= 800),
+    (i) => `${c.altGal} (${i + 1})`,
+  );
+  const oldal = labeled(photos.fogszabalyozas_oldal, (i) => `${c.altPage} (${i + 1})`);
+  const fadePairs = [
+    [gal[6], gal[7]],
+    [gal[10], gal[11]],
+    [gal[12], gal[13]],
+  ].map((pair) => pair.filter(Boolean) as typeof gal);
+
   return (
     <div className="space-y-12">
       <Section title={c.introTitle}>
         <Lead>{c.introLead}</Lead>
         <p>{c.introBody}</p>
       </Section>
+
+      {oldal[7] && (
+        <MediaText image={oldal[7]}>
+          <p>{c.whyBody}</p>
+        </MediaText>
+      )}
 
       <Section title={c.whyTitle}>
         <BulletList items={c.why} />
@@ -19,12 +46,24 @@ export default function FogszabalyozasContent({ locale }: ServiceContentProps) {
 
       <Section title={c.adultTitle}>
         <p>{c.adultBody1}</p>
-        <p>{c.adultBody2}</p>
+        {oldal[2] ? (
+          <MediaText reverse image={oldal[2]}>
+            <p>{c.adultBody2}</p>
+          </MediaText>
+        ) : (
+          <p>{c.adultBody2}</p>
+        )}
       </Section>
 
       <Section title={c.childTitle}>
         <p>{c.childBody1}</p>
-        <p>{c.childBody2}</p>
+        {oldal[3] ? (
+          <MediaText image={oldal[3]}>
+            <p>{c.childBody2}</p>
+          </MediaText>
+        ) : (
+          <p>{c.childBody2}</p>
+        )}
         <InfoPanel title={c.funcTitle}>
           <p>{c.funcBody}</p>
         </InfoPanel>
@@ -44,6 +83,51 @@ export default function FogszabalyozasContent({ locale }: ServiceContentProps) {
         ))}
       </Section>
 
+      <Section title={c.casesTitle}>
+        <p>{c.casesIntro}</p>
+        <div className="grid gap-6 sm:grid-cols-2">
+          {fadePairs.map((frames, i) =>
+            frames.length >= 2 ? (
+              <Crossfade key={i} frames={frames} caption={`${c.fadeCase} ${i + 1}`} />
+            ) : null,
+          )}
+        </div>
+        {oldal[8] && <MediaText reverse image={oldal[8]}><p>{c.caseNote}</p></MediaText>}
+        <GalleryGrid images={gal.slice(0, 12)} labels={c.galleryLabels} />
+      </Section>
+
+      <Section title={c.alignerTitle}>
+        {oldal[1] && (
+          <MediaText image={oldal[1]}>
+            <Lead>{c.alignerLead}</Lead>
+          </MediaText>
+        )}
+        <p>{c.alignerIntro}</p>
+        <SubSection title={c.alignerFlowTitle}>
+          <p>{c.alignerFlow}</p>
+        </SubSection>
+        <SubSection title={c.alignerStartTitle}>
+          <p>{c.alignerStart}</p>
+          <BulletList items={c.alignerSteps} />
+        </SubSection>
+        <SubSection title={c.alignerCtrlTitle}>
+          <p>{c.alignerCtrl}</p>
+        </SubSection>
+        <SubSection title={c.alignerLifeTitle}>
+          <p>{c.alignerLife}</p>
+        </SubSection>
+        <SubSection title={c.alignerCleanTitle}>
+          <p>{c.alignerClean}</p>
+        </SubSection>
+        <SubSection title={c.alignerProTitle}>
+          <BulletList items={c.alignerPros} />
+        </SubSection>
+        <SubSection title={c.alignerConTitle}>
+          <BulletList items={c.alignerCons} />
+        </SubSection>
+        <p>{c.alignerClose}</p>
+      </Section>
+
       <Callout
         title={c.calloutTitle}
         body={c.calloutBody}
@@ -55,6 +139,58 @@ export default function FogszabalyozasContent({ locale }: ServiceContentProps) {
 }
 
 const HU = {
+  altGal: "Fogszabályozás a Dentoplant rendelőben",
+  altPage: "Fogszabályozó kezelés",
+  galleryLabels: { close: "Bezárás", prev: "Előző kép", next: "Következő kép" },
+  casesTitle: "Esetek — előtte és utána",
+  casesIntro: "Néhány kezelési eredmény: a képpárok lassan váltanak a kiindulási és a kész állapoton.",
+  fadeCase: "Eset",
+  caseNote: "A kezelési tervet mindig a harapás, az esztétika és a szájhigiénia együtt határozza meg.",
+  alignerTitle: "Láthatatlan fogszabályozás átlátszó sínekkel, alignerekkel",
+  alignerLead:
+    "A láthatatlan fogszabályozó technika átlátszó sínek, azaz alignerek számítógéppel modellezett rendszere.",
+  alignerIntro:
+    "Az alignerek vékony, mélyhúzott vagy 3D-nyomtatott fóliák, amelyeket előre megtervezett setup-modellre készítenek. A terápia több sínnel megy végbe: minden lépéshez tartozik egy setup, amely az előzőtől és a következőtől kicsit különbözik. Az apró lépések sorozata maga a kezelés. A változások számítógépes szimulációval pontosan tervezhetők.",
+  alignerFlowTitle: "Az aligneres fogszabályozás menete",
+  alignerFlow:
+    "Ha a harapási eltérés alignerrel korrigálható, dokumentációs alkalmon intraorális szkennerrel digitális lenyomatot, standardizált száj- és arcfotókat, valamint röntgent vagy CBCT-t készítünk. Az adatokat a fogtechnikai laborba küldjük pontos instrukciókkal. A program a kiindulási és végállapot közötti átmenetet felosztja (például egy fog egy sínnel maximum 0,25 mm-t mozoghat). A kész tervet a kezelőorvos és a páciens elfogadja, majd a síneket 3D-nyomtatott mintákra mélyhúzzák, vagy közvetlenül nyomtatják.",
+  alignerStartTitle: "A kezelés elkezdése",
+  alignerStart:
+    "Összetettebb esetek is kezelhetők, de szakértelmet igényelnek. Attachmentek és interproximális redukció (IPR) egészíthetik ki a mozgást. A felhelyezés lépései:",
+  alignerSteps: [
+    "Izoláció — a fogfelszínt távol kell tartani a lágyrészektől és a nyáltól",
+    "Alapos tisztítás",
+    "Savazás ortofoszforsavval 30 másodpercig, lemosás, szárítás",
+    "Bond felvitele, polimerizációs lámpával",
+    "Attachmentek felragasztása a fogtechnikai sablonnal",
+    "Szükség esetén fájdalommentes interproximális redukció",
+    "A sín felpróbálása, instruálás, fotózás",
+  ],
+  alignerCtrlTitle: "Mi zajlik a kontrollok során?",
+  alignerCtrl:
+    "A kontrollok rövidek, körülbelül 15 percesek: ellenőrizzük, hogy minden a terv szerint halad-e, fotódokumentáció készül, és átadjuk a következő síneket. Általában 4–6 hetente.",
+  alignerLifeTitle: "Élet láthatatlan fogszabályozóval",
+  alignerLife:
+    "A síneket a nap 22–24 órájában kell hordani, csak fogmosáskor és étkezéskor vehetők ki. Egy alignert általában 2 hétig viselünk. Túl gyors csere növeli a komplikációkat. Ha a sín nem illeszkedik, tovább kell hordani az aktuálisat. Enyhébb fogérzékenység előfordulhat. Enni-inni tilos a sínnel, kizárólag víz megengedett. Cukros étel után fogmosás nélkül visszahelyezve a fogak a sín alatt szuvasodhatnak. Az elhasznált síneket a kezelés végéig meg kell őrizni. Nem szabad zsebben hordani vagy napon hagyni.",
+  alignerCleanTitle: "A láthatatlan fogszabályozó tisztítása",
+  alignerClean:
+    "Hideg vagy langyos víz és fogkefe. Kaphatók aligner-tisztító tabletták vagy habok (például Curaprox Aligner hab). Forró víz deformálhatja a sínt.",
+  alignerProTitle: "Előnyük",
+  alignerPros: [
+    "a készülék szinte észrevehetetlen",
+    "könnyen eltávolítható étkezés előtt",
+    "nincs elem, amely mögé az étel beszorulna",
+    "nem kell az étrendet korlátozni",
+    "nem akadályozza a fogselymet és a fogmosást",
+    "rövidebb kontrollok, kényelmesebb a hagyományosnál",
+  ],
+  alignerConTitle: "Hátrányuk",
+  alignerCons: [
+    "nem minden harapási rendellenesség korrekciójára alkalmazható",
+    "az eredmény a páciens együttműködésétől függ — minimum 22 óra napi hordás",
+  ],
+  alignerClose:
+    "A láthatatlan fogszabályozásnál fontos, hogy a páciens tájékozott legyen a módszer előnyeiről és hátrányairól. Ha felkeltette az érdeklődését, forduljon szakorvosunkhoz bizalommal.",
   introTitle: "Fájdalommentes fogszabályozás Szegeden",
   introLead:
     "Életkortól függetlenül, személyre szabott megoldást biztosítunk a makulátlan, rendezett mosoly elérésére.",
@@ -189,6 +325,58 @@ const HU = {
 };
 
 const EN = {
+  altGal: "Orthodontics at the Dentoplant clinic",
+  altPage: "Orthodontic treatment",
+  galleryLabels: { close: "Close", prev: "Previous image", next: "Next image" },
+  casesTitle: "Cases — before and after",
+  casesIntro: "A few treatment results: the pairs fade slowly between the starting and finished state.",
+  fadeCase: "Case",
+  caseNote: "The plan is always set by bite, aesthetics and oral hygiene together.",
+  alignerTitle: "Invisible orthodontics with clear trays, aligners",
+  alignerLead:
+    "Invisible orthodontics is a computer-modelled system of transparent trays — aligners.",
+  alignerIntro:
+    "Aligners are thin thermoformed or 3D-printed foils made on a planned setup model. Treatment uses several trays: each step has a setup slightly different from the last. The sequence of small steps is the treatment. Changes can be planned accurately with computer simulation.",
+  alignerFlowTitle: "How aligner treatment proceeds",
+  alignerFlow:
+    "If the bite discrepancy can be corrected with aligners, we take a digital impression with an intraoral scanner, standardised oral and facial photos, and X-rays or CBCT. Data go to the lab with precise instructions. The software splits the path from start to finish (for example a tooth may move at most 0.25 mm per tray). After the plan is approved, trays are thermoformed on 3D-printed models or printed directly.",
+  alignerStartTitle: "Starting treatment",
+  alignerStart:
+    "More complex cases can also be treated, but they need expertise. Attachments and interproximal reduction (IPR) may supplement movement. Placement steps:",
+  alignerSteps: [
+    "Isolation — keep the tooth surface away from soft tissue and saliva",
+    "Thorough cleaning",
+    "Etching with orthophosphoric acid for 30 seconds, rinse, dry",
+    "Bond, light-cured",
+    "Bonding attachments with the lab template",
+    "Pain-free interproximal reduction if needed",
+    "Try-in, instruction, photography",
+  ],
+  alignerCtrlTitle: "What happens at check-ups?",
+  alignerCtrl:
+    "Visits are short, about 15 minutes: we check that everything follows the plan, take photos and hand over the next trays. Usually every 4–6 weeks.",
+  alignerLifeTitle: "Life with invisible braces",
+  alignerLife:
+    "Trays should be worn 22–24 hours a day, removed only for brushing and eating. One aligner is usually worn for 2 weeks. Changing too fast raises complications. If a tray does not fit, keep wearing the current one. Mild sensitivity can occur. No eating or drinking with the tray except water. Sugary food without brushing lets teeth soak under the tray. Keep used trays until the end of treatment. Do not carry them in a pocket or leave them in the sun.",
+  alignerCleanTitle: "Cleaning invisible braces",
+  alignerClean:
+    "Cold or lukewarm water and a toothbrush. Aligner cleaning tablets or foams (e.g. Curaprox Aligner foam) are available. Hot water can warp the tray.",
+  alignerProTitle: "Advantages",
+  alignerPros: [
+    "almost invisible",
+    "easy to remove before eating",
+    "no elements for food to lodge behind",
+    "no dietary restriction",
+    "does not hinder floss or brushing",
+    "shorter visits, more comfortable than fixed braces",
+  ],
+  alignerConTitle: "Disadvantages",
+  alignerCons: [
+    "not suitable for every bite discrepancy",
+    "result depends on cooperation — at least 22 hours a day",
+  ],
+  alignerClose:
+    "With invisible orthodontics it matters that the patient knows both the advantages and the drawbacks. If it interests you, talk to our specialist.",
   introTitle: "Pain-free orthodontics in Szeged",
   introLead:
     "Regardless of age, we provide a personalised solution for achieving a flawless, well-ordered smile.",

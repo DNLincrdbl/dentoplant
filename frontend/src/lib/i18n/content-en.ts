@@ -5,16 +5,27 @@
  * tartjuk, slug/kulcs szerint.
  */
 
-export const SERVICE_EN: Record<string, { name: string; summary: string }> = {
+export const SERVICE_EN: Record<string, { name: string; summary: string; navName?: string }> = {
   "elso-talalkozas": {
     name: "First visit",
     summary:
       "At our first meeting we discuss the dental problem you would like our advice on. You will be asked to fill in a questionnaire covering your personal details, medications, allergies and any medical conditions.",
   },
   szajhigienia: {
-    name: "Oral hygiene",
+    name: "Tartar removal",
     summary:
       "A healthy smile boosts your confidence and everyday success. Long-term results depend on a beautiful, healthy smile — which starts with learning the brushing technique that suits your case, delivered through our individual oral hygiene programme.",
+  },
+  "iranyitott-biofilm-kezeles": {
+    name: "Guided Biofilm Therapy – GBT",
+    navName: "GBT",
+    summary:
+      "Guided Biofilm Therapy (GBT) is the most advanced, 8-step Swiss protocol for oral hygiene — gentle, painless biofilm removal beyond conventional tartar scaling.",
+  },
+  "implantatum-higenia": {
+    name: "Implant hygiene",
+    summary:
+      "Long-term success of implant restorations requires specialised cleaning designed for implants and regular maintenance — not conventional scaling instruments.",
   },
   gyermekfogaszat: {
     name: "Paediatric dentistry",
@@ -42,9 +53,31 @@ export const SERVICE_EN: Record<string, { name: string; summary: string }> = {
       "Gingivitis is a superficial inflammation of the gum surrounding the teeth, and is generally well treatable. Caught early it only affects the gum margin, but left untreated even the mildest inflammation can spread further.",
   },
   "fogagybetegseg-kezelese": {
-    name: "Periodontal disease treatment",
+    name: "About periodontal disease",
     summary:
       "For periodontal disease we perform the cleaning steps according to a dedicated protocol. Several types of periodontal disease have been scientifically shown to be driven by the presence of characteristic bacteria.",
+  },
+  "hyadent-bg": {
+    name: "hyaDENT BG",
+    summary:
+      "Surgical hyaluronic acid during open-flap curettage: faster healing, fewer complaints, support for periodontal pocket tissues.",
+  },
+  emdogain: {
+    name: "Emdogain",
+    summary:
+      "Emdogain® (Straumann) enamel matrix protein during open-flap curettage — new cement, new fibres, favourable gum healing.",
+  },
+  "csontpotlas-fogak-mellett": {
+    name: "Bone grafting around teeth",
+    navName: "Bone grafting",
+    summary:
+      "After proper preparation, supporting tissues around retained teeth can also be rebuilt with bone grafting.",
+  },
+  inyplasztika: {
+    name: "Gum plastic surgery",
+    navName: "Gum surgery",
+    summary:
+      "Surgical correction of gum recession, gummy smile and soft-tissue issues in the aesthetic zone — with tunnel technique and connective-tissue grafts.",
   },
   "esztetikai-fogaszat": {
     name: "Cosmetic dentistry",
@@ -137,4 +170,6 @@ export const NAV_LABELS_EN: Record<string, string> = {
   Galéria: "Gallery",
   Blog: "Blog",
   Kapcsolat: "Contact",
+  Szájhigiénia: "Oral hygiene",
+  "Fogágybetegség kezelése": "Periodontal disease treatment",
 };

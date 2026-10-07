@@ -14,6 +14,13 @@ import Fogfeherites from "./fogfeherites";
 import Implantatum from "./implantatum";
 import Fogszabalyozas from "./fogszabalyozas";
 import MikroszkoposFogaszat from "./mikroszkopos-fogaszat";
+import IranyitottBiofilmKezeles from "./iranyitott-biofilm-kezeles";
+import ImplantatumHigenia from "./implantatum-higenia";
+import FogagybetegsegKezelese from "./fogagybetegseg-kezelese";
+import HyadentBg from "./hyadent-bg";
+import Emdogain from "./emdogain";
+import CsontpotlasFogakMellett from "./csontpotlas-fogak-mellett";
+import Inyplasztika from "./inyplasztika";
 
 /**
  * Registry of fully-implemented service detail pages.
@@ -37,4 +44,11 @@ export const SERVICE_CONTENTS: Record<string, ComponentType<ServiceContentProps>
   implantatum: Implantatum,
   fogszabalyozas: Fogszabalyozas,
   "mikroszkopos-fogaszat": MikroszkoposFogaszat,
+  "iranyitott-biofilm-kezeles": IranyitottBiofilmKezeles,
+  "implantatum-higenia": ImplantatumHigenia,
+  "fogagybetegseg-kezelese": FogagybetegsegKezelese,
+  "hyadent-bg": HyadentBg,
+  emdogain: Emdogain,
+  "csontpotlas-fogak-mellett": CsontpotlasFogakMellett,
+  inyplasztika: Inyplasztika,
 };

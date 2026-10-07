@@ -79,7 +79,13 @@ export default async function SitemapPage() {
 
           <div className="rounded-2xl border border-border bg-background p-6">
             <h2 className="font-display text-lg text-brand-900">{c.doctors}</h2>
-            <LinkList items={doctorsNav?.children ?? []} />
+            <LinkList
+              items={(doctorsNav?.children ?? []).flatMap((ch) =>
+                ch.href
+                  ? [{ label: ch.label, href: ch.href }]
+                  : (ch.children ?? []).filter((n): n is { label: string; href: string } => Boolean(n.href)),
+              )}
+            />
           </div>
 
           <div className="rounded-2xl border border-border bg-background p-6">
@@ -100,16 +106,38 @@ export default async function SitemapPage() {
                     {g.heading}
                   </div>
                   <ul className="mt-2 space-y-2 text-sm">
-                    {g.children.map((ch) => (
-                      <li key={ch.href}>
-                        <Link
-                          href={localizeHref(ch.href, locale)}
-                          className="text-foreground/80 transition-colors hover:text-brand-700"
-                        >
-                          {ch.label}
-                        </Link>
-                      </li>
-                    ))}
+                    {g.children.flatMap((ch) =>
+                      ch.children?.length
+                        ? [
+                            <li key={ch.label} className="pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-600">
+                              {ch.label}
+                            </li>,
+                            ...ch.children.map((n) =>
+                              n.href ? (
+                                <li key={n.href}>
+                                  <Link
+                                    href={localizeHref(n.href, locale)}
+                                    className="text-foreground/80 transition-colors hover:text-brand-700"
+                                  >
+                                    {n.label}
+                                  </Link>
+                                </li>
+                              ) : null,
+                            ),
+                          ]
+                        : ch.href
+                          ? [
+                              <li key={ch.href}>
+                                <Link
+                                  href={localizeHref(ch.href, locale)}
+                                  className="text-foreground/80 transition-colors hover:text-brand-700"
+                                >
+                                  {ch.label}
+                                </Link>
+                              </li>,
+                            ]
+                          : [],
+                    )}
                   </ul>
                 </div>
               ))}

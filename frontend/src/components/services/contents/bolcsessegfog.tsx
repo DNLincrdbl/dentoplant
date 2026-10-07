@@ -98,13 +98,18 @@ export default function BolcsessegfogContent({ locale }: ServiceContentProps) {
         </div>
       </Section>
 
-      <Section title={c.workTitle}>
-        <GalleryGrid images={work} labels={c.galleryLabels} />
-      </Section>
-
       <Section title={c.luckyTitle}>
-        <p>{c.luckyBody1}</p>
-        <p>{c.luckyBody2}</p>
+        {work[1] && (
+          <MediaText image={work[1]}>
+            <p>{c.luckyBody1}</p>
+          </MediaText>
+        )}
+        {work[2] && <Figure {...work[2]} />}
+        {work[5] && (
+          <MediaText reverse image={work[5]}>
+            <p>{c.luckyBody2}</p>
+          </MediaText>
+        )}
       </Section>
     </div>
   );

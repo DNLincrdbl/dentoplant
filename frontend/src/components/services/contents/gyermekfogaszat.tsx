@@ -1,10 +1,18 @@
-import { Callout, CardGrid, InfoPanel, Lead, Section, SubSection } from "../ui";
+import { BulletList, Callout, CardGrid, InfoPanel, Lead, MediaText, Section, SubSection } from "../ui";
+import { GalleryGrid } from "@/components/gallery-grid";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
+import photos from "@/lib/service-photos.json";
 
 export default function GyermekfogaszatContent({ locale }: ServiceContentProps) {
   const en = locale === "en";
   const c = en ? EN : HU;
+  const imgs = photos.gyermek.map((p, i) => ({
+    src: p.src,
+    width: p.width,
+    height: p.height,
+    alt: `${c.alt} (${i + 1})`,
+  }));
   return (
     <div className="space-y-12">
       <Section title={c.introTitle}>
@@ -14,8 +22,15 @@ export default function GyermekfogaszatContent({ locale }: ServiceContentProps) 
       </Section>
 
       <Section title={c.whenBrushTitle}>
-        <p>{c.whenBrushBody}</p>
+        {imgs[0] ? (
+          <MediaText image={imgs[0]}>
+            <p>{c.whenBrushBody}</p>
+          </MediaText>
+        ) : (
+          <p>{c.whenBrushBody}</p>
+        )}
       </Section>
+
 
       <Section title={c.checkTitle}>
         <p>{c.checkBody}</p>
@@ -48,17 +63,80 @@ export default function GyermekfogaszatContent({ locale }: ServiceContentProps) 
         <p>{c.twoRowsBody}</p>
       </Section>
 
+      <GalleryGrid images={imgs.slice(1)} labels={c.galleryLabels} />
+
       <Callout
         title={c.calloutTitle}
         body={c.calloutBody}
         ctaLabel={c.calloutCta}
         ctaHref={localizeHref("/kapcsolat", locale as Locale)}
       />
+
+      <Section title={c.blogTitle}>
+        <Lead>{c.blogLead}</Lead>
+        <p>{c.blogIntro}</p>
+        <SubSection title={c.blogProcessTitle}>
+          <p>{c.blogProcess}</p>
+        </SubSection>
+        <SubSection title={c.blogRiskTitle}>
+          <p>{c.blogRisk}</p>
+        </SubSection>
+        <SubSection title={c.blogMoveTitle}>
+          <p>{c.blogMove}</p>
+        </SubSection>
+        <SubSection title={c.blogExtractTitle}>
+          <p>{c.blogExtract}</p>
+        </SubSection>
+        <SubSection title={c.blogOrthoTitle}>
+          <p>{c.blogOrtho}</p>
+        </SubSection>
+        <SubSection title={c.blogColorTitle}>
+          <p>{c.blogColor}</p>
+        </SubSection>
+        <SubSection title={c.blogSymTitle}>
+          <BulletList items={c.blogSym} />
+        </SubSection>
+        <p>{c.blogClose}</p>
+      </Section>
     </div>
   );
 }
 
 const HU = {
+  alt: "Gyermekfogászat a Dentoplant rendelőben",
+  galleryLabels: { close: "Bezárás", prev: "Előző kép", next: "Következő kép" },
+  blogTitle: "Tények és tévhitek a fogváltással kapcsolatban",
+  blogLead:
+    "A tejfogaknak kisgyermekkorban nagyon fontos szerepük van. Megkönnyítik a szilárd táplálék fogyasztását, segítik a beszédet, részt vesznek az állcsontok fejlődésében, és őrzik a helyet a maradó fogaknak.",
+  blogIntro:
+    "6 éves kor körül elkezdenek mozogni, majd kiesnek. A gyerekeknek 20 tejfoga van, a felnőttnek 32 maradó foga — nem csupán fogváltásról van szó, hanem új fogak előbújásáról is.",
+  blogProcessTitle: "Mi a gyermekkori fogváltás menete?",
+  blogProcess:
+    "Az alsó metszőfogak meglazulásával indul, 6–7 évesen. Ekkorra az első nagyőrlők (hatosok) már előtörtek vagy előtörőfélben vannak. Ezek előbújását nem előzi meg tejfog kiesése, ezért sok szülő tejfognak hiszi őket, és nem fordít rájuk kellő figyelmet.",
+  blogRiskTitle: "Maradó fogak veszélyben",
+  blogRisk:
+    "Az új maradó rágófogak is gyorsan képesek elromlani a mély barázdák miatt. A legveszélyeztetettebbek az első nagyőrlők, hiszen hónapok is eltelhetnek, mire a szülő felfedezi őket. A cserélődő első tejfogak az alsó és felső nagymetszők; őket követik a kismetszők, a szemfogak, majd a kisőrlők. A fogváltás átlagosan 12 éves korra zárul a hetedik fogak előbújásával. A bölcsességfogak 17 éves kor után bújhatnak elő. A megelőzés: rendszeres kontroll, fogkőeltávolítás, helyes fogmosás és barázdazárás.",
+  blogMoveTitle: "Szabad mozgatni a fogat, vagy hagyjuk, hogy magától essen ki?",
+  blogMove:
+    "Az erősen mozgó tejfog irritálhatja az ínyt. Nyugodtan mozgassák, hogy minél előbb helyreálljon az íny egészsége, és elősegítsük a maradó fog előtörését.",
+  blogExtractTitle: "Kibújt a maradó fog, de a tejfog még nem esett ki. Ki kell húzni?",
+  blogExtract:
+    "Ha a tejfog mozog, és a maradó fog rágófelszínének csak egy kis része bújt elő, várhatunk pár hetet. Ha a korona legalább félig előtört, vagy a tengelye nem egyezik a tejfogéval, érdemes minél hamarabb eltávolítani, hogy a maradó fog ne rossz irányba bújjon.",
+  blogOrthoTitle: "A frissen előtört maradó fogak nem tökéletesen illeszkednek. Mikortól kell szabályozni?",
+  blogOrtho:
+    "A maradó fogak mérete már előtöréskor megegyezik a felnőtt fogakéval, az állcsont még nem. Természetes, ha 6–8 évesen még nem férnek el tökéletesen. Az enyhe torlódás a növekedéssel megoldódhat; kifejezett eltérésnél fogszabályozás javasolt. Az első szűrővizsgálatra 7 éves korban érdemes eljönni. Ha az alsó maradó metszők a nyelv felől törnek elő, a tejfogak eltávolítása megkönnyítheti a sorba rendeződést.",
+  blogColorTitle: "Nem pont olyan fehér a maradó fogak zománca. Mi az oka?",
+  blogColor:
+    "A tejfog és a maradó fog zománcának szerkezete eltér. A tejfogak inkább kékesfehérek, a maradó fogak sárgásfehérek. A különbség természetes; amikor már nem lesznek tejfogak, sokkal fehérebbnek látjuk a maradó fogakat.",
+  blogSymTitle: "A fogváltást kísérő leggyakoribb tünetek",
+  blogSym: [
+    "A mozgó fogak körül az íny irritált, duzzadt, érzékeny lehet — ha túl sokáig mozog, a fogorvos eltávolíthatja.",
+    "Fokozott nyáltermelés, akár a szájzug gyulladása.",
+    "Az előtört fog egy részét még íny fedheti — a szájhigiénia ilyenkor is fontos.",
+    "Ha a tejfog kiesett, és hosszú ideig nem bújik a maradó fog, vizsgálattal kell tisztázni, van-e csíra; hiány esetén fogszabályozó szakorvossal kell konzultálni.",
+  ],
+  blogClose:
+    "A fogváltás minden gyermeknél egyéni ütemben történik, többnyire az iskolaérettséggel esik egy időszakra. Ha bizonytalanok, érdemes szakorvoshoz fordulni — egy vizsgálat után pontos képet kapnak.",
   introTitle: "Megelőzés és családi fogászati modell",
   introLead:
     "A gyermekek rendszeres fogászati ellenőrzését fél évente javasoljuk a Dentoplant Fogászati Rendelőben, Szegeden.",
@@ -134,6 +212,40 @@ const HU = {
 };
 
 const EN = {
+  alt: "Paediatric dentistry at the Dentoplant clinic",
+  galleryLabels: { close: "Close", prev: "Previous image", next: "Next image" },
+  blogTitle: "Facts and myths about tooth replacement",
+  blogLead:
+    "Milk teeth play a vital role in early childhood: chewing solid food, speech, jaw development, and holding space for permanent teeth.",
+  blogIntro:
+    "Around age 6 they loosen and fall out. Children have 20 milk teeth and adults 32 permanent teeth — so new teeth erupt as well as replacements.",
+  blogProcessTitle: "How does childhood tooth replacement proceed?",
+  blogProcess:
+    "It starts with loosening of the lower incisors at 6–7. By then the first permanent molars (the ‘sixes’) have often already erupted, without a milk tooth falling out first — parents may think they are still milk teeth.",
+  blogRiskTitle: "Permanent teeth at risk",
+  blogRisk:
+    "New permanent molars can decay quickly in deep fissures. The first molars are most at risk. Replacement starts with the central incisors, then laterals, canines and premolars, finishing around age 12 with the second molars. Wisdom teeth may appear after 17. Prevention: regular check-ups, tartar removal, brushing and fissure sealing.",
+  blogMoveTitle: "May we wiggle the tooth, or leave it to fall out?",
+  blogMove:
+    "A very loose milk tooth can irritate the gum. Wiggle it so the gum recovers and the permanent tooth can erupt.",
+  blogExtractTitle: "The permanent tooth has erupted but the milk tooth is still there. Extract it?",
+  blogExtract:
+    "If the milk tooth is loose and only a small part of the permanent occlusal surface has appeared, wait a few weeks. If at least half the crown has erupted or the axes do not match, remove the milk tooth soon so the permanent tooth does not erupt in the wrong direction.",
+  blogOrthoTitle: "Newly erupted permanent teeth do not fit the row perfectly. When to start braces?",
+  blogOrtho:
+    "Permanent teeth are already adult-sized; the jaws are not. Mild crowding at 6–8 may resolve with growth; marked discrepancy warrants orthodontics. A first screening around age 7 is useful. Lower permanent incisors erupting from the tongue side may need milk-tooth removal so the tongue can align them.",
+  blogColorTitle: "Permanent enamel is not as white as milk teeth. Why?",
+  blogColor:
+    "The enamel structure differs. Milk teeth are more bluish-white, permanent teeth yellowish-white. The contrast is natural; once milk teeth are gone, the permanent teeth look whiter.",
+  blogSymTitle: "The most common accompanying symptoms",
+  blogSym: [
+    "Irritated, swollen, sensitive gum around a long-loose tooth — extraction often relieves it at once.",
+    "Increased saliva, sometimes inflammation at the corners of the mouth.",
+    "Gingiva still covering part of the erupted tooth — hygiene remains important.",
+    "If a milk tooth is lost and the permanent tooth does not appear for a long time, check for a tooth germ; if missing, see an orthodontist.",
+  ],
+  blogClose:
+    "The pace is individual, often around school age. If you are unsure, a specialist examination gives a clear picture.",
   introTitle: "Prevention and the family dental model",
   introLead:
     "We recommend regular dental check-ups for children every six months at the Dentoplant Dental Clinic in Szeged.",

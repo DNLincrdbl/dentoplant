@@ -44,9 +44,9 @@ function DoctorCard({
 }) {
   const inner = (
     <>
-      <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500">
+      <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-brand-200 via-brand-300 to-brand-500">
         {member.image ? (
-          <TeamPortrait member={member} sizes="64px" />
+          <TeamPortrait member={member} sizes="192px" />
         ) : (
           <div className="grid h-full w-full place-items-center">
             <span className="font-display text-xl font-semibold text-white/90">

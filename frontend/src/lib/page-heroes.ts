@@ -15,6 +15,18 @@ export const PAGE_HEROES = {
   default: "/heroes/6-dentoplant-fogaszati-es-implantologiai-rendelo.jpg",
 } as const;
 
+/** Szolgáltatás-specifikus borító (slug → kép). */
+export const SERVICE_HEROES: Record<string, string> = {
+  "mikroszkopos-fogaszat": "/szolgaltatasok/mikroszkopos-fogaszat/hero.jpg",
+  bolcsessegfog: "/szolgaltatasok/bolcsessegfog/hero.jpg",
+  fogszabalyozas: "/szolgaltatasok/fogszabalyozas/hero.jpg",
+  "iranyitott-biofilm-kezeles": "/szolgaltatasok/gbt/02.jpg",
+  "implantatum-higenia": "/szolgaltatasok/implantatum-higenia/01.jpg",
+  szajhigienia: "/szolgaltatasok/fogkoeltavolitas/01.jpg",
+  gyermekfogaszat: "/szolgaltatasok/gyermekfogaszat/01.jpg",
+  "esztetikai-fogaszat": "/szolgaltatasok/esztetikai-fogaszat/03.jpg",
+};
+
 /** Szolgáltatás-kategória → hero kép. */
 export const SERVICE_CATEGORY_HEROES: Record<string, string> = {
   "Megelőzés és diagnosztika": "/heroes/14-elso-talalkozas-dentoplant-fogaszat-szeged.jpg",
