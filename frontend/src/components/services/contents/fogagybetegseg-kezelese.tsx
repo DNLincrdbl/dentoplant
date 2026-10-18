@@ -1,4 +1,4 @@
-import { BulletList, Callout, Lead, NumberedList, Section, SubSection } from "../ui";
+import { BulletList, Callout, Lead, MediaText, NumberedList, PhotoRow, Section, SubSection } from "../ui";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
 
@@ -32,6 +32,61 @@ export default function FogagybetegsegKezeleseContent({ locale }: ServiceContent
           <p>{c.systemicBody1}</p>
           <p>{c.systemicBody2}</p>
           <p>{c.systemicBody3}</p>
+        </SubSection>
+      </Section>
+
+      <Section title={c.blogTitle}>
+        <Lead>{c.blogLead}</Lead>
+        <p>{c.blogBody1}</p>
+        <MediaText
+          image={{
+            src: "/szolgaltatasok/fogagy/blog/01.png",
+            alt: c.blogTitle,
+            width: 2032,
+            height: 1270,
+          }}
+        >
+          <p>{c.blogParo}</p>
+        </MediaText>
+        <SubSection title={c.blogWhatTitle}>
+          <p>{c.blogWhat}</p>
+        </SubSection>
+        <SubSection title={c.blogSysTitle}>
+          <p>{c.blogSys}</p>
+          <BulletList items={c.blogSysItems} />
+        </SubSection>
+        <MediaText
+          reverse
+          image={{
+            src: "/szolgaltatasok/fogagy/blog/02.png",
+            alt: c.blogSysTitle,
+            width: 1992,
+            height: 1156,
+          }}
+        >
+          <p>{c.blogCardio}</p>
+        </MediaText>
+        <PhotoRow
+          images={[
+            {
+              src: "/szolgaltatasok/fogagy/blog/03.jpg",
+              alt: c.blogDiabetesTitle,
+              width: 2755,
+              height: 1800,
+            },
+            {
+              src: "/szolgaltatasok/fogagy/blog/04.jpg",
+              alt: c.blogPregTitle,
+              width: 1908,
+              height: 1252,
+            },
+          ]}
+        />
+        <SubSection title={c.blogDiabetesTitle}>
+          <p>{c.blogDiabetes}</p>
+        </SubSection>
+        <SubSection title={c.blogPregTitle}>
+          <p>{c.blogPreg}</p>
         </SubSection>
       </Section>
 
@@ -130,6 +185,33 @@ const HU = {
     "A kardiovaszkuláris betegségek és a fogágybetegség sok tekintetben hasonlók: gyakori, krónikus, nem fertőző kórképek, előfordulásuk az életkorral nő. A fogágy gyulladása növeli a szívinfarktus, a szívelégtelenség és a stroke kockázatát.",
   systemicBody3:
     "A dohányzás, a stressz, a kóros elhízás, a cukorbetegség és az egészségtelen táplálkozás mindkét betegséget súlyosbíthatja. A korai diagnózis és a fogorvos–belgyógyász együttműködés a gyógyulási esélyeket növeli.",
+  blogTitle: "A fogágybetegségekről",
+  blogLead:
+    "A fogágybetegség napjainkban is népbetegségnek számít, megszüntetése nemcsak a fogak, de az általános egészségünk megőrzése érdekében is fontosabb, mint gondolnánk.",
+  blogBody1:
+    "Ha időben fordulunk szakemberhez és visszajárunk a gondozási programba, önfeledten mosolyoghatunk idős korunkban is — és nemcsak a mozgó fogak és az ínyvisszahúzódás kerül el minket, hanem több belgyógyászati kórképtől sem kell aggódnunk.",
+  blogParo:
+    "A fogágyat latinul parodonciumnak, a fogágy gyulladását parodontitisnek nevezzük. A parodontológia a fogágy betegségeivel foglalkozó önálló szakterület: az ínygyulladástól a tartószövetek sorvadása miatt mozgatható fogak megtartásáig.",
+  blogWhatTitle: "Mit nevezünk fogágybetegségnek?",
+  blogWhat:
+    "Gyulladásos betegség, amely a fogakat körülvevő ínyt, csontot és a parodontális ligamentumokat együttesen érinti. Kialakulása lassú, kezdeti fázisa kevés panasszal jár — ezért sok páciens már előrehaladott stádiumban fordul hozzánk. A köznyelvi „ínysorvadás” nem helyes: a gyulladás mélyre terjed, a tartószöveteket is érinti.",
+  blogSysTitle: "Kapcsolat általános megbetegedésekkel",
+  blogSys:
+    "A fogágyon keresztül a véráramba kerülő baktériumok több kórkép kialakulásáért tehetők felelőssé. Szakirodalmi adatok szerint a fogágybetegség növeli:",
+  blogSysItems: [
+    "a II. típusú cukorbetegség",
+    "a szív- és érrendszeri megbetegedések",
+    "az időskori dementia",
+    "a koraszülés és a kisebb magzati súly",
+  ],
+  blogCardio:
+    "A szív- és érrendszeri betegségek és a fogágybetegség gyakori, krónikus, nem fertőző kórképek, előfordulásuk az életkorral nő. A fogágy gyulladása növeli a szívinfarktus, a szívelégtelenség és a stroke kockázatát.",
+  blogDiabetesTitle: "Fogágybetegség és cukorbetegség",
+  blogDiabetes:
+    "A kapcsolat kétirányú: cukorbetegeknél a fogágybetegség súlyosabb lehet, a kezeletlen fogágybetegség viszont megemelheti a vércukorszintet. A rendszeres dentálhigiéniai gondozással a tasakok gyulladása megszüntethető.",
+  blogPregTitle: "Szájüregi egészség a várandósság alatt",
+  blogPreg:
+    "A fogágybetegség és a koraszülés, illetve a kisebb magzati súly közötti összefüggést több adat alátámasztja. A terhesség során kiemelten fontos a szájüregi egészség fenntartása.",
   prepTitle: "Előkészítés, instruálás, motiválás",
   prepBody:
     "Alapvető a gondos, rendszeres szájápolás és a megfelelő fogmosási technika. Be kell építeni a speciális tisztítóeszközöket a napi rutinba, és félévente dentálhigiénikusi ellenőrzés, fogkőeltávolítás szükséges.",
@@ -226,6 +308,33 @@ const EN = {
     "Cardiovascular disease and periodontitis are both common, chronic, non-communicable conditions that increase with age. Periodontal inflammation raises the risk of heart attack, heart failure and stroke.",
   systemicBody3:
     "Smoking, stress, obesity, diabetes and unhealthy diet worsen both. Early diagnosis and dentist–physician cooperation improve the chances of recovery.",
+  blogTitle: "About periodontal disease",
+  blogLead:
+    "Periodontal disease is still a widespread condition; treating it matters not only for the teeth but for general health.",
+  blogBody1:
+    "If you see a specialist in time and stay in a maintenance programme, you can smile freely into old age — avoiding loose teeth and gum recession, and reducing several medical risks.",
+  blogParo:
+    "The periodontium is the supporting apparatus of the tooth; its inflammation is periodontitis. Periodontology covers everything from gingivitis to keeping teeth that have become mobile due to tissue loss.",
+  blogWhatTitle: "What is periodontal disease?",
+  blogWhat:
+    "An inflammatory disease of the gums, bone and periodontal ligaments together. It develops slowly with few early symptoms, so many patients arrive already at an advanced stage. “Gum recession” in everyday speech is inaccurate: the inflammation goes deep and involves the supporting tissues.",
+  blogSysTitle: "Links with general disease",
+  blogSys:
+    "Bacteria entering the bloodstream via the periodontium can contribute to several conditions. Literature links periodontal disease with:",
+  blogSysItems: [
+    "type II diabetes",
+    "cardiovascular disease",
+    "late-life dementia",
+    "premature birth and lower birth weight",
+  ],
+  blogCardio:
+    "Cardiovascular disease and periodontitis are both common, chronic, non-communicable conditions that increase with age. Periodontal inflammation raises the risk of heart attack, heart failure and stroke.",
+  blogDiabetesTitle: "Periodontitis and diabetes",
+  blogDiabetes:
+    "The link is two-way: in people with diabetes periodontitis can be more severe, while untreated periodontitis can raise blood sugar. Regular hygiene care can resolve pocket inflammation.",
+  blogPregTitle: "Oral health in pregnancy",
+  blogPreg:
+    "Several studies link periodontal disease with premature birth and lower birth weight. Maintaining oral health during pregnancy is especially important.",
   prepTitle: "Preparation, instruction, motivation",
   prepBody:
     "Careful daily care and a proper brushing technique are fundamental, plus special cleaning aids and six-monthly hygienist visits with tartar removal.",

@@ -1,5 +1,4 @@
-import { BulletList, Callout, CardGrid, Lead, MediaText, ProcessSteps, Section, SubSection } from "../ui";
-import { GalleryGrid } from "@/components/gallery-grid";
+import { BulletList, Callout, CardGrid, Lead, MediaText, PhotoRow, ProcessSteps, Section, SubSection } from "../ui";
 import type { ServiceContentProps } from "./index";
 import photos from "@/lib/service-photos.json";
 
@@ -37,8 +36,18 @@ export default function SzajhigieniaContent({ locale }: ServiceContentProps) {
 
       <Section title={c.toolsTitle}>
         <SubSection title={c.brushTitle}>
-          <p>{c.brushBody1}</p>
-          <p>{c.brushBody2}</p>
+          <MediaText
+            reverse
+            image={{
+              src: "/szolgaltatasok/fogkoeltavolitas/fogkefe.jpg",
+              alt: c.alt,
+              width: 2000,
+              height: 1320,
+            }}
+          >
+            <p>{c.brushBody1}</p>
+            <p>{c.brushBody2}</p>
+          </MediaText>
         </SubSection>
 
         <SubSection title={c.replaceTitle}>
@@ -62,7 +71,7 @@ export default function SzajhigieniaContent({ locale }: ServiceContentProps) {
         <ProcessSteps steps={c.clinic} />
       </Section>
 
-      <GalleryGrid images={imgs.slice(1)} labels={c.galleryLabels} />
+      <PhotoRow images={[imgs[9], imgs[1], imgs[10]].filter(Boolean)} />
     </div>
   );
 }

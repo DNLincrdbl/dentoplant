@@ -1,5 +1,4 @@
-import { BulletList, Callout, CertPanel, Lead, MediaText, Section } from "../ui";
-import { GalleryGrid } from "@/components/gallery-grid";
+import { BulletList, Callout, CertPanel, Figure, Lead, MediaText, Section } from "../ui";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
 import photos from "@/lib/service-photos.json";
@@ -24,8 +23,8 @@ export default function ImplantHigeniaContent({ locale }: ServiceContentProps) {
         <p>{c.introBody}</p>
       </Section>
 
-      {imgs[0] && (
-        <MediaText image={imgs[0]}>
+      {(imgs[4] ?? imgs[3]) && (
+        <MediaText image={(imgs[4] ?? imgs[3])!}>
           <p>{c.prep}</p>
         </MediaText>
       )}
@@ -35,13 +34,9 @@ export default function ImplantHigeniaContent({ locale }: ServiceContentProps) {
         <BulletList items={c.afterItems} />
       </Section>
 
-      {imgs[3] && (
-        <MediaText reverse image={imgs[3]}>
-          <p>{c.tools}</p>
-        </MediaText>
-      )}
+      <p>{c.tools}</p>
 
-      <GalleryGrid images={imgs} labels={c.galleryLabels} />
+      {imgs[2] && <Figure {...imgs[2]} />}
 
       <Callout
         title={c.calloutTitle}

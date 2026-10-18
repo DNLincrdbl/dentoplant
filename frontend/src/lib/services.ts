@@ -262,12 +262,70 @@ export const SERVICES: Service[] = [
 
   {
     slug: "szajsebeszet",
-    name: "Szájsebészet",
+    name: "Egyszerű és műtéti fogeltávolítás",
+    navName: "Fogeltávolítás",
     category: "Szájsebészet",
     icon: Scissors,
+    cluster: "Szájsebészet",
     doctors: ["dr-maraz-kinga", "dr-meszaros-csongor", "dr-roszik-melitta"],
     summary:
-      "A fogeltávolítások többségében elegendő csak egy egyszerű műszerrel kibillenteni a beteg fogat, viszont a mélyebben fekvő gyökerek, elő nem tört fogak csak szájsebészeti kisműtéttel távolíthatóak el. Ezeket feltárásból végzett fogeltávolításnak nevezzük.",
+      "A fogeltávolítások többségében elegendő csak egy egyszerű műszerrel kibillenteni a beteg fogat, viszont a mélyebben fekvő gyökerek, elő nem tört fogak csak szájsebészeti kisműtéttel távolíthatóak el.",
+    hasFullContent: true,
+  },
+  {
+    slug: "alveolus-prezervacio",
+    name: "Alveólus prezerváció",
+    category: "Szájsebészet",
+    icon: Bone,
+    cluster: "Szájsebészet",
+    doctors: ["dr-maraz-kinga", "dr-meszaros-csongor"],
+    summary:
+      "A foghúzás helyének azonnali ellátása csont- és kötőszövetpótlással, hogy a lehető legtöbb csont és íny megmaradjon — különösen implantáció előtt.",
+    hasFullContent: true,
+  },
+  {
+    slug: "szajsebeszeti-csontpotlas",
+    name: "Csontpótlás",
+    category: "Szájsebészet",
+    icon: Bone,
+    cluster: "Szájsebészet",
+    doctors: ["dr-maraz-kinga", "dr-meszaros-csongor"],
+    summary:
+      "Irányított csontregeneráció implantációhoz és csonthiányokhoz: laterális augmentáció, sausage technika, csontblokk, zárt vagy nyitott arcüreg emelés.",
+    hasFullContent: true,
+  },
+  {
+    slug: "arcureg-emeles",
+    name: "Arcüreg emelés",
+    category: "Szájsebészet",
+    icon: Bone,
+    cluster: "Szájsebészet",
+    doctors: ["dr-maraz-kinga", "dr-meszaros-csongor"],
+    summary:
+      "Az arcüreg alapjának megvastagítása zárt vagy nyitott sinus lifttel, ha a felső őrlők helyén nincs elég csont az implantátumhoz.",
+    hasFullContent: true,
+  },
+  {
+    slug: "vestibulum-plasztika",
+    name: "Vestibulum plasztika és áthajlásmélyítés",
+    navName: "Vestibulum plasztika",
+    category: "Szájsebészet",
+    icon: Scissors,
+    cluster: "Szájsebészet",
+    doctors: ["dr-maraz-kinga"],
+    summary:
+      "Áthajlásmélyítés és feszes íny helyreállítása kivehető pótlás, implantátumok körül, csontpótlás után vagy recesszió mellett.",
+    hasFullContent: true,
+  },
+  {
+    slug: "fogmegtarto-mutetek",
+    name: "Fogmegtartó műtétek",
+    category: "Szájsebészet",
+    icon: Scissors,
+    cluster: "Szájsebészet",
+    doctors: ["dr-maraz-kinga", "dr-sebok-eszter"],
+    summary:
+      "Gyökércsúcs-rezekció, hemiszekció, gyökéramputáció és regeneratív fogmegtartó szájsebészet mikroszkópos nagyításban.",
     hasFullContent: true,
   },
   {

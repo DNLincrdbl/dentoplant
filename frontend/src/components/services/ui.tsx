@@ -50,6 +50,25 @@ export function CertPanel({ title, children }: { title?: string; children: React
   );
 }
 
+/** Equal-width photo row (2–4 images). */
+export function PhotoRow({ images }: { images: Media[] }) {
+  const cols =
+    images.length >= 4
+      ? "sm:grid-cols-2 lg:grid-cols-4"
+      : images.length === 3
+        ? "sm:grid-cols-3"
+        : images.length === 2
+          ? "sm:grid-cols-2"
+          : "";
+  return (
+    <div className={`grid gap-4 ${cols}`}>
+      {images.map((img) => (
+        <Figure key={img.src} {...img} />
+      ))}
+    </div>
+  );
+}
+
 /** A single framed image with optional caption. */
 export function Figure({ src, alt, width, height, caption }: Media & { caption?: string }) {
   return (

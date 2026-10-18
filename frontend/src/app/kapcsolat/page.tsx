@@ -109,16 +109,6 @@ export default async function ContactPage() {
                 </ul>
               </div>
             </div>
-
-            <div className="mt-6 overflow-hidden rounded-2xl border border-border">
-              <iframe
-                title={c.mapTitle}
-                src="https://maps.google.com/maps?q=Szeged%20F%C5%91%20fasor%2045&z=15&output=embed"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="h-64 w-full"
-              />
-            </div>
           </div>
 
           <div className="rounded-3xl border border-border bg-muted/30 p-6 md:p-8">
@@ -158,6 +148,16 @@ export default async function ContactPage() {
               </button>
             </form>
           </div>
+        </div>
+
+        <div className="mt-10 overflow-hidden rounded-2xl border border-border">
+          <iframe
+            title={c.mapTitle}
+            src="https://maps.google.com/maps?q=Szeged%20F%C5%91%20fasor%2045&z=15&output=embed"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="h-72 w-full md:h-96"
+          />
         </div>
       </section>
     </>

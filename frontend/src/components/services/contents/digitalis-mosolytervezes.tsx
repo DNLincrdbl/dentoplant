@@ -47,8 +47,6 @@ export default function DsdContent({ locale }: ServiceContentProps) {
   const fades = Object.values(photos.dsd_attuno).map((frames, n) =>
     labeled(frames, (i) => `${fadeNames[n] ?? c.fadeTitle} — ${i + 1}`),
   );
-  const workGallery = [work[3], work[4], work[5], work[7]].filter(Boolean) as typeof work;
-
   return (
     <div className="space-y-12">
       <BeforeAfter
@@ -75,7 +73,14 @@ export default function DsdContent({ locale }: ServiceContentProps) {
         <p>{c.whatBody[2]}</p>
       </Section>
 
-      <GalleryGrid images={workGallery} labels={c.galleryLabels} />
+      <Section title={c.fadeTitle}>
+        <p>{c.fadeIntro}</p>
+        <div className="grid gap-6 sm:grid-cols-2">
+          {fades.map((frames, i) => (
+            <Crossfade key={i} frames={frames} caption={c.fadeNames[i] ?? `${c.fadeCase} ${i + 1}`} />
+          ))}
+        </div>
+      </Section>
 
       <Section title={c.videoTitle}>
         <VideoEmbed id="mo90lrm2EBQ" title={c.videoTitle} />
@@ -158,15 +163,6 @@ export default function DsdContent({ locale }: ServiceContentProps) {
         </div>
       </Section>
 
-      <Section title={c.fadeTitle}>
-        <p>{c.fadeIntro}</p>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {fades.map((frames, i) => (
-            <Crossfade key={i} frames={frames} caption={c.fadeNames[i] ?? `${c.fadeCase} ${i + 1}`} />
-          ))}
-        </div>
-      </Section>
-
     </div>
   );
 }
@@ -177,7 +173,7 @@ const HU = {
   altWork: "Digitális mosolytervezés munka közben a Dentoplant rendelőben",
   caseBereczki: "Kismetsző foghiányok pótlása",
   caseEmese: "Felső front fogak rekonstrukciója",
-  fadeTitle: "Áttűnő esetek",
+  fadeTitle: "Megvalósult esetek",
   fadeCaption: "Előtte → utána",
   fadeIntro:
     "Az alábbi képpárok lassan váltanak a kiindulási állapot és a kész mosoly között.",
@@ -289,7 +285,7 @@ const EN = {
   altWork: "Digital Smile Design in progress at the Dentoplant clinic",
   caseBereczki: "Replacement of missing lateral incisors",
   caseEmese: "Reconstruction of the upper front teeth",
-  fadeTitle: "Before–after transitions",
+  fadeTitle: "Completed cases",
   fadeCaption: "Before → after",
   fadeIntro: "The image pairs below slowly fade from the starting condition to the finished smile.",
   fadeCase: "Case",

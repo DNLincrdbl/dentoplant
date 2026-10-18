@@ -1,5 +1,4 @@
-import { Callout, CertPanel, Lead, MediaText, ProcessSteps, Section } from "../ui";
-import { GalleryGrid } from "@/components/gallery-grid";
+import { Callout, CertPanel, Figure, Lead, MediaText, PhotoRow, ProcessSteps, Section } from "../ui";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
 import photos from "@/lib/service-photos.json";
@@ -23,8 +22,18 @@ export default function GbtContent({ locale }: ServiceContentProps) {
 
   return (
     <div className="space-y-12">
-      <CertPanel>{en ? GBT_CERT.en : GBT_CERT.hu}</CertPanel>
-      <p className="text-lg font-medium text-brand-800">{c.tagline}</p>
+      <p className="font-display text-2xl leading-snug text-brand-800 md:text-3xl">{c.tagline}</p>
+      <MediaText
+        reverse
+        image={{
+          src: "/szolgaltatasok/gbt/gbt-02.jpg",
+          alt: c.alt,
+          width: 1500,
+          height: 2000,
+        }}
+      >
+        <CertPanel>{en ? GBT_CERT.en : GBT_CERT.hu}</CertPanel>
+      </MediaText>
 
       <Section title={c.introTitle}>
         <Lead>{c.introLead}</Lead>
@@ -38,10 +47,17 @@ export default function GbtContent({ locale }: ServiceContentProps) {
       )}
 
       <Section title={c.stepsTitle}>
-        <ProcessSteps steps={c.steps} />
+        <ProcessSteps steps={c.steps.slice(0, 4)} />
+        <Figure
+          src="/szolgaltatasok/gbt/gbt-01.jpg"
+          alt="EMS Airflow Prophylaxis Master"
+          width={2000}
+          height={1285}
+        />
+        <ProcessSteps steps={c.steps.slice(4)} start={5} />
       </Section>
 
-      <GalleryGrid images={imgs} labels={c.galleryLabels} />
+      <PhotoRow images={[imgs[3], imgs[0], imgs[7]].filter(Boolean)} />
 
       <Callout
         title={c.calloutTitle}

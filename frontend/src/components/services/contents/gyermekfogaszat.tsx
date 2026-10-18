@@ -1,5 +1,4 @@
-import { BulletList, Callout, CardGrid, InfoPanel, Lead, MediaText, Section, SubSection } from "../ui";
-import { GalleryGrid } from "@/components/gallery-grid";
+import { BulletList, Callout, CardGrid, InfoPanel, Lead, MediaText, PhotoRow, Section, SubSection } from "../ui";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
 import photos from "@/lib/service-photos.json";
@@ -22,13 +21,16 @@ export default function GyermekfogaszatContent({ locale }: ServiceContentProps) 
       </Section>
 
       <Section title={c.whenBrushTitle}>
-        {imgs[0] ? (
-          <MediaText image={imgs[0]}>
-            <p>{c.whenBrushBody}</p>
-          </MediaText>
-        ) : (
+        <MediaText
+          image={{
+            src: "/szolgaltatasok/gyermekfogaszat/fogmosas.jpg",
+            alt: c.alt,
+            width: 2000,
+            height: 1333,
+          }}
+        >
           <p>{c.whenBrushBody}</p>
-        )}
+        </MediaText>
       </Section>
 
 
@@ -41,18 +43,46 @@ export default function GyermekfogaszatContent({ locale }: ServiceContentProps) 
       </Section>
 
       <Section title={c.traumaTitle}>
-        <p>{c.traumaBody1}</p>
-        <p>{c.traumaBody2}</p>
+        <MediaText
+          image={{
+            src: "/szolgaltatasok/gyermekfogaszat/regi/01.jpg",
+            alt: c.traumaTitle,
+            width: 2000,
+            height: 1333,
+          }}
+        >
+          <p>{c.traumaBody1}</p>
+          <p>{c.traumaBody2}</p>
+        </MediaText>
       </Section>
 
       <Section title={c.thumbTitle}>
-        <p>{c.thumbBody1}</p>
-        <p>{c.thumbBody2}</p>
+        <MediaText
+          reverse
+          image={{
+            src: "/szolgaltatasok/gyermekfogaszat/regi/02.jpg",
+            alt: c.thumbTitle,
+            width: 2000,
+            height: 1333,
+          }}
+        >
+          <p>{c.thumbBody1}</p>
+          <p>{c.thumbBody2}</p>
+        </MediaText>
       </Section>
 
       <Section title={c.cariesTitle}>
-        <p>{c.cariesBody1}</p>
-        <p>{c.cariesBody2}</p>
+        <MediaText
+          image={{
+            src: "/szolgaltatasok/gyermekfogaszat/regi/03.jpg",
+            alt: c.cariesTitle,
+            width: 1183,
+            height: 730,
+          }}
+        >
+          <p>{c.cariesBody1}</p>
+          <p>{c.cariesBody2}</p>
+        </MediaText>
         <SubSection title={c.causesTitle}>
           <CardGrid items={c.causes} />
           <p>{c.causesBody}</p>
@@ -63,7 +93,7 @@ export default function GyermekfogaszatContent({ locale }: ServiceContentProps) 
         <p>{c.twoRowsBody}</p>
       </Section>
 
-      <GalleryGrid images={imgs.slice(1)} labels={c.galleryLabels} />
+      <PhotoRow images={[imgs[5], imgs[1], imgs[4]].filter(Boolean)} />
 
       <Callout
         title={c.calloutTitle}

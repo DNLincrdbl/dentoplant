@@ -9,6 +9,11 @@ import Bolcsessegfog from "./bolcsessegfog";
 import Inygyulladas from "./inygyulladas";
 import Parodontologia from "./parodontologia";
 import Szajsebeszet from "./szajsebeszet";
+import AlveolusPrezervacio from "./alveolus-prezervacio";
+import SzajsebeszetiCsontpotlas from "./szajsebeszeti-csontpotlas";
+import ArcuregEmeles from "./arcureg-emeles";
+import VestibulumPlasztika from "./vestibulum-plasztika";
+import FogmegtartoMutetek from "./fogmegtarto-mutetek";
 import EsztetikaiFogaszat from "./esztetikai-fogaszat";
 import Fogfeherites from "./fogfeherites";
 import Implantatum from "./implantatum";
@@ -39,6 +44,11 @@ export const SERVICE_CONTENTS: Record<string, ComponentType<ServiceContentProps>
   inygyulladas: Inygyulladas,
   parodontologia: Parodontologia,
   szajsebeszet: Szajsebeszet,
+  "alveolus-prezervacio": AlveolusPrezervacio,
+  "szajsebeszeti-csontpotlas": SzajsebeszetiCsontpotlas,
+  "arcureg-emeles": ArcuregEmeles,
+  "vestibulum-plasztika": VestibulumPlasztika,
+  "fogmegtarto-mutetek": FogmegtartoMutetek,
   "esztetikai-fogaszat": EsztetikaiFogaszat,
   fogfeherites: Fogfeherites,
   implantatum: Implantatum,

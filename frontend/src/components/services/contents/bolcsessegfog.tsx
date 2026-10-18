@@ -31,13 +31,13 @@ export default function BolcsessegfogContent({ locale }: ServiceContentProps) {
       <Section title={c.introTitle}>
         <Lead>{c.introLead}</Lead>
         <p>{c.introBody}</p>
+        <p>{c.workLead}</p>
       </Section>
 
-      {work[0] && (
-        <MediaText image={work[0]}>
-          <p>{c.workLead}</p>
-        </MediaText>
-      )}
+      <Section title={c.baTitle}>
+        <p>{c.baIntro}</p>
+        <GalleryGrid images={ba} labels={c.galleryLabels} />
+      </Section>
 
       <Section title={c.specialTitle}>
         {c.special.map((p, i) => (
@@ -45,15 +45,8 @@ export default function BolcsessegfogContent({ locale }: ServiceContentProps) {
         ))}
       </Section>
 
-      {work[4] && <Figure {...work[4]} />}
-
       <Section title={c.impactedTitle}>
         <p>{c.impactedBody}</p>
-      </Section>
-
-      <Section title={c.baTitle}>
-        <p>{c.baIntro}</p>
-        <GalleryGrid images={ba} labels={c.galleryLabels} />
       </Section>
 
       <Callout
@@ -70,8 +63,8 @@ export default function BolcsessegfogContent({ locale }: ServiceContentProps) {
       <Section title={c.removalTitle}>
         <MediaText reverse image={work[3] ?? work[1]!}>
           <p>{c.removalBody1}</p>
+          <p>{c.removalBody2}</p>
         </MediaText>
-        <p>{c.removalBody2}</p>
       </Section>
 
       <Section title={c.whenTitle}>
@@ -99,17 +92,8 @@ export default function BolcsessegfogContent({ locale }: ServiceContentProps) {
       </Section>
 
       <Section title={c.luckyTitle}>
-        {work[1] && (
-          <MediaText image={work[1]}>
-            <p>{c.luckyBody1}</p>
-          </MediaText>
-        )}
-        {work[2] && <Figure {...work[2]} />}
-        {work[5] && (
-          <MediaText reverse image={work[5]}>
-            <p>{c.luckyBody2}</p>
-          </MediaText>
-        )}
+        <p>{c.luckyBody1}</p>
+        <p>{c.luckyBody2}</p>
       </Section>
     </div>
   );

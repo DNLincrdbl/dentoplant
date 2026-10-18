@@ -110,9 +110,36 @@ export const SERVICE_EN: Record<string, { name: string; summary: string; navName
       "Our clinic offers implantology care of an exceptionally high standard. This is made possible by advanced methods learned on high-level international courses and the use of premium Nobel® implants. Because quality is the best decision — and this choice lasts a lifetime.",
   },
   szajsebeszet: {
-    name: "Oral surgery",
+    name: "Simple and surgical extraction",
+    navName: "Extraction",
     summary:
-      "In most extractions it is enough to loosen the affected tooth with a simple instrument, but deeper roots and unerupted teeth can only be removed by minor oral surgery. These are called surgical extractions with flap elevation.",
+      "In most extractions it is enough to loosen the affected tooth with a simple instrument, but deeper roots and unerupted teeth can only be removed by minor oral surgery.",
+  },
+  "alveolus-prezervacio": {
+    name: "Socket preservation",
+    summary:
+      "Immediate treatment of the extraction site with bone and connective-tissue grafting, so as much bone and gum as possible remains — especially before implants.",
+  },
+  "szajsebeszeti-csontpotlas": {
+    name: "Bone grafting",
+    summary:
+      "Guided bone regeneration for implants and defects: lateral augmentation, sausage technique, block graft, closed or open sinus lift.",
+  },
+  "arcureg-emeles": {
+    name: "Sinus lift",
+    summary:
+      "Thickening the sinus floor with a closed or open sinus lift when there is not enough bone for implants in the upper molar region.",
+  },
+  "vestibulum-plasztika": {
+    name: "Vestibuloplasty and sulcus deepening",
+    navName: "Vestibuloplasty",
+    summary:
+      "Deepening the vestibule and restoring attached gum for dentures, around implants, after grafting, or with recession.",
+  },
+  "fogmegtarto-mutetek": {
+    name: "Tooth-preserving surgery",
+    summary:
+      "Apicoectomy, hemisection, root amputation and regenerative tooth-preserving oral surgery under magnification.",
   },
   bolcsessegfog: {
     name: "Wisdom teeth",
@@ -172,4 +199,5 @@ export const NAV_LABELS_EN: Record<string, string> = {
   Kapcsolat: "Contact",
   Szájhigiénia: "Oral hygiene",
   "Fogágybetegség kezelése": "Periodontal disease treatment",
+  Szájsebészet: "Oral surgery",
 };

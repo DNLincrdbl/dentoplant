@@ -5,6 +5,7 @@ import {
   Lead,
   MediaText,
   NumberedList,
+  PhotoRow,
   Section,
   SubSection,
 } from "../ui";
@@ -28,6 +29,30 @@ export default function MikroszkoposFogaszatContent({ locale }: ServiceContentPr
     height: p.height,
     alt: `${c.altCase} (${i + 1})`,
   }));
+  const e1 = {
+    src: "/szolgaltatasok/mikroszkopos-fogaszat/e1.jpg",
+    width: 2000,
+    height: 1396,
+    alt: c.altWork,
+  };
+  const e2 = {
+    src: "/szolgaltatasok/mikroszkopos-fogaszat/e2.jpg",
+    width: 2000,
+    height: 1404,
+    alt: c.altWork,
+  };
+  const e3 = {
+    src: "/szolgaltatasok/mikroszkopos-fogaszat/e3.jpg",
+    width: 2000,
+    height: 1518,
+    alt: c.altWork,
+  };
+  const e4 = {
+    src: "/szolgaltatasok/mikroszkopos-fogaszat/e4.jpg",
+    width: 2000,
+    height: 1514,
+    alt: c.altWork,
+  };
 
   return (
     <div className="space-y-12">
@@ -37,11 +62,9 @@ export default function MikroszkoposFogaszatContent({ locale }: ServiceContentPr
         <p>{c.introZeiss}</p>
       </Section>
 
-      {work[4] && (
-        <MediaText image={work[4]}>
-          <p>{c.workLead}</p>
-        </MediaText>
-      )}
+      <MediaText image={e1}>
+        <p>{c.workLead}</p>
+      </MediaText>
 
       <Section title={c.whyTitle}>
         <p>{c.whyLead}</p>
@@ -49,7 +72,7 @@ export default function MikroszkoposFogaszatContent({ locale }: ServiceContentPr
         <p>{c.whyBody}</p>
       </Section>
 
-      {work[5] && <Figure {...work[5]} />}
+      <Figure {...e2} />
 
       <Section title={c.useTitle}>
         <SubSection title={c.use1Title}>
@@ -75,13 +98,8 @@ export default function MikroszkoposFogaszatContent({ locale }: ServiceContentPr
         </SubSection>
       </Section>
 
-      <GalleryGrid
-        images={[work[0], work[3], work[7]].filter(Boolean)}
-        labels={c.galleryLabels}
-      />
-
       <Section title={c.duringTitle}>
-        <MediaText reverse image={cases[0] ?? work[3]!}>
+        <MediaText reverse image={e3}>
           <p>{c.duringBody}</p>
         </MediaText>
       </Section>
@@ -89,7 +107,13 @@ export default function MikroszkoposFogaszatContent({ locale }: ServiceContentPr
       <Section title={c.caseTitle}>
         <Lead>{c.caseLead}</Lead>
         <SubSection title={c.case1Title}>
-          <p>{c.case1Body}</p>
+          {cases[0] ? (
+            <MediaText reverse image={cases[0]}>
+              <p>{c.case1Body}</p>
+            </MediaText>
+          ) : (
+            <p>{c.case1Body}</p>
+          )}
         </SubSection>
         <SubSection title={c.case2Title}>
           <p>{c.case2Body}</p>
@@ -102,10 +126,7 @@ export default function MikroszkoposFogaszatContent({ locale }: ServiceContentPr
       </Section>
 
       <Section title={c.workTitle}>
-        <GalleryGrid
-          images={[work[5], work[6], work[8], work[10], work[13]].filter(Boolean)}
-          labels={c.galleryLabels}
-        />
+        <PhotoRow images={[e4, work[6], work[10]].filter(Boolean)} />
       </Section>
 
       <Section title={c.summaryTitle}>
