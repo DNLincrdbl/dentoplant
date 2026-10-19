@@ -3,7 +3,13 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 
-type Media = { src: string; alt: string; width: number; height: number };
+type Media = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption?: string;
+};
 
 /** Two-column image + text row. Image defaults to the right on desktop. */
 export function MediaText({

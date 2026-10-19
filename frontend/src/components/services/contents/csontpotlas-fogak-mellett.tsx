@@ -1,4 +1,4 @@
-import { Callout, Lead, Section } from "../ui";
+import { Callout, Figure, Lead, Section } from "../ui";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
 
@@ -9,6 +9,12 @@ export default function CsontpotlasFogakMellettContent({ locale }: ServiceConten
       <Section title={c.title}>
         <Lead>{c.lead}</Lead>
         <p>{c.body}</p>
+        <Figure
+          src="/szolgaltatasok/fogagy/old/csont.jpg"
+          alt={c.photoAlt}
+          width={500}
+          height={173}
+        />
       </Section>
       <Callout
         title={c.calloutTitle}
@@ -26,6 +32,7 @@ const HU = {
     "A súlyosbodó fogágybetegség során a fog körüli csontmennyiség is jelentősen csökken — a megtartás kulcsa a tartószövetek, így a csont felépítése.",
   body:
     "Megfelelő előkészítés után, bizonyos határok között a fogak körüli szövetek csontpótlással felépíthetők. Csontpótlót, saját csontot és membránokat alkalmazunk. A technika alkalmas a szövetmennyiség helyreállítására, de körültekintő döntést és a páciens részéről kifogástalan szájhigiéniát igényel.",
+  photoAlt: "Fogágy műtét csontpótlással — klinikai fotósor",
   calloutTitle: "Csontpótlás megtartott fogak körül",
   calloutBody: "Csak alapos előkészítés és ideális szájhigiénia mellett.",
   calloutCta: "Bejelentkezés",
@@ -37,6 +44,7 @@ const EN = {
     "As periodontal disease advances, the bone around the tooth also decreases — keeping the tooth often means rebuilding the supporting tissues, including bone.",
   body:
     "After proper preparation, within certain limits, tissues around retained teeth can be rebuilt with bone grafting. We use graft material, autogenous bone and membranes. The technique can restore tissue volume, but it needs a careful decision and excellent home care from the patient.",
+  photoAlt: "Periodontal surgery with bone grafting — clinical series",
   calloutTitle: "Bone grafting around retained teeth",
   calloutBody: "Only after thorough preparation and ideal oral hygiene.",
   calloutCta: "Book now",

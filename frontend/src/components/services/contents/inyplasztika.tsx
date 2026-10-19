@@ -1,6 +1,22 @@
-import { BulletList, Callout, Lead, Section, SubSection } from "../ui";
+import { BulletList, Callout, Lead, PhotoRow, Section, SubSection } from "../ui";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
+
+function img(
+  name: string,
+  alt: string,
+  width = 2000,
+  height = 1333,
+  caption?: string,
+) {
+  return {
+    src: `/szolgaltatasok/fogagy/old/${name}.jpg`,
+    alt,
+    width,
+    height,
+    caption,
+  };
+}
 
 export default function InyplasztikaContent({ locale }: ServiceContentProps) {
   const c = locale === "en" ? EN : HU;
@@ -16,13 +32,61 @@ export default function InyplasztikaContent({ locale }: ServiceContentProps) {
       <Section title={c.complTitle}>
         <BulletList items={c.compl} />
         <p>{c.body2}</p>
-        <p>{c.body3}</p>
       </Section>
       <SubSection title={c.singleTitle}>
         <p>{c.single}</p>
+        <PhotoRow
+          images={[
+            {
+              src: "/szolgaltatasok/fogagy/old/single-1.jpg",
+              alt: c.singleCap1,
+              width: 1333,
+              height: 2000,
+              caption: c.singleCap1,
+            },
+            {
+              src: "/szolgaltatasok/fogagy/old/single-2.jpg",
+              alt: c.singleCap2,
+              width: 1333,
+              height: 2000,
+              caption: c.singleCap2,
+            },
+            {
+              src: "/szolgaltatasok/fogagy/old/single-3.jpg",
+              alt: c.singleCap3,
+              width: 1333,
+              height: 2000,
+              caption: c.singleCap3,
+            },
+          ]}
+        />
       </SubSection>
       <SubSection title={c.multiTitle}>
         <p>{c.multi}</p>
+        <PhotoRow
+          images={[
+            img("multi-1", c.multiAlt),
+            img("multi-2", c.multiAlt),
+            img("multi-3", c.multiAlt),
+            img("multi-4", c.multiCapStart, 1024, 682, c.multiCapStart),
+          ]}
+        />
+        <PhotoRow
+          images={[
+            img("multi-5", c.multiAlt),
+            img("multi-6", c.graftCap, 2000, 1333, c.graftCap),
+            img("multi-7", c.multiAlt),
+            img("multi-8", c.multiCap1y, 1024, 682, c.multiCap1y),
+          ]}
+        />
+        <PhotoRow
+          images={[
+            img("multi-9", c.multiAlt),
+            img("multi-10", c.multiAlt),
+            img("multi-11", c.multiAlt),
+            img("multi-12", c.multiCap7y, 1024, 682, c.multiCap7y),
+          ]}
+        />
       </SubSection>
       <Callout
         title={c.calloutTitle}
@@ -59,14 +123,20 @@ const HU = {
   ],
   body2:
     "Két dolog kell: sebészi technika és anyag, amivel az íny szövetét megnöveljük. A legmodernebb megoldások az ínypapillák átvágása nélküli tunnel (alagút) technikák. Anyagként szájpadlásból vett kötőszövetes szabadlebenyt, a tuber területéről nyert graftot, vagy Geistlich Mucograft®-ot használunk.",
-  body3:
-    "A fotók a későbbiekben kerülnek fel az oldalra.",
   singleTitle: "Egyszeres ínyrecesszió",
   single:
     "Például a jobb felső szemfogról 5 mm íny húzódott le. Az íny „visszahúzása” csak műtéttel lehetséges: a szájpadlásból eltávolított kötőszövetes szabadlebenyt koronálisan csúsztatott lebenytechnikával kombináljuk, parodontális plasztikai mikrosebészettel.",
   multiTitle: "Többszörös ínyrecesszió",
   multi:
     "Több fogat érintő lehúzódás, különösen az esztétikai zónában. A fogközök megnyitása nélküli tunnel technikával a preparált alagútba húzzuk a szájpadlásból vett graftot, majd speciális varratokkal pozícionáljuk az ínyt. Hosszú távú követéseinkben a recesszió fedésének sikeressége évek múltán is közel 100%-os lehet.",
+  singleCap1: "Kezelés előtt",
+  singleCap2: "Tisztítás és mérések",
+  singleCap3: "Kezelés után 1 évvel",
+  multiAlt: "Többszörös ínyrecesszió kezelése",
+  graftCap: "Szájpadlásból Hürzeler-technikával kivett kötőszövetes szabadlebeny",
+  multiCapStart: "Kiindulási állapot",
+  multiCap1y: "Egyéves eredmény",
+  multiCap7y: "Hétéves eredmény",
   calloutTitle: "Ínyplasztikai konzultáció",
   calloutBody: "Tunnel technika és kötőszövetes graft — az ínyvonal harmóniájáért.",
   calloutCta: "Bejelentkezés",
@@ -97,13 +167,20 @@ const EN = {
   ],
   body2:
     "Two things are needed: a surgical technique and a material to augment the gum. The most modern options are tunnel techniques that do not cut the papillae. We use a palatal connective-tissue graft, a graft from the tuber region, or Geistlich Mucograft®.",
-  body3: "Photos will be added to this page later.",
   singleTitle: "Single recession",
   single:
     "For example 5 mm of gum receded from an upper canine. Covering it is only possible surgically: a palatal connective-tissue graft combined with a coronally advanced flap, using periodontal plastic microsurgery.",
   multiTitle: "Multiple recessions",
   multi:
     "Recession on several teeth, especially in the aesthetic zone. With a tunnel technique that does not open the papillae we draw the palatal graft into the prepared tunnel and position the gum with special sutures. In our long-term follow-up, coverage can remain close to 100% years later.",
+  singleCap1: "Before treatment",
+  singleCap2: "Cleaning and measurements",
+  singleCap3: "One year after treatment",
+  multiAlt: "Multiple recession treatment",
+  graftCap: "Connective-tissue graft harvested from the palate with the Hürzeler technique",
+  multiCapStart: "Baseline",
+  multiCap1y: "One-year result",
+  multiCap7y: "Seven-year result",
   calloutTitle: "Gum plastic consultation",
   calloutBody: "Tunnel technique and connective-tissue graft — for a harmonious gum line.",
   calloutCta: "Book now",

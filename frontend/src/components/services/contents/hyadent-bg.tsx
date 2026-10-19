@@ -1,4 +1,4 @@
-import { BulletList, Callout, Lead, Section } from "../ui";
+import { BulletList, Callout, Lead, PhotoRow, Section } from "../ui";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
 
@@ -13,6 +13,22 @@ export default function HyadentBgContent({ locale }: ServiceContentProps) {
       </Section>
       <Section title={c.advTitle}>
         <BulletList items={c.adv} />
+        <PhotoRow
+          images={[
+            {
+              src: "/szolgaltatasok/fogagy/old/hya-1.jpg",
+              alt: c.photoAlt1,
+              width: 800,
+              height: 532,
+            },
+            {
+              src: "/szolgaltatasok/fogagy/old/hya-2.jpg",
+              alt: c.photoAlt2,
+              width: 800,
+              height: 532,
+            },
+          ]}
+        />
       </Section>
       <Callout
         title={c.calloutTitle}
@@ -43,6 +59,8 @@ const HU = {
     "jól kombinálható más bioanyagokkal",
     "minimális posztoperatív fájdalom és kisebb duzzanat",
   ],
+  photoAlt1: "hyaDENT BG a nyitott kürett során",
+  photoAlt2: "hyaDENT BG — műtét utáni állapot",
   calloutTitle: "Érdeklődjön a regeneratív lehetőségekről",
   calloutBody: "A nyitott kürett során alkalmazott hialuronsav a gyógyulást és a tasak megőrzését szolgálja.",
   calloutCta: "Bejelentkezés",
@@ -67,6 +85,8 @@ const EN = {
     "combines well with other biomaterials",
     "minimal postoperative pain and less swelling",
   ],
+  photoAlt1: "hyaDENT BG during open-flap curettage",
+  photoAlt2: "hyaDENT BG — after surgery",
   calloutTitle: "Ask about regenerative options",
   calloutBody: "Hyaluronic acid during open-flap curettage supports healing and pocket preservation.",
   calloutCta: "Book now",

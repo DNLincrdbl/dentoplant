@@ -1,4 +1,4 @@
-import { BulletList, Callout, Lead, MediaText, NumberedList, PhotoRow, Section, SubSection } from "../ui";
+import { BulletList, Callout, Figure, Lead, MediaText, NumberedList, PhotoRow, Section, SubSection } from "../ui";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
 
@@ -97,6 +97,22 @@ export default function FogagybetegsegKezeleseContent({ locale }: ServiceContent
       <Section title={c.microTitle}>
         <p>{c.microBody1}</p>
         <p>{c.microBody2}</p>
+        <PhotoRow
+          images={[
+            {
+              src: "/szolgaltatasok/fogagy/old/fmd-1.jpg",
+              alt: c.fmdAlt1,
+              width: 1284,
+              height: 854,
+            },
+            {
+              src: "/szolgaltatasok/fogagy/old/fmd-2.jpg",
+              alt: c.fmdAlt2,
+              width: 800,
+              height: 532,
+            },
+          ]}
+        />
       </Section>
 
       <Section title={c.closedTitle}>
@@ -129,6 +145,12 @@ export default function FogagybetegsegKezeleseContent({ locale }: ServiceContent
       <Section title={c.regenTitle}>
         <p>{c.regenBody1}</p>
         <p>{c.regenBody2}</p>
+        <Figure
+          src="/szolgaltatasok/fogagy/old/regen.jpg"
+          alt={c.regenAlt}
+          width={1016}
+          height={342}
+        />
         <p>{c.regenBody3}</p>
         <BulletList items={c.regenItems} />
       </Section>
@@ -220,6 +242,8 @@ const HU = {
     "Fogágybetegség esetén protokoll szerint tisztítunk. Több típus hátterében jellegzetes baktériumok állnak. A klinikai képtől függően mintát veszünk a tasakokból. Ha parodontopathogén kórokozókra pozitív, teljes szájdezinfekciós protokollt végzünk: célzott antibiotikum mellett teljes professzionális tisztítás, kiegészítve kürettálással — íny alatti tisztítással, a gyulladt szövetek és a fertőzött gyökércement eltávolításával. Helyi érzéstelenítésben, steril Gracey kéziműszerekkel, fájdalommentesen.",
   microBody2:
     "Rövid időn belül áttisztítjuk az összes beteg ínytasakot, hogy a kitisztított tasakok ne fertőződjenek újra. A páciens klorhexidines szájöblítéssel és nyelvhát-tisztítással egészíti ki. Egy hónap múlva kiértékeljük, majd a recall programba kerül.",
+  fmdAlt1: "Teljes szájdezinfekció — klinikai kép",
+  fmdAlt2: "Teljes szájdezinfekció — kontroll",
   closedTitle: "Zárt kürettálás",
   closedBody:
     "Íny alatti tisztítás: a gyulladt szöveteket, a tasakfalat és a fertőzött gyökércementet távolítjuk el speciális Gracey műszerekkel.",
@@ -252,6 +276,7 @@ const HU = {
     "A fogágy regenerációja szűk határok között lehetséges. Célja az eredeti parodontális szövetek (csont, gyökérhártya, gyökércement, kollagénrostok) helyreállítása. Szükségesek a csontból és a vérből származó növekedési faktorok, valamint egy réteg, amely a csontkrátert védi az íny gyors beburjánzásától — erre szolgálnak a speciális membránok.",
   regenBody2:
     "A defektus formájától, mélységétől és szögétől függően különböző anyagokat kombinálunk. Csak alapos evidenciájú, prémium bioanyagokat használunk: xenograft csontpótlók (Nobel Biocare Xenogain™, Bio-Oss® Geistlich), kollagén membránok (Creos™, Bio-Gide®), hyaDENT BG, Emdogain® Plus (Straumann), saját csont és szájpadlebeny graftként.",
+  regenAlt: "Regeneratív bioanyagok a fogágy műtéteihez",
   regenBody3: "A regeneratív műtétek alapvető feltételei:",
   regenItems: [
     "az oki terápia sikeres, a fogágygyulladás jelei nem mutatkoznak",
@@ -343,6 +368,8 @@ const EN = {
     "We clean according to protocol. If culture from the pockets is positive for periodontopathogens, we run a full-mouth disinfection: targeted antibiotics plus professional cleaning and curettage under local anaesthesia with sterile Gracey instruments.",
   microBody2:
     "All diseased pockets are cleaned in a short window so they are not recolonised. The patient adds chlorhexidine rinses and tongue cleaning. After one month we reassess and enter a recall programme.",
+  fmdAlt1: "Full-mouth disinfection — clinical photo",
+  fmdAlt2: "Full-mouth disinfection — follow-up",
   closedTitle: "Closed curettage",
   closedBody:
     "Subgingival cleaning: inflamed tissue, pocket wall and infected root cementum are removed with Gracey instruments.",
@@ -375,6 +402,7 @@ const EN = {
     "Periodontal regeneration is possible within narrow limits. The aim is to restore bone, periodontal ligament, cementum and collagen fibres, using growth factors and membranes that protect the bone crater from rapid gingival ingrowth.",
   regenBody2:
     "We combine materials according to defect shape, depth and angle, using only premium, well-evidenced biomaterials.",
+  regenAlt: "Regenerative biomaterials for periodontal surgery",
   regenBody3: "Basic requirements for regenerative surgery:",
   regenItems: [
     "cause-related therapy has succeeded; inflammation is absent",

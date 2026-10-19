@@ -18,6 +18,11 @@ export const PAGE_HEROES = {
 /** Készre vágott borító: ne cropolja/zoomolja az object-cover. */
 export const SERVICE_HERO_CLASS: Record<string, string> = {
   bolcsessegfog: "object-contain object-center",
+  "fogagybetegseg-kezelese": "object-contain object-center",
+  "hyadent-bg": "object-contain object-center",
+  emdogain: "object-contain object-center",
+  "csontpotlas-fogak-mellett": "object-contain object-center",
+  inyplasztika: "object-contain object-center",
 };
 
 /** Szolgáltatás-specifikus borító (slug → kép). */
@@ -30,6 +35,11 @@ export const SERVICE_HEROES: Record<string, string> = {
   szajhigienia: "/szolgaltatasok/szajhigienia/hero.jpg",
   gyermekfogaszat: "/szolgaltatasok/gyermekfogaszat/01.jpg",
   "esztetikai-fogaszat": "/szolgaltatasok/esztetikai-fogaszat/03.jpg",
+  "fogagybetegseg-kezelese": "/szolgaltatasok/fogagy/old/hero.jpg",
+  "hyadent-bg": "/szolgaltatasok/fogagy/old/hero.jpg",
+  emdogain: "/szolgaltatasok/fogagy/old/hero.jpg",
+  "csontpotlas-fogak-mellett": "/szolgaltatasok/fogagy/old/hero.jpg",
+  inyplasztika: "/szolgaltatasok/fogagy/old/hero.jpg",
 };
 
 /** Szolgáltatás-kategória → hero kép. */
