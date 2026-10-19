@@ -59,18 +59,32 @@ export function CertPanel({ title, children }: { title?: string; children: React
 /** Equal-width photo row (2–4 images). */
 export function PhotoRow({ images }: { images: Media[] }) {
   const cols =
-    images.length >= 4
-      ? "sm:grid-cols-2 lg:grid-cols-4"
-      : images.length === 3
-        ? "sm:grid-cols-3"
-        : images.length === 2
-          ? "sm:grid-cols-2"
-          : "";
+    images.length >= 6
+      ? "grid-cols-3 lg:grid-cols-6"
+      : images.length >= 4
+        ? "sm:grid-cols-2 lg:grid-cols-4"
+        : images.length === 3
+          ? "sm:grid-cols-3"
+          : images.length === 2
+            ? "sm:grid-cols-2"
+            : "";
   return (
     <div className={`grid gap-4 ${cols}`}>
       {images.map((img) => (
         <Figure key={img.src} {...img} />
       ))}
+    </div>
+  );
+}
+
+/** Photo row with a short stage label beside it (desktop) / above it (mobile). */
+export function LabeledPhotoRow({ label, images }: { label: string; images: Media[] }) {
+  return (
+    <div className="grid gap-3 md:grid-cols-[minmax(7.5rem,10.5rem)_1fr] md:items-center md:gap-6">
+      <p className="font-display text-sm leading-snug text-brand-800 md:text-right">
+        {label}
+      </p>
+      <PhotoRow images={images} />
     </div>
   );
 }

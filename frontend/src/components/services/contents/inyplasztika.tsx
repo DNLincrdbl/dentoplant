@@ -1,4 +1,4 @@
-import { BulletList, Callout, Lead, PhotoRow, Section, SubSection } from "../ui";
+import { BulletList, Callout, LabeledPhotoRow, Lead, PhotoRow, Section, SubSection } from "../ui";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
 
@@ -63,28 +63,28 @@ export default function InyplasztikaContent({ locale }: ServiceContentProps) {
       </SubSection>
       <SubSection title={c.multiTitle}>
         <p>{c.multi}</p>
-        <PhotoRow
+        <LabeledPhotoRow
+          label={c.multiCapStart}
           images={[
             img("multi-1", c.multiAlt),
             img("multi-2", c.multiAlt),
             img("multi-3", c.multiAlt),
-            img("multi-4", c.multiCapStart, 1024, 682, c.multiCapStart),
           ]}
         />
-        <PhotoRow
+        <LabeledPhotoRow
+          label={c.multiCap1y}
           images={[
             img("multi-5", c.multiAlt),
             img("multi-6", c.graftCap, 2000, 1333, c.graftCap),
             img("multi-7", c.multiAlt),
-            img("multi-8", c.multiCap1y, 1024, 682, c.multiCap1y),
           ]}
         />
-        <PhotoRow
+        <LabeledPhotoRow
+          label={c.multiCap7y}
           images={[
             img("multi-9", c.multiAlt),
             img("multi-10", c.multiAlt),
             img("multi-11", c.multiAlt),
-            img("multi-12", c.multiCap7y, 1024, 682, c.multiCap7y),
           ]}
         />
       </SubSection>

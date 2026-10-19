@@ -13,8 +13,6 @@ export default function ArcuregEmelesContent({ locale }: ServiceContentProps) {
         <Lead>{c.lead}</Lead>
         <MediaText image={{ src: `${BLOG}/01.jpg`, alt: c.blogTitle, width: 1112, height: 856 }}>
           <p>{c.blog1}</p>
-        </MediaText>
-        <MediaText reverse image={{ src: `${BLOG}/02.jpg`, alt: c.blogTitle, width: 1333, height: 2000 }}>
           <p>{c.blog2}</p>
         </MediaText>
         <PhotoRow

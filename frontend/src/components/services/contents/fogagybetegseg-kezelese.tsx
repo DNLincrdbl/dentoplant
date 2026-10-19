@@ -1,6 +1,22 @@
-import { BulletList, Callout, Figure, Lead, MediaText, NumberedList, PhotoRow, Section, SubSection } from "../ui";
+import { BulletList, Callout, Figure, LabeledPhotoRow, Lead, MediaText, NumberedList, PhotoRow, Section, SubSection } from "../ui";
 import { localizeHref, type Locale } from "@/lib/i18n/config";
 import type { ServiceContentProps } from "./index";
+
+function oldImg(
+  name: string,
+  alt: string,
+  width: number,
+  height: number,
+  caption?: string,
+) {
+  return {
+    src: `/szolgaltatasok/fogagy/old/${name}.jpg`,
+    alt,
+    width,
+    height,
+    caption,
+  };
+}
 
 export default function FogagybetegsegKezeleseContent({ locale }: ServiceContentProps) {
   const en = locale === "en";
@@ -155,6 +171,92 @@ export default function FogagybetegsegKezeleseContent({ locale }: ServiceContent
         <BulletList items={c.regenItems} />
       </Section>
 
+      <Section title={c.hyaTitle}>
+        <Lead>{c.hyaLead}</Lead>
+        <p>{c.hyaBody}</p>
+        <SubSection title={c.hyaAdvTitle}>
+          <BulletList items={c.hyaAdv} />
+        </SubSection>
+        <PhotoRow
+          images={[
+            oldImg("hya-1", c.hyaAlt1, 800, 532),
+            oldImg("hya-2", c.hyaAlt2, 800, 532),
+          ]}
+        />
+      </Section>
+
+      <Section title={c.emdoTitle}>
+        <MediaText reverse image={oldImg("emdo-intro", c.emdoAlt, 255, 198)}>
+          <Lead>{c.emdoLead}</Lead>
+          <p>{c.emdoBody1}</p>
+        </MediaText>
+        <PhotoRow
+          images={[
+            oldImg("emdo-1", c.emdoS1, 150, 150, c.emdoS1),
+            oldImg("emdo-2", c.emdoS2, 150, 150, c.emdoS2),
+            oldImg("emdo-3", c.emdoS3, 150, 150, c.emdoS3),
+            oldImg("emdo-4", c.emdoS4, 150, 150, c.emdoS4),
+            oldImg("emdo-5", c.emdoS5, 150, 150, c.emdoS5),
+            oldImg("emdo-6", c.emdoS6, 150, 150, c.emdoS6),
+          ]}
+        />
+        <p>{c.emdoBody2}</p>
+      </Section>
+
+      <Section title={c.boneTitle}>
+        <Lead>{c.boneLead}</Lead>
+        <p>{c.boneBody}</p>
+        <Figure {...oldImg("csont", c.boneAlt, 500, 173)} />
+        <PhotoRow
+          images={[
+            oldImg("iny-a", c.gumThumbAlt, 150, 157),
+            oldImg("iny-b", c.gumTitle, 150, 150),
+          ]}
+        />
+      </Section>
+
+      <Section title={c.gumTitle}>
+        <Lead>{c.gumLead}</Lead>
+        <p>{c.gumBody}</p>
+        <SubSection title={c.singleTitle}>
+          <p>{c.single}</p>
+          <PhotoRow
+            images={[
+              oldImg("single-1", c.singleCap1, 1333, 2000, c.singleCap1),
+              oldImg("single-2", c.singleCap2, 1333, 2000, c.singleCap2),
+              oldImg("single-3", c.singleCap3, 1333, 2000, c.singleCap3),
+            ]}
+          />
+        </SubSection>
+        <SubSection title={c.multiTitle}>
+          <p>{c.multi}</p>
+          <LabeledPhotoRow
+            label={c.multiCapStart}
+            images={[
+              oldImg("multi-1", c.multiAlt, 2000, 1333),
+              oldImg("multi-2", c.multiAlt, 2000, 1333),
+              oldImg("multi-3", c.multiAlt, 2000, 1333),
+            ]}
+          />
+          <LabeledPhotoRow
+            label={c.multiCap1y}
+            images={[
+              oldImg("multi-5", c.multiAlt, 2000, 1333),
+              oldImg("multi-6", c.graftCap, 2000, 1333, c.graftCap),
+              oldImg("multi-7", c.multiAlt, 2000, 1333),
+            ]}
+          />
+          <LabeledPhotoRow
+            label={c.multiCap7y}
+            images={[
+              oldImg("multi-9", c.multiAlt, 2000, 1333),
+              oldImg("multi-10", c.multiAlt, 2000, 1333),
+              oldImg("multi-11", c.multiAlt, 2000, 1333),
+            ]}
+          />
+        </SubSection>
+      </Section>
+
       <Callout
         title={c.calloutTitle}
         body={c.calloutBody}
@@ -286,6 +388,64 @@ const HU = {
     "a páciens nem dohányzik",
     "megfelelő általános egészségi állapot, nincs műtéti kontraindikáció",
   ],
+  hyaTitle: "IV/1. HyaDENT BG (xHya) a nyitott kürett során",
+  hyaLead:
+    "A fogágybetegségben elvesztett szövetek megőrzéséhez jelentősen hozzájárul a hialuronsav sebészi alkalmazása.",
+  hyaBody:
+    "A nyitott kürett során az íny minimális leválasztása csak az elváltozás elérhetőségére korlátozódik. A tisztítási fázis után a HyaDENT BG™ sebészi hialuronsav a tasakba juttatható.",
+  hyaAdvTitle: "Előnyök nyitott kürett mellett",
+  hyaAdv: [
+    "gyorsabb sebgyógyulás",
+    "kiszámítható gyógyulási folyamat",
+    "bakteriosztatikus hatás — kisebb a sebgyógyulási komplikáció esélye",
+    "műtét során egyszerű kezelni, véres közegben jól működik",
+    "nem igényel folyamatos hűtést",
+    "a tasakba helyezve a szövetek regenerációját támogatja",
+    "jól kombinálható más bioanyagokkal",
+    "minimális posztoperatív fájdalom és kisebb duzzanat",
+  ],
+  hyaAlt1: "hyaDENT BG a nyitott kürett során",
+  hyaAlt2: "hyaDENT BG — műtét utáni állapot",
+  emdoTitle: "IV/2. Emdogain a nyitott kürett során",
+  emdoLead:
+    "Megfelelő esetválasztás mellett a nyitott kürett során regeneratív anyag juttatható a területre, és a fogágy újraépíthető.",
+  emdoBody1:
+    "Több mint tíz éve alkalmazott regeneratív anyag az Emdogain® (Straumann). Legnyilvánvalóbb hatása a gyökérfelszín módosítása, új cement és új rostok képződése.",
+  emdoBody2:
+    "A beavatkozás körülbelül egy óráig tart, helyi érzéstelenítésben. Ezzel a technikával általában kisebb elváltozásokat kezelünk: az íny lehúzódása minimális, a sebgyógyulás kedvező.",
+  emdoAlt: "Emdogain a nyitott kürett során",
+  emdoS1: "Lebenyképzés",
+  emdoS2: "Gyökérfelszín tisztítása",
+  emdoS3: "Gyökérfelszín kondicionálása",
+  emdoS4: "Emdogain felvitele",
+  emdoS5: "Sebzárás",
+  emdoS6: "Gyógyult állapot",
+  boneTitle: "IV/3. Fogágy műtétek csontpótlással",
+  boneLead:
+    "A súlyosbodó fogágybetegség során a fog körüli csontmennyiség is jelentősen csökken — a megtartás kulcsa a tartószövetek, így a csont felépítése.",
+  boneBody:
+    "Megfelelő előkészítés után, bizonyos határok között a fogak körüli szövetek csontpótlással felépíthetők. Csontpótlót, saját csontot és membránokat alkalmazunk.",
+  boneAlt: "Fogágy műtét csontpótlással — klinikai fotósor",
+  gumThumbAlt: "Ínyplasztika",
+  gumTitle: "V. Ínyplasztikai beavatkozások — recessziósebészet",
+  gumLead:
+    "Az íny plasztikai helyreállítását célzó megoldások közé tartoznak az ínylehúzódások műtétei. Koronálisan csúsztatott lebenyek és alagúttechnikák, gyakran szájpadból vett kötőszövetes lebennyel.",
+  gumBody:
+    "A fognyakról lehúzódott íny korrekciója a legtöbb esetben lehetséges. A legmodernebb megoldások az ínypapillák átvágása nélküli tunnel (alagút) technikák.",
+  singleTitle: "Egyszeres ínyrecesszió",
+  single:
+    "Például a jobb felső szemfogról 5 mm íny húzódott le. Az íny „visszahúzása” csak műtéttel lehetséges: szájpadlásból vett kötőszövetes szabadlebeny koronálisan csúsztatott lebenytechnikával, parodontális plasztikai mikrosebészettel.",
+  multiTitle: "Többszörös ínyrecesszió",
+  multi:
+    "Több fogat érintő lehúzódás, különösen az esztétikai zónában. Tunnel technikával a preparált alagútba húzzuk a szájpadlásból vett graftot. Hosszú távú követéseinkben a recesszió fedésének sikeressége évek múltán is közel 100%-os lehet.",
+  singleCap1: "Kezelés előtt",
+  singleCap2: "Tisztítás és mérések",
+  singleCap3: "Kezelés után 1 évvel",
+  multiAlt: "Többszörös ínyrecesszió kezelése",
+  graftCap: "Szájpadlásból Hürzeler-technikával kivett kötőszövetes szabadlebeny",
+  multiCapStart: "Kiindulási állapot",
+  multiCap1y: "Egyéves eredmény",
+  multiCap7y: "Hétéves eredmény",
   calloutTitle: "Parodontológiai konzultáció",
   calloutBody: "Fázisos, protokoll szerinti kezelés — a saját fogak megtartásáért.",
   calloutCta: "Bejelentkezés",
@@ -412,6 +572,64 @@ const EN = {
     "the patient does not smoke",
     "general health is adequate; no surgical contraindication",
   ],
+  hyaTitle: "IV/1. HyaDENT BG (xHya) in open-flap curettage",
+  hyaLead:
+    "Surgical hyaluronic acid contributes substantially to preserving tissues lost to periodontal disease.",
+  hyaBody:
+    "In open-flap curettage the gum is reflected only as far as needed. After cleaning, HyaDENT BG™ can be placed in the pocket.",
+  hyaAdvTitle: "Advantages with open-flap curettage",
+  hyaAdv: [
+    "faster wound healing",
+    "predictable healing",
+    "bacteriostatic effect — lower chance of healing complications",
+    "easy to handle in a bloody field",
+    "no continuous cooling",
+    "supports tissue regeneration in the pocket",
+    "combines well with other biomaterials",
+    "minimal postoperative pain and less swelling",
+  ],
+  hyaAlt1: "hyaDENT BG during open-flap curettage",
+  hyaAlt2: "hyaDENT BG — after surgery",
+  emdoTitle: "IV/2. Emdogain in open-flap curettage",
+  emdoLead:
+    "With the right case selection a regenerative material can be placed during open-flap curettage and the periodontium rebuilt.",
+  emdoBody1:
+    "Emdogain® (Straumann) has been used for more than ten years. Its clearest effects are root-surface modification, new cementum and new fibres.",
+  emdoBody2:
+    "The procedure lasts about an hour under local anaesthesia. We generally treat smaller lesions: gum recession is minimal and healing is favourable.",
+  emdoAlt: "Emdogain in open-flap curettage",
+  emdoS1: "Flap elevation",
+  emdoS2: "Root-surface cleaning",
+  emdoS3: "Root-surface conditioning",
+  emdoS4: "Emdogain application",
+  emdoS5: "Wound closure",
+  emdoS6: "Healed site",
+  boneTitle: "IV/3. Periodontal surgery with bone grafting",
+  boneLead:
+    "As periodontal disease advances, the bone around the tooth also decreases — keeping the tooth often means rebuilding the supporting tissues, including bone.",
+  boneBody:
+    "After proper preparation, within certain limits, tissues around retained teeth can be rebuilt with bone grafting, autogenous bone and membranes.",
+  boneAlt: "Periodontal surgery with bone grafting — clinical series",
+  gumThumbAlt: "Gum plastic surgery",
+  gumTitle: "V. Gum plastic surgery — recession surgery",
+  gumLead:
+    "Soft-tissue plastic procedures include surgery for gum recession: coronally advanced flaps and tunnel techniques, often with a connective-tissue graft from the palate.",
+  gumBody:
+    "Correction of recession from the tooth neck is usually possible. The most modern options are tunnel techniques that do not cut the papillae.",
+  singleTitle: "Single recession",
+  single:
+    "For example 5 mm of gum receded from an upper canine. Covering it is only possible surgically: a palatal connective-tissue graft combined with a coronally advanced flap.",
+  multiTitle: "Multiple recessions",
+  multi:
+    "Recession on several teeth, especially in the aesthetic zone. With a tunnel technique we draw the palatal graft into the prepared tunnel. In long-term follow-up, coverage can remain close to 100% years later.",
+  singleCap1: "Before treatment",
+  singleCap2: "Cleaning and measurements",
+  singleCap3: "One year after treatment",
+  multiAlt: "Multiple recession treatment",
+  graftCap: "Connective-tissue graft harvested from the palate with the Hürzeler technique",
+  multiCapStart: "Baseline",
+  multiCap1y: "One-year result",
+  multiCap7y: "Seven-year result",
   calloutTitle: "Periodontal consultation",
   calloutBody: "Phased, protocol-based treatment — to keep your own teeth.",
   calloutCta: "Book now",
