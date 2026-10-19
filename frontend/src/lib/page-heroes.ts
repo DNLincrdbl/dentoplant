@@ -15,10 +15,15 @@ export const PAGE_HEROES = {
   default: "/heroes/6-dentoplant-fogaszati-es-implantologiai-rendelo.jpg",
 } as const;
 
+/** Készre vágott borító: ne cropolja/zoomolja az object-cover. */
+export const SERVICE_HERO_CLASS: Record<string, string> = {
+  bolcsessegfog: "object-contain object-center",
+};
+
 /** Szolgáltatás-specifikus borító (slug → kép). */
 export const SERVICE_HEROES: Record<string, string> = {
   "mikroszkopos-fogaszat": "/szolgaltatasok/mikroszkopos-fogaszat/hero.jpg",
-  bolcsessegfog: "/szolgaltatasok/bolcsessegfog/hero.jpg",
+  bolcsessegfog: "/szolgaltatasok/bolcsessegfog/hero-banner.jpg",
   fogszabalyozas: "/szolgaltatasok/fogszabalyozas/hero.jpg",
   "iranyitott-biofilm-kezeles": "/szolgaltatasok/szajhigienia/hero.jpg",
   "implantatum-higenia": "/szolgaltatasok/szajhigienia/hero.jpg",

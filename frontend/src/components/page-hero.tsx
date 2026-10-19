@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { getLocale } from "@/lib/i18n/server";
 import { localizeHref } from "@/lib/i18n/config";
 import { PAGE_HEROES } from "@/lib/page-heroes";
+import { cn } from "@/lib/utils";
 
 export type Crumb = { label: string; href?: string };
 
@@ -13,6 +14,7 @@ export async function PageHero({
   description,
   crumbs,
   image = PAGE_HEROES.default,
+  imageClassName,
 }: {
   eyebrow?: string;
   title: string;
@@ -20,6 +22,8 @@ export async function PageHero({
   crumbs?: Crumb[];
   /** Halvány háttérkép. `null` = nincs kép. */
   image?: string | null;
+  /** Felülírja a default object-cover cropot (pl. készre vágott borító). */
+  imageClassName?: string;
 }) {
   const locale = await getLocale();
   return (
@@ -34,7 +38,10 @@ export async function PageHero({
             fetchPriority="high"
             quality={82}
             sizes="(max-width: 768px) 100vw, 1600px"
-            className="pointer-events-none -z-20 object-cover object-[center_35%]"
+            className={cn(
+              "pointer-events-none -z-20",
+              imageClassName ?? "object-cover object-[center_35%]",
+            )}
           />
           <div
             aria-hidden
