@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useId, useRef, useState } from "react";
 import { MessageCircle, Send, X } from "lucide-react";
+import { apiPost, formatApiError } from "@/lib/api";
 import { useLocale, useLocalizedHref } from "@/lib/i18n/context";
 import { cn } from "@/lib/utils";
 
@@ -75,23 +76,13 @@ export function SiteChat() {
     const started = Date.now();
     let reply: string;
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { Accept: "application/json", "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: trimmed,
-          history: nextMessages.slice(1, -1).map((m) => ({ role: m.role, content: m.content })),
-        }),
+      const data = await apiPost<{ reply: string }>("/api/chat", {
+        message: trimmed,
+        history: nextMessages.slice(1, -1).map((m) => ({ role: m.role, content: m.content })),
       });
-      const data = (await response.json().catch(() => null)) as { reply?: string } | null;
-      if (!response.ok || !data?.reply) {
-        throw new Error("chat_failed");
-      }
       reply = data.reply;
-    } catch {
-      reply = en
-        ? "The assistant is unavailable right now. Please call +36 30 264 5024."
-        : "A chat most nem elérhető. Kérjük, hívjon: +36 30 264 5024.";
+    } catch (err) {
+      reply = formatApiError(err);
     }
     await wait(Math.max(0, TYPING_MS - (Date.now() - started)));
     setMessages((prev) => [...prev, { role: "assistant", content: reply }]);
