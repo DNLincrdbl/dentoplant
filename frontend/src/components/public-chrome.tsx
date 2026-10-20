@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { SiteHeader } from "./site-header";
+import { SiteChat } from "./site-chat";
 import { PageTransition } from "./page-transition";
 import { useLocale } from "@/lib/i18n/context";
 
@@ -33,6 +34,7 @@ export function PublicChrome({
         <PageTransition>{children}</PageTransition>
       </main>
       {footer}
+      <SiteChat />
     </>
   );
 }

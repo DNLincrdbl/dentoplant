@@ -128,6 +128,7 @@ def create_app():
     from .blueprints.blog import bp as blog_bp
     from .blueprints.upload import bp as upload_bp
     from .blueprints.contact import bp as contact_bp
+    from .blueprints.chat import bp as chat_bp
     from .errors import register_error_handlers
     openapi_bp = None
 
@@ -137,6 +138,7 @@ def create_app():
     app.register_blueprint(blog_bp)
     app.register_blueprint(upload_bp)
     app.register_blueprint(contact_bp, url_prefix="/api")
+    app.register_blueprint(chat_bp, url_prefix="/api")
     register_error_handlers(app)
 
     @app.before_request

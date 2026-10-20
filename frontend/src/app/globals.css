@@ -346,3 +346,72 @@ h1, h2, h3, .font-display {
   border-radius: 6px;
   font-size: 0.9em;
 }
+
+.chat-panel {
+  transform-origin: 100% 100%;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(12px, 64px) scale(0.14);
+  border-radius: 1.75rem;
+  transition:
+    opacity 220ms ease,
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 520ms,
+    box-shadow 520ms ease;
+}
+
+.chat-panel[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, 0) scale(1);
+}
+
+@keyframes chat-bubble-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chat-dot {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+.chat-bubble {
+  animation: chat-bubble-in 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.chat-dot {
+  animation: chat-dot 1s ease-in-out infinite;
+}
+
+.chat-dot:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.chat-dot:nth-child(3) {
+  animation-delay: 0.24s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-panel {
+    transition: none;
+  }
+  .chat-bubble,
+  .chat-dot {
+    animation: none;
+  }
+}

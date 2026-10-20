@@ -71,6 +71,7 @@ export function formatApiError(err: unknown): string {
     invalid_email: "Érvénytelen e-mail cím formátum.",
     invalid_json: "Érvénytelen kérés. Frissítse az oldalt, majd próbálja újra.",
     account_locked: "Túl sok sikertelen belépés miatt a fiók ideiglenesen zárolva van.",
+    ratelimit: "Túl sok üzenet rövid időn belül. Próbálja újra kicsit később, vagy hívjon minket.",
     no_file: "Nem érkezett fájl a feltöltéshez.",
     no_file_selected: "Válasszon ki egy képet a feltöltéshez.",
     file_type_not_allowed:
@@ -92,6 +93,7 @@ export function formatApiError(err: unknown): string {
   if (err.status === 0) {
     return "Nem sikerült kapcsolódni a szerverhez. Ellenőrizze, hogy a backend fut-e.";
   }
+  if (err.status === 429) return byReason.ratelimit;
   if (err.status === 413) return byReason.file_too_large;
   if (err.status === 401) return byReason.unauthorized;
   if (err.status === 403) return byReason.forbidden;

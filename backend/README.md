@@ -28,6 +28,9 @@ Hozz létre egy `.env` fájlt a `backend/` mappában:
 SECRET_KEY=valami-hosszu-random-string-min-32-karakter
 RUN_MODE=development
 FRONTEND_URL=http://localhost:3000
+# Opcionális: AI chat (ha nincs kulcs, a tudásbázisból válaszol)
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-4o-mini
 ```
 
 > `SECRET_KEY` generálás: `python -c "import secrets; print(secrets.token_urlsafe(48))"`
@@ -77,6 +80,7 @@ Ezután a `/blog` és `/admin` oldalak automatikusan a backenddel kommunikálnak
 | GET    | `/api/blog/public/posts/<slug>`      | Publikált cikk slug alapján                 |
 | GET    | `/api/health`                        | Health-check                                |
 | GET    | `/api/ping`                          | Ping                                        |
+| POST   | `/api/chat`                          | Honlap chatbot (`{message, history}`)       |
 
 ### Admin endpointok (session + CSRF + `is_admin` kötelező)
 
